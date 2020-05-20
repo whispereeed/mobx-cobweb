@@ -1,0 +1,192 @@
+{
+  "count": 4,
+  "items": [
+    {
+      "id": "tSU9FjS_qMr000",
+      "version": 1,
+      "active": true,
+      "createTime": 1567011298195,
+      "updateTime": 1567011298195,
+      "name": "银企联测试3",
+      "nameSpell": "YINQILIANCESHI3",
+      "code": "",
+      "corporationId": "XRA9koBTaA0000",
+      "type": "PERSONAL",
+      "owner": "CORPORATION",
+      "cardNo": "342532463426",
+      "logs": [
+        {
+          "action": "CREATE",
+          "operatorId": "XRA9koBTaA0000:094964196637936879",
+          "time": 1567011298194,
+          "attributes": null
+        }
+      ],
+      "sort": "BANK",
+      "staffId": "",
+      "visibility": {
+        "fullVisible": true,
+        "staffs": null,
+        "roles": null,
+        "departments": null,
+        "departmentsIncludeChildren": true
+      },
+      "branch": "",
+      "icon": "https://images.ekuaibao.com/bank/bank-other.svg",
+      "bank": "",
+      "province": "",
+      "city": "",
+      "certificateType": "08",
+      "certificateNo": "1234",
+      "bankLinkNo": "",
+      "unionIcon": "https://images.ekuaibao.com/bank/bank-other.svg",
+      "unionBank": "长葛轩辕村镇银行有限责任公司",
+      "isDefault": false
+    },
+    {
+      "id": "kz49FjVL6slo00",
+      "version": 1,
+      "active": true,
+      "createTime": 1567011287493,
+      "updateTime": 1567011287493,
+      "name": "银企联测试2",
+      "nameSpell": "YINQILIANCESHI2",
+      "code": "",
+      "corporationId": "XRA9koBTaA0000",
+      "type": "PERSONAL",
+      "owner": "CORPORATION",
+      "cardNo": "1345324632462346",
+      "logs": [
+        {
+          "action": "CREATE",
+          "operatorId": "XRA9koBTaA0000:094964196637936879",
+          "time": 1567011287492,
+          "attributes": null
+        }
+      ],
+      "sort": "BANK",
+      "staffId": "",
+      "visibility": {
+        "fullVisible": true,
+        "staffs": null,
+        "roles": null,
+        "departments": null,
+        "departmentsIncludeChildren": true
+      },
+      "branch": "",
+      "icon": "https://images.ekuaibao.com/bank/bank-other.svg",
+      "bank": "",
+      "province": "",
+      "city": "",
+      "certificateType": "",
+      "certificateNo": "",
+      "bankLinkNo": "",
+      "unionIcon": "https://images.ekuaibao.com/bank/bank-other.svg",
+      "unionBank": "遂宁市商业银行股份有限公司",
+      "isDefault": false
+    },
+    {
+      "id": "B_09FkAJcQ1k00",
+      "version": 1,
+      "active": true,
+      "createTime": 1567011134465,
+      "updateTime": 1567011134465,
+      "name": "银企联测试1",
+      "nameSpell": "YINQILIANCESHI1",
+      "code": "",
+      "corporationId": "XRA9koBTaA0000",
+      "type": "PERSONAL",
+      "owner": "CORPORATION",
+      "cardNo": "1234215132512534",
+      "logs": [
+        {
+          "action": "CREATE",
+          "operatorId": "XRA9koBTaA0000:094964196637936879",
+          "time": 1567011134465,
+          "attributes": null
+        }
+      ],
+      "sort": "BANK",
+      "staffId": "",
+      "visibility": {
+        "fullVisible": true,
+        "staffs": null,
+        "roles": null,
+        "departments": null,
+        "departmentsIncludeChildren": true
+      },
+      "branch": "",
+      "icon": "https://images.ekuaibao.com/bank/bank-other.svg",
+      "bank": "",
+      "province": "",
+      "city": "",
+      "certificateType": "",
+      "certificateNo": "",
+      "bankLinkNo": "",
+      "unionIcon": "https://images.ekuaibao.com/bank/bank-other.svg",
+      "unionBank": "金华银行股份有限公司",
+      "isDefault": false
+    },
+    {
+      "id": "jmI9tZvhxgcA00",
+      "version": 1,
+      "active": true,
+      "createTime": 1563940040049,
+      "updateTime": 1563940040049,
+      "name": "123",
+      "nameSpell": "123",
+      "code": "",
+      "corporationId": "XRA9koBTaA0000",
+      "type": "PUBLIC",
+      "owner": "INDIVIDUAL",
+      "cardNo": "s",
+      "logs": [
+        {
+          "action": "CREATE",
+          "operatorId": "XRA9koBTaA0000:175461374726958256",
+          "time": 1563940040048,
+          "attributes": null
+        }
+      ],
+      "sort": "BANK",
+      "staffId": {
+        "version": 14,
+        "active": true,
+        "createTime": 1561368150495,
+        "updateTime": 1574093411607,
+        "name": "檀家琦",
+        "nameSpell": "TANJIAQI",
+        "code": "",
+        "corporationId": "XRA9koBTaA0000",
+        "userId": "Vers8Vzqw3uiP6qb9EiP7ZPAiEiE",
+        "id": "XRA9koBTaA0000:175461374726958256",
+        "avatar": "",
+        "email": null,
+        "cellphone": null,
+        "note": null,
+        "departments": ["XRA9koBTaA0000:1"],
+        "defaultDepartment": "XRA9koBTaA0000:1",
+        "external": false,
+        "order": { "XRA9koBTaA0000:1": "9046993409060866295" }
+      },
+      "visibility": {
+        "fullVisible": true,
+        "staffs": null,
+        "roles": null,
+        "departments": null,
+        "departmentsIncludeChildren": true
+      },
+      "branch": "123",
+      "icon": "https://images.ekuaibao.com/bank/bank-ny.svg",
+      "bank": "中国农业银行",
+      "province": "北京市",
+      "city": "北京市",
+      "certificateType": null,
+      "certificateNo": null,
+      "bankLinkNo": null,
+      "unionIcon": null,
+      "unionBank": null,
+      "isDefault": false
+    }
+  ]
+}

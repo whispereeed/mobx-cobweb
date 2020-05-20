@@ -1,0 +1,106 @@
+{
+  "value": {
+    "staff": {
+      "version": 14,
+      "active": true,
+      "createTime": 1561368150495,
+      "updateTime": 1574093411607,
+      "name": "龚彥宇",
+      "nameSpell": "GONGYANYU",
+      "code": "123321",
+      "corporationId": "XRA9koBTaA0000",
+      "userId": "tLwu5tpsk7etQAENLoON0giEiE",
+      "id": "XRA9koBTaA0000:gongyanyu",
+      "avatar": "",
+      "email": null,
+      "cellphone": null,
+      "note": null,
+      "departments": [
+        {
+          "version": 1,
+          "active": true,
+          "createTime": 1574093411607,
+          "updateTime": 1574093411607,
+          "name": "研发部",
+          "nameSpell": "YANFABU",
+          "code": "",
+          "corporationId": "XRA9koBTaA0000",
+          "parentId": "XRA9koBTaA0000:1",
+          "order": 19031410,
+          "id": "XRA9koBTaA0000:19031410"
+        }
+      ],
+      "defaultDepartment": {
+        "version": 1,
+        "active": true,
+        "createTime": 1574093411607,
+        "updateTime": 1574093411607,
+        "name": "研发部",
+        "nameSpell": "YANFABU",
+        "code": "",
+        "corporationId": "XRA9koBTaA0000",
+        "parentId": "XRA9koBTaA0000:1",
+        "order": 19031410,
+        "id": "XRA9koBTaA0000:19031410"
+      },
+      "external": false,
+      "order": { "XRA9koBTaA0000:19031410": "9043357214046142247" },
+      "corporation": {
+        "version": 10,
+        "active": true,
+        "createTime": 1561368150463,
+        "updateTime": 1561368150463,
+        "name": "易快报研发",
+        "nameSpell": "YIKUAIBAOYANFA",
+        "sourceChannel": "DT",
+        "sourceId": "dingeddf6aab06ff518935c2f4657eb6378f",
+        "id": "XRA9koBTaA0000",
+        "address": null,
+        "tel": null,
+        "fax": null,
+        "industry": "计算机软件",
+        "userId": null
+      },
+      "bankCardNums": { "id": "XRA9koBTaA0000:gongyanyu", "values": [] },
+      "roles": {
+        "id": "XRA9koBTaA0000:gongyanyu",
+        "version": 14,
+        "active": true,
+        "createTime": 1561368150495,
+        "updateTime": 1574093411607,
+        "corporationId": "XRA9koBTaA0000",
+        "values": [
+          {
+            "roleDefId": "XRA9koBTaA0000:leader",
+            "properties": { "departmentId": "XRA9koBTaA0000:19031410" },
+            "roleDef": {
+              "id": "XRA9koBTaA0000:leader",
+              "version": 14,
+              "active": true,
+              "createTime": 1574093411612,
+              "updateTime": 1574093411612,
+              "name": "部门主管",
+              "nameSpell": "BUMENZHUGUAN",
+              "corporationId": "XRA9koBTaA0000",
+              "roleGroupId": "XRA9koBTaA0000:group:default",
+              "scope": { "name": "部门角色", "properties": { "departmentId": "organization.Department" } },
+              "locked": true,
+              "code": "CODE43",
+              "type": "ROLE",
+              "sourceType": "organization.Department",
+              "sourceTypeValue": null,
+              "sourceName": "部门主管",
+              "purposeType": "organization.Staff",
+              "purposeTypeValue": null,
+              "purposeName": "部门主管(反)",
+              "sourceChannel": "MANUAL"
+            }
+          }
+        ]
+      }
+    },
+    "permissions": ["SYS_ADMIN"],
+    "home5": true,
+    "isAuthorized": true
+  }
+}

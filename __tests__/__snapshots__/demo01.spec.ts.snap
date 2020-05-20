@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`api findOne 1`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "fields": Array [
+      "version",
+      "active",
+      "createTime",
+      "updateTime",
+      "name",
+      "nameSpell",
+      "code",
+      "corporationId",
+      "userId",
+      "id",
+      "avatar",
+      "email",
+      "cellphone",
+      "note",
+      "external",
+      "order",
+      "corporation",
+      "roles",
+    ],
+    "id": "XRA9koBTaA0000:gongyanyu",
+    "refs": Object {
+      "defaultDepartment": Object {
+        "model": "organization.Department",
+        "type": 0,
+      },
+      "departments": Object {
+        "model": "organization.Department",
+        "type": 1,
+      },
+    },
+    "type": "organization.Staff",
+  },
+  "active": true,
+  "avatar": "",
+  "cellphone": null,
+  "code": "123321",
+  "corporation": undefined,
+  "corporationId": "XRA9koBTaA0000",
+  "createTime": 1561368150495,
+  "defaultDepartment": "XRA9koBTaA0000:19031410",
+  "departments": Array [
+    "XRA9koBTaA0000:19031410",
+  ],
+  "email": null,
+  "external": false,
+  "id": "XRA9koBTaA0000:gongyanyu",
+  "name": "龚彥宇",
+  "nameSpell": "GONGYANYU",
+  "note": null,
+  "order": Object {
+    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  },
+  "roles": undefined,
+  "updateTime": 1574093411607,
+  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
+  "version": 14,
+}
+`;
+
+exports[`api findOne 2`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "fields": Array [
+      "version",
+      "active",
+      "createTime",
+      "updateTime",
+      "name",
+      "nameSpell",
+      "code",
+      "corporationId",
+      "userId",
+      "id",
+      "avatar",
+      "email",
+      "cellphone",
+      "note",
+      "external",
+      "order",
+      "corporation",
+      "roles",
+    ],
+    "id": "XRA9koBTaA0000:gongyanyu",
+    "refs": Object {
+      "defaultDepartment": Object {
+        "model": "organization.Department",
+        "type": 0,
+      },
+      "departments": Object {
+        "model": "organization.Department",
+        "type": 1,
+      },
+    },
+    "type": "organization.Staff",
+  },
+  "active": true,
+  "avatar": "",
+  "cellphone": null,
+  "code": "123321",
+  "corporation": undefined,
+  "corporationId": "XRA9koBTaA0000",
+  "createTime": 1561368150495,
+  "defaultDepartment": "XRA9koBTaA0000:19031410",
+  "departments": Array [
+    "XRA9koBTaA0000:19031410",
+  ],
+  "email": null,
+  "external": false,
+  "id": "XRA9koBTaA0000:gongyanyu",
+  "name": "龚彥宇",
+  "nameSpell": "GONGYANYU",
+  "note": null,
+  "order": Object {
+    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  },
+  "roles": undefined,
+  "updateTime": 1574093411607,
+  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
+  "version": 14,
+}
+`;
+
+exports[`api findOne 3`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "fields": Array [
+      "version",
+      "active",
+      "createTime",
+      "updateTime",
+      "name",
+      "nameSpell",
+      "code",
+      "corporationId",
+      "userId",
+      "id",
+      "avatar",
+      "email",
+      "cellphone",
+      "note",
+      "external",
+      "order",
+      "corporation",
+      "roles",
+    ],
+    "id": "XRA9koBTaA0000:gongyanyu",
+    "refs": Object {
+      "defaultDepartment": Object {
+        "model": "organization.Department",
+        "type": 0,
+      },
+      "departments": Object {
+        "model": "organization.Department",
+        "type": 1,
+      },
+    },
+    "type": "organization.Staff",
+  },
+  "active": true,
+  "avatar": "",
+  "cellphone": null,
+  "code": "123321",
+  "corporation": undefined,
+  "corporationId": "XRA9koBTaA0000",
+  "createTime": 1561368150495,
+  "defaultDepartment": "XRA9koBTaA0000:19031410",
+  "departments": Array [
+    "XRA9koBTaA0000:19031410",
+  ],
+  "email": null,
+  "external": false,
+  "id": "XRA9koBTaA0000:gongyanyu",
+  "name": "龚彥宇",
+  "nameSpell": "GONGYANYU",
+  "note": null,
+  "order": Object {
+    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  },
+  "roles": undefined,
+  "updateTime": 1574093411607,
+  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
+  "version": 14,
+}
+`;
