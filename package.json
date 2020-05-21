@@ -12,9 +12,9 @@
     "optimize": "npm run build:lib && npm run build:esm && npm run build:types",
     "copy": "cp package.json README.md .npmignore dist",
     "publish2npm": "npm publish dist",
-    "build:lib": "tsc --outDir dist/lib --module commonjs",
-    "build:esm": "tsc --outDir dist/esm --module esnext",
-    "build:types": "tsc --outDir dist/types --emitDeclarationOnly --declaration",
+    "build:lib": "tsc --rootDir src --outDir dist/lib --module commonjs",
+    "build:esm": "tsc --rootDir src --outDir dist/esm --module esnext",
+    "build:types": "tsc --rootDir src --outDir dist/types --emitDeclarationOnly --declaration",
     "test": "jest"
   },
   "peerDependencies": {

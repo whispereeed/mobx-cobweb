@@ -60,18 +60,18 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
     }
 
     fetch<T extends ISkeletonModel = ISkeletonModel>(
-      type: IType | IModelConstructor<T>,
+      type: IType | T | IModelConstructor<T>,
       ids?: IIdentifier | IIdentifier[],
       options?: IRequestOptions
     ): Promise<IResponseView<T>>
 
     fetch<T extends ISkeletonModel = ISkeletonModel>(
-      type: IType | IModelConstructor<T>,
+      type: IType | T | IModelConstructor<T>,
       options?: IRequestOptions
     ): Promise<IResponseView<T>>
 
     public fetch<T extends ISkeletonModel = ISkeletonModel>(
-      type: IType | IModelConstructor<T>,
+      type: IType | T | IModelConstructor<T>,
       ids?: any,
       options?: any
     ): Promise<IResponseView<T>> {

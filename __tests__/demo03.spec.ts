@@ -70,7 +70,7 @@ describe('ListDataView', () => {
 
   test('infinite', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
-    const response = await collection.fetch(PropertySet, {
+    const response = await collection.fetch<PropertySet>(PropertySet, {
       selector: {
         limit: [0, 10]
       }

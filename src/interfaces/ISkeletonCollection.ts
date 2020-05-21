@@ -17,13 +17,13 @@ export interface ISkeletonCollection extends PureCollection {
   ): T
 
   fetch<T extends ISkeletonModel = ISkeletonModel>(
-    type: IType | IModelConstructor<T>,
+    type: IType | T | IModelConstructor<T>,
     ids?: IIdentifier | IIdentifier[],
     options?: IRequestOptions
   ): Promise<IResponseView<T>>
 
   fetch<T extends ISkeletonModel = ISkeletonModel>(
-    type: IType | IModelConstructor<T>,
+    type: IType | T | IModelConstructor<T>,
     options?: IRequestOptions
   ): Promise<IResponseView<T>>
 
