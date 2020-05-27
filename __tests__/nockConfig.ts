@@ -11,7 +11,7 @@ const MAPPER: any = {}
 const fixtures = path.join(__dirname, 'fixtures')
 const files = G.sync('**/**.json', { nodir: true, cwd: fixtures })
 
-files.forEach(f => {
+files.forEach((f) => {
   const json = require(path.join(fixtures, f))
   const url = f.replace('.json', '').replace(/\./g, '/')
   MAPPER['/' + url] = json
@@ -21,7 +21,7 @@ let CURRENT_SCOPE: nock.Scope
 
 export function useFixturesByGET() {
   CURRENT_SCOPE = nock(BASE_HOST)
-  Object.keys(MAPPER).forEach(url => {
+  Object.keys(MAPPER).forEach((url) => {
     CURRENT_SCOPE.get(url).reply(200, JSON.stringify(MAPPER[url]))
   })
   return CURRENT_SCOPE
@@ -43,5 +43,16 @@ export function useFixtureGetById(key: string) {
     const json = MAPPER[key]
     const object = json.items.find((k: any) => k.id === id)
     return JSON.stringify({ value: object })
+  })
+}
+
+export function useFixtureGetByIds(key: string) {
+  CURRENT_SCOPE.get(new RegExp(key + '/\\[.+\\]')).reply(200, (uri: string) => {
+    const ids = uri.slice(uri.lastIndexOf('/') + 2, -1).split(',')
+    console.log(ids)
+    const json = MAPPER[key]
+    const object = json.items.filter((k: any) => ids.includes(k.id))
+    console.log(object)
+    return JSON.stringify({ items: object , count : 1})
   })
 }
