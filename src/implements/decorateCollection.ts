@@ -22,7 +22,7 @@ import {
   IResponseView,
   IRawData,
   IRequestOptions,
-  $PickElementType
+  $ElementOf
 } from '../interfaces'
 import { query } from './NetworkUtils'
 
@@ -56,7 +56,7 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
 
       if (!data) return null
 
-      return mapItems(data, (item: any) => this.__addRecord<$PickElementType<T>>(item, type)) as any
+      return mapItems(data, (item: any) => this.__addRecord<$ElementOf<T>>(item, type)) as any
     }
 
     fetch<T extends ISkeletonModel = ISkeletonModel>(

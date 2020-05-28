@@ -7,12 +7,12 @@ import { IResponseView } from './IResponseView'
 import { ISkeletonModel } from './ISkeletonModel'
 import { IRequestOptions } from './IRequestOptions'
 import { IRawData } from './IRawData'
-import { $PickElementType } from './types'
+import { $ElementOf } from './types'
 
 export interface ISkeletonCollection extends PureCollection {
   sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(data?: IRawData<D>): T
   sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(
-    type: IType | IModelConstructor<$PickElementType<T>>,
+    type: IType | IModelConstructor<$ElementOf<T>>,
     data: D
   ): T
 
