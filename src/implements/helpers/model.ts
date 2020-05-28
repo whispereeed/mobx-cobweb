@@ -35,7 +35,7 @@ export function saveModel<T extends ISkeletonModel>(model: T, options: IRequestO
 
   return requestMethod(collection, options)
     .then(handleResponse(model))
-    .then(response => {
+    .then((response) => {
       clearCacheByType(getModelType(model))
       return response
     })
@@ -47,7 +47,7 @@ export function removeModel<T extends ISkeletonModel>(model: T, options: IReques
   const isPersisted = isModelPersisted(model)
 
   if (isPersisted) {
-    return remove(collection, options).then(response => {
+    return remove(collection, options).then((response) => {
       if (response.error) {
         throw response.error
       }
@@ -106,9 +106,9 @@ export function handleResponse<T extends ISkeletonModel>(record: T, prop?: strin
   )
 }
 
-export function fetchModelRefs(model: PureModel): Promise<PureModel[]> {
+export function fetchModelRefs<T extends PureModel>(model: T) {
   const collection = getModelCollection(model) as ISkeletonCollection
   const refs = getModelMetaKey(model, 'refs')
-  const map = Object.keys(refs).map(ref => collection.fetch(refs[ref].model, getRefId(model, ref)))
-  return Promise.all(map).then(d => d.map(k => k.data))
+  const map = Object.keys(refs).map((ref) => collection.fetch(refs[ref].model, getRefId(model, ref)))
+  return Promise.all(map)
 }

@@ -27,7 +27,7 @@ describe('sync', () => {
     expect(modelToJSON(dd)).toMatchSnapshot()
   }
 
-  const data: object[] = require('./fixtures/organization.departments.tree.actives.json').items
+  const data: object[] = require('./fixtures/organization.departments.json').items
 
   test('sync 1', () => {
     const sf = collection.sync<Department[]>({

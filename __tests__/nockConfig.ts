@@ -49,10 +49,8 @@ export function useFixtureGetById(key: string) {
 export function useFixtureGetByIds(key: string) {
   CURRENT_SCOPE.get(new RegExp(key + '/\\[.+\\]')).reply(200, (uri: string) => {
     const ids = uri.slice(uri.lastIndexOf('/') + 2, -1).split(',')
-    console.log(ids)
     const json = MAPPER[key]
     const object = json.items.filter((k: any) => ids.includes(k.id))
-    console.log(object)
-    return JSON.stringify({ items: object , count : 1})
+    return JSON.stringify({ items: object, count: ids.length })
   })
 }

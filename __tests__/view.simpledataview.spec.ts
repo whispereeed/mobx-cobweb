@@ -27,7 +27,11 @@ describe('SimpleDataView', () => {
     useFixtureGetById(Staff.endpoint)
     const response = await collection.fetch<Staff>(Staff, getRefId(me, 'staff'))
     const simpleDataView = new SimpleDataView(response)
+    useFixtureGetById(Department.endpoint)
     useFixtureGetByIds(Department.endpoint)
     await simpleDataView.fetchRefs()
+
+    expect(me.staff.defaultDepartment).toBeInstanceOf(Department)
+    expect(me.staff.defaultDepartment).toBe(collection.findOne(Department, me.staff.defaultDepartment.id))
   })
 })

@@ -5,7 +5,7 @@ import { skeleton, Model, prop } from '../../src'
 
 export default class Department extends skeleton(Model) {
   static type = 'organization.Department'
-  static endpoint = '/organization/departments/tree/actives'
+  static endpoint = '/organization/departments'
 
   @prop.identifier public id: string
 

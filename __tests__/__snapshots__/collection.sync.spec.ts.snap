@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sync sync 1 1`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "fields": Array [
+      "version",
+      "active",
+      "createTime",
+      "updateTime",
+      "name",
+      "nameSpell",
+      "code",
+      "corporationId",
+      "order",
+      "id",
+    ],
+    "id": "6Rk9l1WYNM0400:50128173",
+    "refs": Object {
+      "children": Object {
+        "model": "organization.Department",
+        "type": 1,
+      },
+      "parentId": Object {
+        "model": "organization.Department",
+        "type": 0,
+      },
+    },
+    "type": "organization.Department",
+  },
+  "active": true,
+  "children": Array [
+    "6Rk9l1WYNM0400:72152045",
+  ],
+  "code": "",
+  "corporationId": "6Rk9l1WYNM0400",
+  "createTime": 1574211989469,
+  "id": "6Rk9l1WYNM0400:50128173",
+  "name": "研发总部",
+  "nameSpell": "YANFAZONGBU",
+  "order": 4,
+  "parentId": "6Rk9l1WYNM0400:1",
+  "updateTime": 1574211989469,
+  "version": 1,
+}
+`;
+
+exports[`sync sync 2 1`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "fields": Array [
+      "version",
+      "active",
+      "createTime",
+      "updateTime",
+      "name",
+      "nameSpell",
+      "code",
+      "corporationId",
+      "order",
+      "id",
+    ],
+    "id": "6Rk9l1WYNM0400:50128173",
+    "refs": Object {
+      "children": Object {
+        "model": "organization.Department",
+        "type": 1,
+      },
+      "parentId": Object {
+        "model": "organization.Department",
+        "type": 0,
+      },
+    },
+    "type": "organization.Department",
+  },
+  "active": true,
+  "children": Array [
+    "6Rk9l1WYNM0400:72152045",
+  ],
+  "code": "",
+  "corporationId": "6Rk9l1WYNM0400",
+  "createTime": 1574211989469,
+  "id": "6Rk9l1WYNM0400:50128173",
+  "name": "研发总部",
+  "nameSpell": "YANFAZONGBU",
+  "order": 4,
+  "parentId": "6Rk9l1WYNM0400:1",
+  "updateTime": 1574211989469,
+  "version": 1,
+}
+`;
