@@ -1,11 +1,8 @@
-import './network'
-import { useFixturesByGET } from './nockConfig'
-
-import { collection } from './collection'
+import { collection, useFixturesByGET } from './config'
 import { modelToJSON } from 'datx'
 import Department from './models/Department'
 
-describe('sync', () => {
+describe('collection.sync', () => {
   let scope: any = null
 
   beforeAll(() => {
@@ -29,7 +26,7 @@ describe('sync', () => {
 
   const data: object[] = require('./fixtures/organization.departments.json').items
 
-  test('sync 1', () => {
+  test('should sync IRawData', () => {
     const sf = collection.sync<Department[]>({
       type: 'organization.Department',
       data: data
@@ -37,7 +34,7 @@ describe('sync', () => {
     cases(sf)
   })
 
-  test('sync 2', () => {
+  test('should sync data & type', () => {
     const sf = collection.sync<Department[]>(Department, data)
     cases(sf)
   })

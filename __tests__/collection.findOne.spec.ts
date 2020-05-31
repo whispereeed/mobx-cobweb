@@ -1,12 +1,10 @@
-import './network'
-import { useFixturesByGET } from './nockConfig'
+import { collection, useFixturesByGET } from './config'
 
-import { collection } from './collection'
 import { modelToJSON } from 'datx'
 import Staff from './models/Staff'
 import Me from './models/Me'
 
-describe('api', () => {
+describe('collection.findOne', () => {
   let scope: any = null
 
   beforeEach(() => {
@@ -14,7 +12,7 @@ describe('api', () => {
     collection.removeAll(Staff)
   })
 
-  test('findOne', async () => {
+  test('should findOne at collection', async () => {
     const sf = await collection.fetch<Staff>(Staff)
 
     const staff = collection.findOne<Staff>(Staff, 'XRA9koBTaA0000:gongyanyu')
@@ -34,7 +32,7 @@ describe('api', () => {
     const staff2 = collection.findOne(Staff, 'XRA9koBTaA0000:gongyanyu')
     expect(staff === staff2).toBeTruthy()
 
-    const staff3 = (sf.data as Staff[]).find(s => s.id === staff.id)
+    const staff3 = (sf.data as Staff[]).find((s) => s.id === staff.id)
 
     expect(staff === staff3).toBeTruthy()
 

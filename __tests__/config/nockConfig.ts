@@ -8,7 +8,7 @@ import G from 'glob'
 const BASE_HOST = 'http://127.0.0.1:3000/api/v1'
 
 const MAPPER: any = {}
-const fixtures = path.join(__dirname, 'fixtures')
+const fixtures = path.join(__dirname, '..', 'fixtures')
 const files = G.sync('**/**.json', { nodir: true, cwd: fixtures })
 
 files.forEach((f) => {

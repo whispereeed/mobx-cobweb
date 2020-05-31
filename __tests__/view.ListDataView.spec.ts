@@ -1,7 +1,4 @@
-import './network'
-import { useFixturesByGET, useFixtureLimitByPOST } from './nockConfig'
-
-import { collection } from './collection'
+import { collection, useFixtureLimitByPOST, useFixturesByGET } from './config'
 import { ListDataView } from '../src'
 import { autorun } from 'mobx'
 
@@ -16,7 +13,7 @@ describe('ListDataView', () => {
     collection.removeAll(PropertySet)
   })
 
-  test('page', async () => {
+  test('should be fetch data by `page`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
     const response = await collection.fetch(PropertySet, {
       selector: {
@@ -68,7 +65,7 @@ describe('ListDataView', () => {
     expect(jestFn).toBeCalledTimes(9)
   })
 
-  test('infinite', async () => {
+  test('should be fetch data by `infinite`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
     const response = await collection.fetch<PropertySet>(PropertySet, {
       selector: {

@@ -1,14 +1,10 @@
-import './network'
-
-import { useFixtureGetById, useFixturesByGET } from './nockConfig'
-
-import { collection } from './collection'
+import { collection, useFixtureGetById, useFixturesByGET } from './config'
 import { modelToJSON, getRefId } from 'datx'
 import { fetchModelRefs, GenericView } from '../src'
 import Me from './models/Me'
 import Staff from './models/Staff'
 
-describe('simple', () => {
+describe('collection.fetch', () => {
   let scope: any = null
 
   beforeEach(() => {
@@ -17,7 +13,7 @@ describe('simple', () => {
     collection.removeAll(Staff)
   })
 
-  test('fetch', async () => {
+  test('should be fetch a Model By Id/Ids', async () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()
@@ -32,7 +28,7 @@ describe('simple', () => {
     expect(meV.list[0] === me).toBeTruthy()
   })
 
-  test('fetchModelRefs', async () => {
+  test('should be fetch all Refs Models <fetchModelRefs>', async () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()

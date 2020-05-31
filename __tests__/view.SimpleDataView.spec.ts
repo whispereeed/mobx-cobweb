@@ -1,7 +1,4 @@
-import './network'
-import { useFixturesByGET, useFixtureGetById, useFixtureGetByIds } from './nockConfig'
-
-import { collection } from './collection'
+import { collection, useFixturesByGET, useFixtureGetById, useFixtureGetByIds } from './config'
 import { SimpleDataView } from '../src'
 
 import Staff from './models/Staff'
@@ -18,7 +15,7 @@ describe('SimpleDataView', () => {
     collection.removeAll(Staff)
   })
 
-  test('fetch', async () => {
+  test('should be fetch Model by at Model instance', async () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()
