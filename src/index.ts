@@ -15,10 +15,13 @@ export type { IResponseView } from './interfaces/IResponseView'
 export { ResponseView } from './implements/ResponseView'
 export { GenericModel } from './implements/GenericModel'
 export { GenericView } from './implements/GenericView'
-export { setNetworkAdapter } from './implements/NetworkUtils'
-export { clearAllCache, clearCacheByType } from './implements/cache'
+export { setNetworkAdapter } from './implements/helpers/NetworkUtils'
+export { clearAllCache, clearCacheByType } from './implements/helpers/cache'
 
 export { skeleton } from './mixin'
-export * from './views'
+
+export * from './dataviews/ListDataView'
+export * from './dataviews/SimpleDataView'
+export * from './dataviews/TreeDataView'
 
 export * from './implements/adapter/NetworkAdapter'

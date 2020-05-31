@@ -24,7 +24,7 @@ export function decorateModel(BaseClass: typeof PureModel) {
       return removeModel(this, options)
     }
 
-    fetchRefs(): Promise<PureModel[]> {
+    public fetchRefs(): Promise<PureModel[]> {
       return fetchModelRefs(this)
     }
   }

@@ -4,7 +4,24 @@
 import { INestedArray } from '../../interfaces'
 import { IIdentifier, IType } from 'datx'
 import { IDictionary } from 'datx-utils'
-import { IQueryParamLimit, IQueryParamOrder, IQueryParams } from './IQueryParams'
+
+interface IQueryParamOrder {
+  value: string
+  order: 'ASC' | 'DESC'
+}
+
+interface IQueryParamLimit {
+  start: number
+  count: number
+}
+
+interface IQueryParams {
+  orderBy?: Array<IQueryParamOrder>
+  limit?: IQueryParamLimit
+  dims?: string
+  filterBy?: string
+  select?: string
+}
 
 const URL_REGEX = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
 
@@ -16,7 +33,7 @@ function prepareFilters(filters: string | string[]): string {
 
 function prepareOrders(orders?: string[]): Array<IQueryParamOrder> {
   if (!orders) return undefined
-  return orders.map(key => {
+  return orders.map((key) => {
     let oo = { value: key, order: 'ASC' }
     if (key.endsWith('!')) {
       oo = { value: key.slice(0, -1), order: 'DESC' }
@@ -30,7 +47,7 @@ function prepareSelect(select: string | INestedArray<string>): string {
   if (typeof select === 'string') return select
 
   return select
-    .map(k => {
+    .map((k) => {
       if (k === '...') {
         return '`...`'
       }
@@ -55,7 +72,7 @@ export function prepareURL(endpoint: string, type: IType, ids?: IIdentifier | II
 export function prepareQS(params: IDictionary<string>): string {
   if (!params) return undefined
   return Object.keys(params)
-    .map(k => `${k}=${params[k]}`)
+    .map((k) => `${k}=${params[k]}`)
     .join('&')
 }
 

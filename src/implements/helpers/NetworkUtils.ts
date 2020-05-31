@@ -4,7 +4,7 @@
 import { IIdentifier, IType, PureCollection, View } from 'datx'
 
 import { getCache, saveCache } from './cache'
-import { getValue, isBrowser } from './helpers/utils'
+import { getValue, isBrowser } from './utils'
 
 import {
   IResponseView,
@@ -14,9 +14,9 @@ import {
   ISkeletonCollection,
   INetworkAdapter,
   IResponseData
-} from '../interfaces'
+} from '../../interfaces'
 
-import { ResponseView } from './ResponseView'
+import { ResponseView } from '../ResponseView'
 
 const config: { cache: boolean; adapter: INetworkAdapter } = {
   cache: isBrowser,
@@ -37,7 +37,7 @@ function packResponse(responseData: IResponseData, modelType: IType, collection:
 
 function getModelEndpointUrl(type: IType, collection: PureCollection): string {
   const StaticCollection = collection.constructor as typeof PureCollection
-  const QueryModel: any = StaticCollection.types.filter(item => item.type === type)[0]
+  const QueryModel: any = StaticCollection.types.filter((item) => item.type === type)[0]
   const endpoint = getValue<string>(QueryModel['endpoint'])
 
   if (!endpoint) {
@@ -56,7 +56,7 @@ interface ICollectionFetchOpts {
   views?: Array<View>
 }
 
-function collectionFetch<T extends ISkeletonModel>(reqOptions: ICollectionFetchOpts): Promise<IResponseView<T>> {
+async function collectionFetch<T extends ISkeletonModel>(reqOptions: ICollectionFetchOpts): Promise<IResponseView<T>> {
   const { options, method = 'GET', collection, views, modelType, ids } = reqOptions
 
   const prepared = config.adapter.prepare({
@@ -79,26 +79,23 @@ function collectionFetch<T extends ISkeletonModel>(reqOptions: ICollectionFetchO
     }
   }
 
-  return config.adapter
-    .fetch(prepared.url, prepared.options)
-    .then(response => packResponse(response, modelType, collection))
-    .then((response: IRawResponse) => {
-      const collectionResponse = Object.assign(response, { collection })
-      const resp = new ResponseView<T>(collectionResponse, collection, options, undefined, views)
+  const response1 = await config.adapter.fetch(prepared.url, prepared.options)
+  const response2: IRawResponse = packResponse(response1, modelType, collection)
+  const collectionResponse = Object.assign(response2, { collection })
+  const resp = new ResponseView<T>(collectionResponse, collection, options, undefined, views)
 
-      if (config.cache && isCacheSupported) {
-        saveCache(prepared.url, resp)
-      }
+  if (config.cache && isCacheSupported) {
+    saveCache(prepared.url, resp)
+  }
 
-      return resp
-    })
+  return resp
 }
 
 export function setNetworkAdapter(adapter: INetworkAdapter) {
   config.adapter = adapter
 }
 
-export function query<T extends ISkeletonModel = ISkeletonModel>(
+export function query<T extends ISkeletonModel>(
   modelType: IType,
   options?: IRequestOptions,
   collection?: ISkeletonCollection,
@@ -115,7 +112,7 @@ export function query<T extends ISkeletonModel = ISkeletonModel>(
   })
 }
 
-export function create<T extends ISkeletonModel = ISkeletonModel>(
+export function create<T extends ISkeletonModel>(
   collection?: ISkeletonCollection,
   options?: IRequestOptions,
   views?: View[]
@@ -128,7 +125,7 @@ export function create<T extends ISkeletonModel = ISkeletonModel>(
   })
 }
 
-export function update<T extends ISkeletonModel = ISkeletonModel>(
+export function update<T extends ISkeletonModel>(
   collection?: ISkeletonCollection,
   options?: IRequestOptions,
   views?: View[]
@@ -141,7 +138,7 @@ export function update<T extends ISkeletonModel = ISkeletonModel>(
   })
 }
 
-export function remove<T extends ISkeletonModel = ISkeletonModel>(
+export function remove<T extends ISkeletonModel>(
   collection?: ISkeletonCollection,
   options?: IRequestOptions,
   views?: View[]

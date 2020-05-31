@@ -68,46 +68,45 @@ export class NetworkAdapter implements INetworkAdapter {
     return { url: fixedURL, options: options2, cacheKey }
   }
 
-  fetch(url: string, options: any): Promise<IResponseData> {
+  async fetch(url: string, options: any): Promise<IResponseData> {
     let status: number
     let headers: IResponseHeaders
     const request: Promise<void> = Promise.resolve()
     const requestHeaders = options.headers
-    return request
-      .then(() => this.fetchReference(url, options))
-      .then((response: Response) => {
+    try {
+      let responseData: any
+      try {
+        await request
+        let response: Response = await this.fetchReference(url, options)
         status = response.status
         headers = response.headers
-        return response.json()
-      })
-      .catch((error: Error) => {
+        responseData = await response.json()
+      } catch (error1) {
         if (status === 204) {
-          return null
+          responseData = null
         }
 
-        throw error
-      })
-      .then((responseData: any) => {
-        let result: IResponseData = {}
+        throw error1
+      }
+      let result: IResponseData = {}
 
-        if (responseData.value) {
-          result.data = responseData.value
-        }
+      if (responseData.value) {
+        result.data = responseData.value
+      }
 
-        if (responseData.items && Array.isArray(responseData.items)) {
-          result.data = responseData.items
-          result.meta = { count: responseData.count }
-        }
+      if (responseData.items && Array.isArray(responseData.items)) {
+        result.data = responseData.items
+        result.meta = { count: responseData.count }
+      }
 
-        if (status >= 400) {
-          throw { message: `Invalid HTTP status: ${status}`, status }
-        }
+      if (status >= 400) {
+        throw { message: `Invalid HTTP status: ${status}`, status }
+      }
 
-        return { data: result, headers, requestHeaders, status }
-      })
-      .catch(error => {
-        return this.onError({ error, headers, requestHeaders, status })
-      })
+      return { data: result, headers, requestHeaders, status }
+    } catch (error2) {
+      return this.onError({ error: error2, headers, requestHeaders, status })
+    }
   }
 
   onError(error: IResponseData) {

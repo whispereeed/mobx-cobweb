@@ -39,8 +39,7 @@ describe('simple', () => {
     expect(getRefId(me, 'staff')).toBe('XRA9koBTaA0000:gongyanyu')
 
     useFixtureGetById(Staff.endpoint)
-    const nn = await fetchModelRefs(me)
-    expect(nn[0]).toBe(me.staff)
+    await fetchModelRefs(me)
     expect(me.staff.id).toEqual('XRA9koBTaA0000:gongyanyu')
     expect(modelToJSON(me)).toMatchSnapshot()
     expect(modelToJSON(me.staff)).toMatchSnapshot()

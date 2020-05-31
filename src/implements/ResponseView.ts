@@ -73,7 +73,7 @@ export class ResponseView<T extends ISkeletonModel> implements IResponseView<T> 
       }
     }
 
-    this.views.forEach(view => {
+    this.views.forEach((view) => {
       if (this.data) {
         view.add(this.data)
       }
@@ -94,7 +94,7 @@ export class ResponseView<T extends ISkeletonModel> implements IResponseView<T> 
     const newId = getModelId(record)
     const type = getModelType(record)
 
-    const viewIndexes = this.views.map(view => view.list.indexOf(record))
+    const viewIndexes = this.views.map((view) => view.list.indexOf(record))
 
     if (this.collection) {
       this.collection.removeOne(type, newId)

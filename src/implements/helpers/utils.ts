@@ -20,5 +20,5 @@ export function getValue<T>(target: T | (() => T)): T {
 }
 
 export function error(message: string): Error {
-  return new Error(`[datx exception] ${message}`)
+  return new Error(`[skeleton-orm exception] ${message}`)
 }

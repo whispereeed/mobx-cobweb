@@ -3,7 +3,7 @@
  ***************************************************/
 import { getModelType, IType } from 'datx'
 
-import { ISkeletonModel, IResponseView } from '../interfaces'
+import { ISkeletonModel, IResponseView } from '../../interfaces'
 
 export interface ICache {
   response: IResponseView<ISkeletonModel>
@@ -23,7 +23,7 @@ export function saveCache(url: string, response: IResponseView<ISkeletonModel>, 
 }
 
 export function getCache(url: string): ICache | undefined {
-  return cacheStorage.find(item => item.url === url)
+  return cacheStorage.find((item) => item.url === url)
 }
 
 export function clearAllCache() {
@@ -31,5 +31,5 @@ export function clearAllCache() {
 }
 
 export function clearCacheByType(type: IType) {
-  cacheStorage = cacheStorage.filter(item => item.type !== type)
+  cacheStorage = cacheStorage.filter((item) => item.type !== type)
 }

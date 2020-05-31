@@ -1,8 +1,8 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/3 12:24. *
  ***************************************************/
-import { IListDataView, IResponseView, ISimpleDataView, ISkeletonModel, ITreeDataView } from '../../interfaces'
-import { ResponseView } from '../ResponseView'
+import { IListDataView, IResponseView, ISimpleDataView, ISkeletonModel, ITreeDataView } from '../interfaces'
+import { ResponseView } from '../implements/ResponseView'
 import { IIdentifier } from 'datx'
 import { observable } from 'mobx'
 

@@ -11,12 +11,12 @@ import {
 
 import { IRawModel, META_FIELD } from 'datx-utils'
 
-import { clearCacheByType } from '../cache'
-import { MODEL_PERSISTED_FIELD, MODEL_PROP_FIELD, MODEL_QUEUE_FIELD, MODEL_RELATED_FIELD } from '../consts'
+import { clearCacheByType } from './cache'
+import { MODEL_PERSISTED_FIELD, MODEL_PROP_FIELD, MODEL_QUEUE_FIELD, MODEL_RELATED_FIELD } from './consts'
 
 import { ISkeletonModel, IRequestOptions, ISkeletonCollection, IResponseView } from '../../interfaces'
 
-import { create, remove, update } from '../NetworkUtils'
+import { create, remove, update } from './NetworkUtils'
 import { action } from 'mobx'
 
 function isModelPersisted(model: PureModel): boolean {
@@ -27,42 +27,37 @@ function setModelPersisted(model: PureModel, status: boolean) {
   setModelMetaKey(model, MODEL_PERSISTED_FIELD, status)
 }
 
-export function saveModel<T extends ISkeletonModel>(model: T, options: IRequestOptions = {}): Promise<ISkeletonModel> {
+export async function saveModel<T extends ISkeletonModel>(
+  model: T,
+  options: IRequestOptions = {}
+): Promise<ISkeletonModel> {
   const collection = getModelCollection(model) as ISkeletonCollection
   const data = modelToJSON(model)
   const requestMethod = isModelPersisted(model) ? update : create
   options.data = data
 
-  return requestMethod(collection, options)
-    .then(handleResponse(model))
-    .then((response) => {
-      clearCacheByType(getModelType(model))
-      return response
-    })
+  const result = await requestMethod<T>(collection, options)
+  const response: T = handleResponse<T>(model)(result)
+  clearCacheByType(getModelType(model))
+  return response
 }
 
-export function removeModel<T extends ISkeletonModel>(model: T, options: IRequestOptions = {}): Promise<void> {
+export async function removeModel<T extends ISkeletonModel>(model: T, options: IRequestOptions = {}): Promise<void> {
   const collection = getModelCollection(model) as ISkeletonCollection
 
   const isPersisted = isModelPersisted(model)
 
   if (isPersisted) {
-    return remove(collection, options).then((response) => {
-      if (response.error) {
-        throw response.error
-      }
-
-      setModelPersisted(model, false)
-
-      if (collection) {
-        collection.removeOne(model)
-      }
-    })
-  } else if (collection) {
-    collection.removeOne(model)
+    let response = await remove(collection, options)
+    if (response.error) {
+      throw response.error
+    }
+    setModelPersisted(model, false)
   }
 
-  return Promise.resolve()
+  if (collection) {
+    await collection.removeOne(model)
+  }
 }
 
 export function flattenModel(data: any, type: IType): IRawModel | null {

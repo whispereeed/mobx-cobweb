@@ -12,7 +12,7 @@ import {
 import { IRawModel, mapItems } from 'datx-utils'
 import { action } from 'mobx'
 
-import { clearAllCache, clearCacheByType } from './cache'
+import { clearAllCache, clearCacheByType } from './helpers/cache'
 import { GenericModel } from './GenericModel'
 import { flattenModel, removeModel } from './helpers/model'
 import { isBrowser } from './helpers/utils'
@@ -24,7 +24,7 @@ import {
   IRequestOptions,
   $ElementOf
 } from '../interfaces'
-import { query } from './NetworkUtils'
+import { query } from './helpers/NetworkUtils'
 
 export function decorateCollection(BaseClass: typeof PureCollection) {
   class SkeletonCollection extends BaseClass implements ISkeletonCollection {
@@ -82,7 +82,7 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
         ids = undefined
       }
 
-      return query<T>(modelType, options, this, undefined, ids).then(res => this.__handleErrors<T>(res))
+      return query<T>(modelType, options, this, undefined, ids).then((res) => this.__handleErrors<T>(res))
     }
 
     public removeOne(type: IType | typeof PureModel, id: IIdentifier, remote?: boolean | IRequestOptions): Promise<void>
@@ -148,7 +148,7 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
 
       if (record) {
         updateModel(record, flattened)
-      } else if (StaticCollection.types.filter(item => item.type === type).length) {
+      } else if (StaticCollection.types.filter((item) => item.type === type).length) {
         record = this.add<T>(flattened, type)
       } else {
         record = this.add(new GenericModel(flattened)) as T

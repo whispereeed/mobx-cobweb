@@ -23,7 +23,7 @@ export function decorateView<U>(BaseClass: typeof View) {
       models: Array<IIdentifier | M> = [],
       unique: boolean = false
     ) {
-      super(modelType, collection, sortMethod as (string | ((item: PureModel) => any)), models, unique)
+      super(modelType, collection, sortMethod as string | ((item: PureModel) => any), models, unique)
       this.__collection = collection
     }
 
@@ -45,7 +45,9 @@ export function decorateView<U>(BaseClass: typeof View) {
         ids = undefined
       }
 
-      return this.__collection.fetch<M>(this.modelType, ids, options).then(response => this.__addFromResponse(response))
+      return this.__collection
+        .fetch<M>(this.modelType, ids, options)
+        .then((response) => this.__addFromResponse(response))
     }
 
     private __addFromResponse(response: IResponseView<M>) {
