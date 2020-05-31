@@ -2,15 +2,15 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   testRegex: '/__tests__/.*.spec.[tj]sx?$',
-  testPathIgnorePatterns: ['/node_modules/', '/fixtures/', '/models/', 'network.ts', 'nockConfig.ts', 'collection.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '/fixtures/', '/models/', '/config/'],
   collectCoverageFrom: ['src/**/**.{ts,tsx}'],
-  collectCoverage: true ,
+  collectCoverage: true,
   globals: {
-    "ts-jest": {
+    'ts-jest': {
       isolatedModules: true,
       diagnostics: {
-        ignoreCodes: "TS1192"
+        ignoreCodes: 'TS1192'
       }
     }
   }
-};
+}
