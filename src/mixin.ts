@@ -16,7 +16,7 @@ import {
 import { decorateCollection } from './implements/decorateCollection'
 import { decorateModel } from './implements/decorateModel'
 import { decorateView } from './implements/decorateView'
-import { ISkeletonCollection, ISkeletonModel, ISkeletonModelConstructor, ISkeletonView } from './interfaces'
+import { ISkeletonCollection, ISkeletonModel, ISkeletonModelConstructor } from './interfaces'
 
 export function skeleton<T extends PureModel>(
   BaseClass: IModelConstructor<T>
@@ -26,17 +26,15 @@ export function skeleton<T extends PureCollection>(
   BaseClass: ICollectionConstructor<T>
 ): ICollectionConstructor<T & ISkeletonCollection>
 
-export function skeleton<T extends ISkeletonModel>(
-  BaseClass: IViewConstructor<T> | typeof View
-): IViewConstructor<T, ISkeletonView<T>>
-
-export function skeleton<T>(BaseClass: IModelConstructor<T> | ICollectionConstructor<T> | IViewConstructor<T>) {
+export function skeleton<T extends PureModel | PureCollection | View>(
+  BaseClass: IModelConstructor<T> | ICollectionConstructor<T> | IViewConstructor<T>
+) {
   if (isModel(BaseClass)) {
-    return decorateModel((BaseClass as unknown) as typeof PureModel)
+    return decorateModel(BaseClass as typeof PureModel)
   } else if (isCollection(BaseClass)) {
-    return decorateCollection((BaseClass as unknown) as typeof PureCollection)
+    return decorateCollection(BaseClass as typeof PureCollection)
   } else if (isView(BaseClass)) {
-    return decorateView<T>((BaseClass as unknown) as typeof View)
+    return decorateView<T>(BaseClass as typeof View)
   }
 
   throw new Error('The instance needs to be a model, collection or a view')

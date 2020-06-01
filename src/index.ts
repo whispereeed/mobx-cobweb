@@ -7,10 +7,8 @@ export * from './implements/helpers/model'
 
 export type { ISkeletonCollection } from './interfaces/ISkeletonCollection'
 export type { ISkeletonModel } from './interfaces/ISkeletonModel'
-export type { ISkeletonView } from './interfaces/ISkeletonView'
 export type { IRawResponse } from './interfaces/IRawResponse'
 export type { IRequestOptions } from './interfaces/IRequestOptions'
-export type { IResponseView } from './interfaces/IResponseView'
 
 export { ResponseView } from './implements/ResponseView'
 export { GenericModel } from './implements/GenericModel'
@@ -21,7 +19,5 @@ export { clearAllCache, clearCacheByType } from './implements/helpers/cache'
 export { skeleton } from './mixin'
 
 export * from './dataviews/ListDataView'
-export * from './dataviews/SimpleDataView'
-export * from './dataviews/TreeDataView'
 
 export * from './implements/adapter/NetworkAdapter'

@@ -3,6 +3,7 @@ import {
   getModelMetaKey,
   getModelType,
   getRefId,
+  IIdentifier,
   IType,
   modelToJSON,
   PureModel,
@@ -14,10 +15,11 @@ import { IRawModel, META_FIELD } from 'datx-utils'
 import { clearCacheByType } from './cache'
 import { MODEL_PERSISTED_FIELD, MODEL_PROP_FIELD, MODEL_QUEUE_FIELD, MODEL_RELATED_FIELD } from './consts'
 
-import { ISkeletonModel, IRequestOptions, ISkeletonCollection, IResponseView } from '../../interfaces'
+import { ISkeletonModel, IRequestOptions, ISkeletonCollection } from '../../interfaces'
 
 import { create, remove, update } from './NetworkUtils'
 import { action } from 'mobx'
+import { ResponseView } from '../ResponseView'
 
 function isModelPersisted(model: PureModel): boolean {
   return getModelMetaKey(model, MODEL_PERSISTED_FIELD)
@@ -27,10 +29,7 @@ function setModelPersisted(model: PureModel, status: boolean) {
   setModelMetaKey(model, MODEL_PERSISTED_FIELD, status)
 }
 
-export async function saveModel<T extends ISkeletonModel>(
-  model: T,
-  options: IRequestOptions = {}
-): Promise<ISkeletonModel> {
+export async function saveModel<T extends ISkeletonModel>(model: T, options: IRequestOptions = {}): Promise<T> {
   const collection = getModelCollection(model) as ISkeletonCollection
   const data = modelToJSON(model)
   const requestMethod = isModelPersisted(model) ? update : create
@@ -42,7 +41,7 @@ export async function saveModel<T extends ISkeletonModel>(
   return response
 }
 
-export async function removeModel<T extends ISkeletonModel>(model: T, options: IRequestOptions = {}): Promise<void> {
+export async function removeModel<T>(model: T, options: IRequestOptions = {}): Promise<void> {
   const collection = getModelCollection(model) as ISkeletonCollection
 
   const isPersisted = isModelPersisted(model)
@@ -77,9 +76,9 @@ export function flattenModel(data: any, type: IType): IRawModel | null {
   }
 }
 
-export function handleResponse<T extends ISkeletonModel>(record: T, prop?: string): (response: IResponseView<T>) => T {
+export function handleResponse<T extends ISkeletonModel>(record: T, prop?: string): (response: ResponseView<T>) => T {
   return action(
-    (response: IResponseView<T>): T => {
+    (response: ResponseView<T>): T => {
       if (response.error) {
         throw response.error
       }
@@ -104,6 +103,6 @@ export function handleResponse<T extends ISkeletonModel>(record: T, prop?: strin
 export function fetchModelRefs<T extends PureModel>(model: T) {
   const collection = getModelCollection(model) as ISkeletonCollection
   const refs = getModelMetaKey(model, 'refs')
-  const map = Object.keys(refs).map((ref) => collection.fetch(refs[ref].model, getRefId(model, ref)))
+  const map = Object.keys(refs).map((ref) => collection.fetch(refs[ref].model, getRefId(model, ref) as IIdentifier[]))
   return Promise.all(map)
 }

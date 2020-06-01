@@ -1,11 +1,11 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/3 12:24. *
  ***************************************************/
-import { IListDataView, IRequestOptions, IResponseView, ISkeletonModel } from '../interfaces'
+import { IRequestOptions, ISkeletonModel } from '../interfaces'
 import { ResponseView } from '../implements/ResponseView'
 import { action, observable } from 'mobx'
 
-export class ListDataView<T extends ISkeletonModel> extends ResponseView<T> implements IListDataView<T> {
+export class ListDataView<T extends ISkeletonModel> extends ResponseView<T[]> {
   data: T[]
 
   @observable isLoading: boolean = false
@@ -16,7 +16,7 @@ export class ListDataView<T extends ISkeletonModel> extends ResponseView<T> impl
 
   private limit: [number, number]
 
-  constructor(response: IResponseView<T>, overrideData?: T | Array<T>) {
+  constructor(response: ResponseView<T[]>, overrideData?: T[]) {
     super(response.rawResponse, response.collection, response.requestOptions, overrideData, response.views)
     this.limit = response.requestOptions?.selector?.limit || [0, 10]
   }

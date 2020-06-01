@@ -3,10 +3,11 @@
  ***************************************************/
 import { getModelType, IType } from 'datx'
 
-import { ISkeletonModel, IResponseView } from '../../interfaces'
+import { ISkeletonModel } from '../../interfaces'
+import { ResponseView } from '../ResponseView'
 
 export interface ICache {
-  response: IResponseView<ISkeletonModel>
+  response: ResponseView<ISkeletonModel | ISkeletonModel[]>
   timestamp: number
   type: IType
   url: string
@@ -14,7 +15,7 @@ export interface ICache {
 
 let cacheStorage: Array<ICache> = []
 
-export function saveCache(url: string, response: IResponseView<ISkeletonModel>, modelType?: string) {
+export function saveCache(url: string, response: ResponseView<ISkeletonModel | ISkeletonModel[]>, modelType?: string) {
   if (response && 'data' in response && (!('error' in response) || !response.error) && response.data) {
     // The type might need to be 100% correct - used only to clear the cache
     const type = modelType || getModelType(response.data instanceof Array ? response.data[0] : response.data)

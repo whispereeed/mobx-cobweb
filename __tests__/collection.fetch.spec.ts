@@ -1,5 +1,5 @@
 import { collection, useFixtureGetById, useFixturesByGET } from './config'
-import { modelToJSON, getRefId } from 'datx'
+import { modelToJSON, getRefId, IIdentifier } from 'datx'
 import { fetchModelRefs, GenericView } from '../src'
 import Me from './models/Me'
 import Staff from './models/Staff'
@@ -20,7 +20,7 @@ describe('collection.fetch', () => {
     expect(getRefId(me, 'staff')).toBe('XRA9koBTaA0000:gongyanyu')
 
     useFixtureGetById(Staff.endpoint)
-    await collection.fetch(Staff, getRefId(me, 'staff'))
+    await collection.fetch(Staff, getRefId(me, 'staff') as IIdentifier)
     expect(me.staff.id).toEqual('XRA9koBTaA0000:gongyanyu')
     expect(modelToJSON(me)).toMatchSnapshot()
     expect(modelToJSON(me.staff)).toMatchSnapshot()

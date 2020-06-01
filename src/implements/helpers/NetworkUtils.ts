@@ -7,13 +7,13 @@ import { getCache, saveCache } from './cache'
 import { getValue, isBrowser } from './utils'
 
 import {
-  IResponseView,
   IRequestOptions,
   IRawResponse,
   ISkeletonModel,
   ISkeletonCollection,
   INetworkAdapter,
-  IResponseData
+  IResponseData,
+  $PickOf
 } from '../../interfaces'
 
 import { ResponseView } from '../ResponseView'
@@ -23,7 +23,11 @@ const config: { cache: boolean; adapter: INetworkAdapter } = {
   adapter: null
 }
 
-function packResponse(responseData: IResponseData, modelType: IType, collection: ISkeletonCollection): IRawResponse {
+function packResponse<O>(
+  responseData: IResponseData,
+  modelType: IType,
+  collection: ISkeletonCollection
+): IRawResponse<O> {
   const { data = {}, ...others } = responseData
   // data : {data : * , meta : *}
   data.type = modelType
@@ -56,7 +60,9 @@ interface ICollectionFetchOpts {
   views?: Array<View>
 }
 
-async function collectionFetch<T extends ISkeletonModel>(reqOptions: ICollectionFetchOpts): Promise<IResponseView<T>> {
+async function collectionFetch<M extends ISkeletonModel | ISkeletonModel[]>(
+  reqOptions: ICollectionFetchOpts
+): Promise<ResponseView<M>> {
   const { options, method = 'GET', collection, views, modelType, ids } = reqOptions
 
   const prepared = config.adapter.prepare({
@@ -75,14 +81,14 @@ async function collectionFetch<T extends ISkeletonModel>(reqOptions: ICollection
   if (config.cache && isCacheSupported && collectionCache && !skipCache) {
     const cache = getCache(prepared.cacheKey)
     if (cache) {
-      return Promise.resolve((cache.response as unknown) as IResponseView<T>)
+      return Promise.resolve((cache.response as unknown) as ResponseView<M>)
     }
   }
 
   const response1 = await config.adapter.fetch(prepared.url, prepared.options)
-  const response2: IRawResponse = packResponse(response1, modelType, collection)
+  const response2: IRawResponse<$PickOf<M, object[], object>> = packResponse(response1, modelType, collection)
   const collectionResponse = Object.assign(response2, { collection })
-  const resp = new ResponseView<T>(collectionResponse, collection, options, undefined, views)
+  const resp = new ResponseView<M>(collectionResponse, collection, options, undefined, views)
 
   if (config.cache && isCacheSupported) {
     saveCache(prepared.url, resp)
@@ -95,14 +101,14 @@ export function setNetworkAdapter(adapter: INetworkAdapter) {
   config.adapter = adapter
 }
 
-export function query<T extends ISkeletonModel>(
+export function query<M extends ISkeletonModel | ISkeletonModel[]>(
   modelType: IType,
   options?: IRequestOptions,
   collection?: ISkeletonCollection,
   views?: Array<View>,
   ids?: IIdentifier | IIdentifier[]
-): Promise<IResponseView<T>> {
-  return collectionFetch<T>({
+): Promise<ResponseView<M>> {
+  return collectionFetch<M>({
     modelType,
     options,
     collection,
@@ -116,7 +122,7 @@ export function create<T extends ISkeletonModel>(
   collection?: ISkeletonCollection,
   options?: IRequestOptions,
   views?: View[]
-): Promise<IResponseView<T>> {
+): Promise<ResponseView<T>> {
   return collectionFetch<T>({
     collection,
     method: 'POST',
@@ -129,7 +135,7 @@ export function update<T extends ISkeletonModel>(
   collection?: ISkeletonCollection,
   options?: IRequestOptions,
   views?: View[]
-): Promise<IResponseView<T>> {
+): Promise<ResponseView<T>> {
   return collectionFetch<T>({
     collection,
     method: 'PATCH',
@@ -142,7 +148,7 @@ export function remove<T extends ISkeletonModel>(
   collection?: ISkeletonCollection,
   options?: IRequestOptions,
   views?: View[]
-): Promise<IResponseView<T>> {
+): Promise<ResponseView<T>> {
   return collectionFetch<T>({
     collection,
     method: 'DELETE',

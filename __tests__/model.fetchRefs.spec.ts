@@ -1,12 +1,11 @@
 import { collection, useFixturesByGET, useFixtureGetById, useFixtureGetByIds } from './config'
-import { SimpleDataView } from '../src'
 
 import Staff from './models/Staff'
 import Me from './models/Me'
-import { getRefId } from 'datx'
+import { getRefId, IIdentifier } from 'datx'
 import Department from './models/Department'
 
-describe('SimpleDataView', () => {
+describe('Modal fetchRefs', () => {
   let scope: any = null
 
   beforeEach(() => {
@@ -22,11 +21,10 @@ describe('SimpleDataView', () => {
     expect(getRefId(me, 'staff')).toBe('XRA9koBTaA0000:gongyanyu')
 
     useFixtureGetById(Staff.endpoint)
-    const response = await collection.fetch<Staff>(Staff, getRefId(me, 'staff'))
-    const simpleDataView = new SimpleDataView(response)
+    const response = await collection.fetch<Staff>(Staff, getRefId(me, 'staff') as IIdentifier)
     useFixtureGetById(Department.endpoint)
     useFixtureGetByIds(Department.endpoint)
-    await simpleDataView.fetchRefs()
+    await (response.data as Staff).fetchRefs()
 
     expect(me.staff.defaultDepartment).toBeInstanceOf(Department)
     expect(me.staff.defaultDepartment).toBe(collection.findOne(Department, me.staff.defaultDepartment.id))

@@ -4,6 +4,7 @@ import {
   ICollectionConstructor,
   IIdentifier,
   IModelConstructor,
+  isCollection,
   IType,
   PureCollection,
   PureModel,
@@ -16,31 +17,18 @@ import { clearAllCache, clearCacheByType } from './helpers/cache'
 import { GenericModel } from './GenericModel'
 import { flattenModel, removeModel } from './helpers/model'
 import { isBrowser } from './helpers/utils'
-import {
-  ISkeletonCollection,
-  ISkeletonModel,
-  IResponseView,
-  IRawData,
-  IRequestOptions,
-  $ElementOf
-} from '../interfaces'
+import { ISkeletonCollection, ISkeletonModel, IRequestOptions, $ElementOf } from '../interfaces'
 import { query } from './helpers/NetworkUtils'
+import { ResponseView } from './ResponseView'
 
 export function decorateCollection(BaseClass: typeof PureCollection) {
   class SkeletonCollection extends BaseClass implements ISkeletonCollection {
-    public static types =
-      BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(GenericModel) : [GenericModel]
-    public static cache: boolean = (BaseClass as any)['cache'] === undefined ? isBrowser : (BaseClass as any)['cache']
+    static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(GenericModel) : [GenericModel]
+    static cache: boolean = (BaseClass as any)['cache'] === undefined ? isBrowser : (BaseClass as any)['cache']
 
-    public static defaultModel = BaseClass['defaultModel'] || GenericModel
+    static defaultModel = BaseClass['defaultModel'] || GenericModel
 
-    sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(data?: IRawData<D>): T
-    sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(
-      type: IType | IModelConstructor<T>,
-      data: D
-    ): T
-
-    @action public sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(
+    @action sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(
       raw: any,
       data?: any
     ): T {
@@ -61,20 +49,9 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
 
     fetch<T extends ISkeletonModel = ISkeletonModel>(
       type: IType | T | IModelConstructor<T>,
-      ids?: IIdentifier | IIdentifier[],
-      options?: IRequestOptions
-    ): Promise<IResponseView<T>>
-
-    fetch<T extends ISkeletonModel = ISkeletonModel>(
-      type: IType | T | IModelConstructor<T>,
-      options?: IRequestOptions
-    ): Promise<IResponseView<T>>
-
-    public fetch<T extends ISkeletonModel = ISkeletonModel>(
-      type: IType | T | IModelConstructor<T>,
       ids?: any,
       options?: any
-    ): Promise<IResponseView<T>> {
+    ): Promise<ResponseView<T | T[]>> {
       const modelType = getModelType(type)
 
       if (arguments.length === 2 && Object.prototype.toString.call(ids) === '[object Object]') {
@@ -85,9 +62,7 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
       return query<T>(modelType, options, this, undefined, ids).then((res) => this.__handleErrors<T>(res))
     }
 
-    public removeOne(type: IType | typeof PureModel, id: IIdentifier, remote?: boolean | IRequestOptions): Promise<void>
-    public removeOne(model: PureModel, remote?: boolean | IRequestOptions): Promise<void>
-    @action public removeOne(
+    @action removeOne(
       obj: IType | typeof PureModel | PureModel,
       id?: IIdentifier | boolean | IRequestOptions,
       remote?: boolean | IRequestOptions
@@ -121,17 +96,17 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
       return Promise.resolve()
     }
 
-    @action public removeAll(type: string | number | typeof PureModel) {
+    @action removeAll(type: string | number | typeof PureModel) {
       super.removeAll(type)
       clearCacheByType(getModelType(type))
     }
 
-    @action public reset() {
+    @action reset() {
       super.reset()
       clearAllCache()
     }
 
-    private __handleErrors<T extends ISkeletonModel>(response: IResponseView<T>) {
+    private __handleErrors<T extends ISkeletonModel>(response: ResponseView<T>) {
       if (response.error) {
         throw response.error
       }

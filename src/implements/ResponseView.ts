@@ -1,25 +1,25 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { getModelId, getModelType, IType, modelToJSON, PureModel, updateModel, updateModelId, View } from 'datx'
+import { getModelId, getModelType, IType, modelToJSON, updateModel, updateModelId, View } from 'datx'
 import { action } from 'mobx'
 
 import { GenericModel } from './GenericModel'
-import { flattenModel } from './helpers/model'
 
 import {
-  IResponseView,
   IError,
   IResponseHeaders,
   IRequestOptions,
   IRawResponse,
   IHeaders,
   ISkeletonModel,
-  ISkeletonCollection
+  ISkeletonCollection,
+  $ElementOf,
+  $PickOf
 } from '../interfaces'
 
-export class ResponseView<T extends ISkeletonModel> implements IResponseView<T> {
-  public data: T | Array<T> | null = null
+export class ResponseView<T extends ISkeletonModel | ISkeletonModel[]> {
+  public data: T | null = null
 
   public meta: object
 
@@ -37,15 +37,15 @@ export class ResponseView<T extends ISkeletonModel> implements IResponseView<T> 
 
   public readonly requestOptions?: IRequestOptions
 
-  public readonly rawResponse: IRawResponse
+  public readonly rawResponse: IRawResponse<$PickOf<T, object[], object>>
 
   public readonly modelType: IType
 
   constructor(
-    rawResponse: IRawResponse,
+    rawResponse: IRawResponse<$PickOf<T, object[], object>>,
     collection?: ISkeletonCollection,
     requestOptions?: IRequestOptions,
-    overrideData?: T | Array<T>,
+    overrideData?: T,
     views?: Array<View>
   ) {
     this.collection = collection
@@ -59,7 +59,9 @@ export class ResponseView<T extends ISkeletonModel> implements IResponseView<T> 
     }
 
     if (collection) {
-      this.data = overrideData ? collection.add<T>(overrideData as T) : collection.sync<T>(rawResponse.data)
+      this.data = overrideData
+        ? (collection.add<T>(overrideData) as T)
+        : (collection.sync<$ElementOf<T>>(rawResponse.data) as T)
     } else if (rawResponse.data) {
       // The case when a record is not in a store and save/remove are used
       const resp = rawResponse.data
@@ -69,7 +71,7 @@ export class ResponseView<T extends ISkeletonModel> implements IResponseView<T> 
           throw new Error('A save/remove operation should not return an array of results')
         }
 
-        this.data = overrideData || (new GenericModel(flattenModel(undefined, resp.data)) as T)
+        this.data = overrideData || (new GenericModel(resp.data) as T)
       }
     }
 
@@ -86,7 +88,8 @@ export class ResponseView<T extends ISkeletonModel> implements IResponseView<T> 
   }
 
   @action public replaceData(data: T): ResponseView<T> {
-    const record: PureModel = this.data as PureModel
+    const record = this.data
+
     if (record === data) {
       return this
     }

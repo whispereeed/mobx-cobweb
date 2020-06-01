@@ -13,8 +13,3 @@ export * from './ISkeletonCollection'
 export * from './ISkeletonModel'
 export * from './ISkeletonView'
 export * from './INetworkAdapter'
-
-export * from './IResponseView'
-export * from './ISimpleDataView'
-export * from './IListDataView'
-export * from './ITreeDataView'

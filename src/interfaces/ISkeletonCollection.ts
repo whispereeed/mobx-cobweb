@@ -3,31 +3,40 @@
  ***************************************************/
 import { IIdentifier, IModelConstructor, IType, PureCollection, PureModel } from 'datx'
 
-import { IResponseView } from './IResponseView'
 import { ISkeletonModel } from './ISkeletonModel'
 import { IRequestOptions } from './IRequestOptions'
 import { IRawData } from './IRawData'
-import { $ElementOf } from './types'
+import { ResponseView } from '..'
 
 export interface ISkeletonCollection extends PureCollection {
-  sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(data?: IRawData<D>): T
-  sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(
-    type: IType | IModelConstructor<$ElementOf<T>>,
-    data: D
-  ): T
+  sync<T extends ISkeletonModel>(data?: IRawData<object[]>): T[]
+  sync<T extends ISkeletonModel>(data?: IRawData<object>): T
+  sync<T extends ISkeletonModel>(type: IModelConstructor<T> | IType, data: object[]): T[]
+  sync<T extends ISkeletonModel>(type: IModelConstructor<T> | IType, data: object): T
 
-  fetch<T extends ISkeletonModel = ISkeletonModel>(
-    type: IType | T | IModelConstructor<T>,
-    ids?: IIdentifier | IIdentifier[],
-    options?: IRequestOptions
-  ): Promise<IResponseView<T>>
-
-  fetch<T extends ISkeletonModel = ISkeletonModel>(
+  fetch<T extends ISkeletonModel>(
     type: IType | T | IModelConstructor<T>,
     options?: IRequestOptions
-  ): Promise<IResponseView<T>>
+  ): Promise<ResponseView<T[]>>
+
+  fetch<T extends ISkeletonModel>(
+    type: IType | T | IModelConstructor<T>,
+    ids: undefined | null,
+    options?: IRequestOptions
+  ): Promise<ResponseView<T[]>>
+
+  fetch<T extends ISkeletonModel>(
+    type: IType | T | IModelConstructor<T>,
+    id?: IIdentifier,
+    options?: IRequestOptions
+  ): Promise<ResponseView<T>>
+
+  fetch<T extends ISkeletonModel>(
+    type: IType | T | IModelConstructor<T>,
+    ids?: IIdentifier[],
+    options?: IRequestOptions
+  ): Promise<ResponseView<T[]>>
 
   removeOne(type: IType | typeof PureModel, id: IIdentifier, remote?: boolean | IRequestOptions): Promise<void>
-
   removeOne(model: PureModel, remote?: boolean | IRequestOptions): Promise<void>
 }

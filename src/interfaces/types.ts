@@ -3,6 +3,7 @@
  ***************************************************/
 import { IDictionary } from 'datx-utils'
 export type $ElementOf<T> = T extends Array<infer E> ? E : T
+export type $PickOf<T, X, Y> = T extends Array<infer E> ? X : Y
 
 export interface INestedArray<T> extends Array<T | INestedArray<T>> {}
 

@@ -6,8 +6,8 @@ import { IResponseHeaders } from './IResponseHeaders'
 import { IRawData } from './IRawData'
 import { ISkeletonCollection } from './ISkeletonCollection'
 
-export interface IRawResponse {
-  data?: IRawData
+export interface IRawResponse<D> {
+  data?: IRawData<D>
   collection?: ISkeletonCollection
   error?: Error
   headers?: IResponseHeaders

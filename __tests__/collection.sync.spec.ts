@@ -27,7 +27,7 @@ describe('collection.sync', () => {
   const data: object[] = require('./fixtures/organization.departments.json').items
 
   test('should sync IRawData', () => {
-    const sf = collection.sync<Department[]>({
+    const sf = collection.sync<Department>({
       type: 'organization.Department',
       data: data
     })
@@ -35,7 +35,12 @@ describe('collection.sync', () => {
   })
 
   test('should sync data & type', () => {
-    const sf = collection.sync<Department[]>(Department, data)
+    const sf = collection.sync<Department>(Department, data)
+    cases(sf)
+  })
+
+  test('should sync data & type:string ', () => {
+    const sf = collection.sync<Department>('organization.Department', data)
     cases(sf)
   })
 })
