@@ -1,32 +1,28 @@
 /***************************************************
- * Created by nanyuantingfeng on 2019/12/3 12:24. *
+ * Created by nanyuantingfeng on 2020/6/2 15:10. *
  ***************************************************/
-import { IRequestOptions } from '../interfaces'
-import { ResponseView } from '../ResponseView'
+import { getModelType, IModelConstructor, IType, PureModel } from 'datx'
+import { Collection } from '../Collection'
 import { action, observable } from 'mobx'
-import { PureModel } from 'datx'
-import { Collection } from '..'
+import { IRequestOptions } from '../interfaces'
 
-export class ListDataView<T extends PureModel> extends ResponseView<T[]> {
-  collection: Collection
+export class ListDataView<T extends PureModel> {
+  protected collection: Collection
+  protected modelType: IType
 
-  data: T[]
+  private meta: { count: number }
+  private limit: [number, number] = [0, 10]
+  private requestOptions?: IRequestOptions
 
-  @observable isLoading: boolean = false
+  public data: T[]
+  @observable public isLoading: boolean = false
 
-  meta: {
-    count: number
+  constructor(modelType: IType | IModelConstructor<T>, collection: Collection) {
+    this.modelType = getModelType(modelType)
+    this.collection = collection
   }
 
-  private limit: [number, number]
-
-  constructor(response: ResponseView<T[]>, overrideData?: T[]) {
-    super(response.rawResponse, response.collection, response.requestOptions, overrideData, response.views)
-    this.limit = response.requestOptions?.selector?.limit || [0, 10]
-  }
-
-  @action
-  async infinite(start: number, count: number): Promise<this> {
+  @action async infinite(start: number, count: number): Promise<this> {
     this.limit = [start, count]
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, {
@@ -36,16 +32,17 @@ export class ListDataView<T extends PureModel> extends ResponseView<T[]> {
         limit: [start, count]
       }
     })
+    this.requestOptions = response.requestOptions
     this.isLoading = false
     this.data.push(...response.data)
     this.meta = response.meta as any
     return undefined
   }
 
-  @action
-  async search(options: IRequestOptions): Promise<this> {
+  @action async search(options: IRequestOptions): Promise<this> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
+    this.requestOptions = response.requestOptions
     this.isLoading = false
     this.data = response.data
     this.meta = response.meta as any

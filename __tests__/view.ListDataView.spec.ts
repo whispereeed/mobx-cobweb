@@ -15,29 +15,30 @@ describe('ListDataView', () => {
 
   test('should be fetch data by `page`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
-    const response = await collection.fetch(PropertySet, {
+    const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
+    const jestFn = jest.fn(() => listDataView.isLoading)
+    autorun(jestFn)
+
+    await listDataView.search({
       selector: {
         limit: [0, 10]
       }
     })
 
-    expect(response.data).toBeInstanceOf(Array)
-    expect((response.data as any[]).length).toBe(10)
-    const listDataView = new ListDataView<PropertySet>(response)
+    expect(listDataView.data).toBeInstanceOf(Array)
+    expect(listDataView.data.length).toBe(10)
+
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data[1]).toBeInstanceOf(PropertySet)
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[1].name).toBe('payPlan')
-
-    const jestFn = jest.fn(() => listDataView.isLoading)
-    autorun(jestFn)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.next()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[1].name).toBe('invoiceForm')
-    expect(jestFn).toBeCalledTimes(3)
+    expect(jestFn).toBeCalledTimes(5)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.last()
@@ -45,7 +46,7 @@ describe('ListDataView', () => {
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[1].name).toBe('u_自hvk8l')
     expect(listDataView.data[8].name).toBe('u_金额字段2')
-    expect(jestFn).toBeCalledTimes(5)
+    expect(jestFn).toBeCalledTimes(7)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.prev()
@@ -54,7 +55,7 @@ describe('ListDataView', () => {
     expect(listDataView.data[1].name).toBe('u_S7小白菜写')
     expect(listDataView.data[8].name).toBe('u_实体9lgt')
     expect(listDataView.data[9].name).toBe('u_测试d7tz')
-    expect(jestFn).toBeCalledTimes(7)
+    expect(jestFn).toBeCalledTimes(9)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.first()
@@ -62,32 +63,32 @@ describe('ListDataView', () => {
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[0].name).toBe('payPlanMode')
     expect(listDataView.data[1].name).toBe('payPlan')
-    expect(jestFn).toBeCalledTimes(9)
+    expect(jestFn).toBeCalledTimes(11)
   })
 
   test('should be fetch data by `infinite`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
-    const response = await collection.fetch<PropertySet>(PropertySet, {
+
+    const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
+    const jestFn = jest.fn(() => listDataView.isLoading)
+    autorun(jestFn)
+    await listDataView.search({
       selector: {
         limit: [0, 10]
       }
     })
-
-    const listDataView = new ListDataView<PropertySet>(response)
-    const jestFn = jest.fn(() => listDataView.isLoading)
-    autorun(jestFn)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.infinite(10, 20)
     expect(listDataView.data.length).toBe(30)
     expect(listDataView.data[1]).toMatchSnapshot()
     expect(listDataView.data[1].label).toBe('支付计划')
-    expect(jestFn).toBeCalledTimes(3)
+    expect(jestFn).toBeCalledTimes(5)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.infinite(20, 60)
     expect(listDataView.data.length).toBe(90)
     expect(listDataView.data[44].label).toBe('核销金额')
-    expect(jestFn).toBeCalledTimes(5)
+    expect(jestFn).toBeCalledTimes(7)
   })
 })
