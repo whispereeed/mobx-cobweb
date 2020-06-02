@@ -1,7 +1,6 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/27 16:24. *
  ***************************************************/
-import { IDictionary } from 'datx-utils'
 export type $ElementOf<T> = T extends Array<infer E> ? E : T
 export type $PickOf<T, X, Y> = T extends Array<infer E> ? X : Y
 
@@ -15,4 +14,4 @@ export interface IError {
   detail?: string
 }
 
-export type IHeaders = IDictionary<string>
+export type IHeaders = Record<string, string>

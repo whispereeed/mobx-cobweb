@@ -1,24 +1,26 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { getModelId, getModelType, IType, modelToJSON, updateModel, updateModelId, View } from 'datx'
+import {
+  getModelId,
+  getModelType,
+  IType,
+  modelToJSON,
+  PureCollection,
+  PureModel,
+  updateModel,
+  updateModelId,
+  View
+} from 'datx'
 import { action } from 'mobx'
 
 import { GenericModel } from './GenericModel'
 
-import {
-  IError,
-  IResponseHeaders,
-  IRequestOptions,
-  IRawResponse,
-  IHeaders,
-  ISkeletonModel,
-  ISkeletonCollection,
-  $ElementOf,
-  $PickOf
-} from '../interfaces'
+import { IError, IResponseHeaders, IRequestOptions, IRawResponse, IHeaders, $PickOf } from './interfaces'
+import { Collection } from './Collection'
+import { error } from './helpers/utils'
 
-export class ResponseView<T extends ISkeletonModel | ISkeletonModel[]> {
+export class ResponseView<T extends PureModel | PureModel[]> {
   public data: T | null = null
 
   public meta: object
@@ -33,7 +35,7 @@ export class ResponseView<T extends ISkeletonModel | ISkeletonModel[]> {
 
   public views: Array<View> = []
 
-  public readonly collection?: ISkeletonCollection
+  public readonly collection?: PureCollection
 
   public readonly requestOptions?: IRequestOptions
 
@@ -43,7 +45,7 @@ export class ResponseView<T extends ISkeletonModel | ISkeletonModel[]> {
 
   constructor(
     rawResponse: IRawResponse<$PickOf<T, object[], object>>,
-    collection?: ISkeletonCollection,
+    collection?: PureCollection,
     requestOptions?: IRequestOptions,
     overrideData?: T,
     views?: Array<View>
@@ -59,19 +61,17 @@ export class ResponseView<T extends ISkeletonModel | ISkeletonModel[]> {
     }
 
     if (collection) {
-      this.data = overrideData
-        ? (collection.add<T>(overrideData) as T)
-        : (collection.sync<$ElementOf<T>>(rawResponse.data) as T)
+      this.data = overrideData ? collection.add<T>(overrideData) : (collection as Collection).sync<T>(rawResponse.data)
     } else if (rawResponse.data) {
       // The case when a record is not in a store and save/remove are used
       const resp = rawResponse.data
 
       if (resp.data) {
         if (resp.data instanceof Array) {
-          throw new Error('A save/remove operation should not return an array of results')
+          throw error('A save/remove operation should not return an array of results')
         }
 
-        this.data = overrideData || (new GenericModel(resp.data) as T)
+        this.data = overrideData || (new GenericModel(resp.data) as any)
       }
     }
 

@@ -1,9 +1,9 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/4 11:25. *
  ***************************************************/
-import { skeleton, Model, prop } from '../../src'
+import { Model, prop } from '../../src'
 
-export default class Power extends skeleton(Model) {
+export default class Power extends Model {
   static type = 'charge.Powers'
   static endpoint = '/charge/powers'
 

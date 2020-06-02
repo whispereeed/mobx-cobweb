@@ -6,7 +6,7 @@ import { IHeaders } from './types'
 import { IType } from 'datx'
 import { IResponseHeaders } from './IResponseHeaders'
 
-export interface IRawData<D = any> {
+export interface IRawData<D> {
   type: IType
   data?: D
   meta?: IDictionary

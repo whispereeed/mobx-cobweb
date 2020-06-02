@@ -1,13 +1,12 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { getModelType, IType } from 'datx'
+import { getModelType, IType, PureModel } from 'datx'
 
-import { ISkeletonModel } from '../../interfaces'
 import { ResponseView } from '../ResponseView'
 
 export interface ICache {
-  response: ResponseView<ISkeletonModel | ISkeletonModel[]>
+  response: ResponseView<PureModel | PureModel[]>
   timestamp: number
   type: IType
   url: string
@@ -15,7 +14,7 @@ export interface ICache {
 
 let cacheStorage: Array<ICache> = []
 
-export function saveCache(url: string, response: ResponseView<ISkeletonModel | ISkeletonModel[]>, modelType?: string) {
+export function saveCache(url: string, response: ResponseView<PureModel | PureModel[]>, modelType?: string) {
   if (response && 'data' in response && (!('error' in response) || !response.error) && response.data) {
     // The type might need to be 100% correct - used only to clear the cache
     const type = modelType || getModelType(response.data instanceof Array ? response.data[0] : response.data)

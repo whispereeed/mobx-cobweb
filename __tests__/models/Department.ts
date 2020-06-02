@@ -1,9 +1,9 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/29 11:53. *
  ***************************************************/
-import { skeleton, Model, prop } from '../../src'
+import { Model, prop } from '../../src'
 
-export default class Department extends skeleton(Model) {
+export default class Department extends Model {
   static type = 'organization.Department'
   static endpoint = '/organization/departments'
 

@@ -4,11 +4,11 @@
 import { IHeaders } from './types'
 import { IResponseHeaders } from './IResponseHeaders'
 import { IRawData } from './IRawData'
-import { ISkeletonCollection } from './ISkeletonCollection'
+import { PureCollection } from 'datx'
 
 export interface IRawResponse<D> {
   data?: IRawData<D>
-  collection?: ISkeletonCollection
+  collection?: PureCollection
   error?: Error
   headers?: IResponseHeaders
   requestHeaders?: IHeaders

@@ -1,10 +1,10 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/29 11:49. *
  ***************************************************/
-import { skeleton, Model, prop } from '../../src'
-import Staff  from './Staff'
+import { Model, prop } from '../../src'
+import Staff from './Staff'
 
-export default class Me extends skeleton(Model) {
+export default class Me extends Model {
   static type = 'organization.Staff.Me'
   static endpoint = '/organization/staffs/me'
 

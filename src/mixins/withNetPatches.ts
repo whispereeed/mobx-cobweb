@@ -1,37 +1,44 @@
+/***************************************************
+ * Created by nanyuantingfeng on 2020/6/2 12:55. *
+ ***************************************************/
 import {
   getModelId,
   getModelType,
   ICollectionConstructor,
   IIdentifier,
   IModelConstructor,
-  isCollection,
   IType,
   PureCollection,
   PureModel,
   updateModel
 } from 'datx'
-import { IRawModel, mapItems } from 'datx-utils'
+
+import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
+
+import {
+  clearAllCache,
+  clearCacheByType,
+  flattenModel,
+  GenericModel,
+  IRequestOptions,
+  removeModel,
+  ResponseView
+} from '..'
+
 import { action } from 'mobx'
+import { IRawModel, mapItems } from 'datx-utils'
+import { query } from '../helpers/NetworkUtils'
+import { isBrowser } from '../helpers/utils'
 
-import { clearAllCache, clearCacheByType } from './helpers/cache'
-import { GenericModel } from './GenericModel'
-import { flattenModel, removeModel } from './helpers/model'
-import { isBrowser } from './helpers/utils'
-import { ISkeletonCollection, ISkeletonModel, IRequestOptions, $ElementOf } from '../interfaces'
-import { query } from './helpers/NetworkUtils'
-import { ResponseView } from './ResponseView'
+export function withNetPatches<T extends PureCollection>(Base: ICollectionConstructor<T>) {
+  const BaseClass = Base as typeof PureCollection
 
-export function decorateCollection(BaseClass: typeof PureCollection) {
-  class SkeletonCollection extends BaseClass implements ISkeletonCollection {
+  class WithNetPatches extends BaseClass implements INetPatchesCollection<T> {
     static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(GenericModel) : [GenericModel]
-    static cache: boolean = (BaseClass as any)['cache'] === undefined ? isBrowser : (BaseClass as any)['cache']
+    static cache: boolean = (BaseClass as any)[''] === undefined ? isBrowser : (BaseClass as any)['cache']
+    static defaultModel = BaseClass.defaultModel || GenericModel
 
-    static defaultModel = BaseClass['defaultModel'] || GenericModel
-
-    @action sync<T extends ISkeletonModel | ISkeletonModel[], D = T extends any[] ? any[] : any>(
-      raw: any,
-      data?: any
-    ): T {
+    @action sync<P extends PureModel>(raw: any, data?: any): P | P[] {
       if (!raw) return null
       let type: IType
 
@@ -44,10 +51,10 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
 
       if (!data) return null
 
-      return mapItems(data, (item: any) => this.__addRecord<$ElementOf<T>>(item, type)) as any
+      return mapItems(data, (item: any) => this.__addRecord<P>(item, type)) as any
     }
 
-    fetch<T extends ISkeletonModel = ISkeletonModel>(
+    fetch<T extends PureModel>(
       type: IType | T | IModelConstructor<T>,
       ids?: any,
       options?: any
@@ -69,6 +76,7 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
     ): Promise<void> {
       const remove = typeof id === 'boolean' || typeof id === 'object' ? id : remote
       let modelId: number | string | undefined
+
       if (typeof id === 'string' || typeof id === 'number') {
         modelId = id
       } else if (typeof id === 'boolean' || obj instanceof PureModel) {
@@ -84,7 +92,7 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
       }
 
       if (model && remove) {
-        return removeModel((model as any) as ISkeletonModel, typeof remove === 'object' ? remove : undefined)
+        return removeModel(model, typeof remove === 'object' ? remove : undefined)
       }
 
       if (model) {
@@ -106,7 +114,7 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
       clearAllCache()
     }
 
-    private __handleErrors<T extends ISkeletonModel>(response: ResponseView<T>) {
+    private __handleErrors<T extends PureModel>(response: ResponseView<T>) {
       if (response.error) {
         throw response.error
       }
@@ -114,10 +122,10 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
       return response
     }
 
-    private __addRecord<T extends ISkeletonModel = ISkeletonModel>(item: any, type: IType): T {
+    private __addRecord<T extends PureModel>(item: any, type: IType): T {
       const StaticCollection = this.constructor as typeof PureCollection
       const id = item.id
-      let record: T | null = id === undefined ? null : this.findOne<T>(type, id)
+      let record: T = id === undefined ? null : this.findOne<T>(type, id)
       // const Type = StaticCollection.types.find(item => getModelType(item) === type) || GenericModel
       const flattened: IRawModel = flattenModel(item, type)
 
@@ -126,12 +134,12 @@ export function decorateCollection(BaseClass: typeof PureCollection) {
       } else if (StaticCollection.types.filter((item) => item.type === type).length) {
         record = this.add<T>(flattened, type)
       } else {
-        record = this.add(new GenericModel(flattened)) as T
+        record = this.add(new GenericModel(flattened)) as any
       }
 
       return record
     }
   }
 
-  return (SkeletonCollection as unknown) as ICollectionConstructor<PureCollection & ISkeletonCollection>
+  return (WithNetPatches as unknown) as ICollectionConstructor<INetPatchesCollection<T> & T>
 }

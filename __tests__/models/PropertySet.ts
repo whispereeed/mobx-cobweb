@@ -1,9 +1,9 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/4 11:22. *
  ***************************************************/
-import { skeleton, Model, prop } from '../../src'
+import { Model, prop } from '../../src'
 
-export default class PropertySet extends skeleton(Model) {
+export default class PropertySet extends Model {
   static type = 'flow.PropertySet'
   static endpoint = '/flow/propertySet'
 

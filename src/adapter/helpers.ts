@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/28 17:44. *
  ***************************************************/
-import { INestedArray } from '../../interfaces'
+import { INestedArray } from '../interfaces'
 import { IIdentifier, IType } from 'datx'
 import { IDictionary } from 'datx-utils'
 
@@ -23,7 +23,7 @@ interface IQueryParams {
   select?: string
 }
 
-const URL_REGEX = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+const URL_REGEX = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=]+$/
 
 function prepareFilters(filters: string | string[]): string {
   if (!filters) return undefined

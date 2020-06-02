@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/4 10:26. *
  ***************************************************/
-import { skeleton, Model, prop } from '../../src'
+import { Model, prop } from '../../src'
 
 interface IMenuAvailableRange {
   fullVisible: boolean
@@ -10,7 +10,7 @@ interface IMenuAvailableRange {
   visibility: any
 }
 
-export default class Menu extends skeleton(Model) {
+export default class Menu extends Model {
   static type = 'menu.Menus'
   static endpoint = '/menu/menus'
 

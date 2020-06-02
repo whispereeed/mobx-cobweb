@@ -1,20 +1,12 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { IIdentifier, IType, PureCollection, View } from 'datx'
+import { IIdentifier, IType, PureCollection, PureModel, View } from 'datx'
 
 import { getCache, saveCache } from './cache'
 import { getValue, isBrowser } from './utils'
 
-import {
-  IRequestOptions,
-  IRawResponse,
-  ISkeletonModel,
-  ISkeletonCollection,
-  INetworkAdapter,
-  IResponseData,
-  $PickOf
-} from '../../interfaces'
+import { IRequestOptions, IRawResponse, INetworkAdapter, IResponseData, $PickOf } from '../interfaces'
 
 import { ResponseView } from '../ResponseView'
 
@@ -23,11 +15,7 @@ const config: { cache: boolean; adapter: INetworkAdapter } = {
   adapter: null
 }
 
-function packResponse<O>(
-  responseData: IResponseData,
-  modelType: IType,
-  collection: ISkeletonCollection
-): IRawResponse<O> {
+function packResponse<O>(responseData: IResponseData, modelType: IType, collection: PureCollection): IRawResponse<O> {
   const { data = {}, ...others } = responseData
   // data : {data : * , meta : *}
   data.type = modelType
@@ -55,12 +43,12 @@ interface ICollectionFetchOpts {
   modelType?: IType
   options?: IRequestOptions
   method?: string
-  collection?: ISkeletonCollection
+  collection?: PureCollection
   ids?: IIdentifier | IIdentifier[]
   views?: Array<View>
 }
 
-async function collectionFetch<M extends ISkeletonModel | ISkeletonModel[]>(
+async function collectionFetch<M extends PureModel | PureModel[]>(
   reqOptions: ICollectionFetchOpts
 ): Promise<ResponseView<M>> {
   const { options, method = 'GET', collection, views, modelType, ids } = reqOptions
@@ -101,10 +89,10 @@ export function setNetworkAdapter(adapter: INetworkAdapter) {
   config.adapter = adapter
 }
 
-export function query<M extends ISkeletonModel | ISkeletonModel[]>(
+export function query<M extends PureModel | PureModel[]>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: ISkeletonCollection,
+  collection?: PureCollection,
   views?: Array<View>,
   ids?: IIdentifier | IIdentifier[]
 ): Promise<ResponseView<M>> {
@@ -118,8 +106,8 @@ export function query<M extends ISkeletonModel | ISkeletonModel[]>(
   })
 }
 
-export function create<T extends ISkeletonModel>(
-  collection?: ISkeletonCollection,
+export function create<T extends PureModel>(
+  collection?: PureCollection,
   options?: IRequestOptions,
   views?: View[]
 ): Promise<ResponseView<T>> {
@@ -131,8 +119,8 @@ export function create<T extends ISkeletonModel>(
   })
 }
 
-export function update<T extends ISkeletonModel>(
-  collection?: ISkeletonCollection,
+export function update<T extends PureModel>(
+  collection?: PureCollection,
   options?: IRequestOptions,
   views?: View[]
 ): Promise<ResponseView<T>> {
@@ -144,8 +132,8 @@ export function update<T extends ISkeletonModel>(
   })
 }
 
-export function remove<T extends ISkeletonModel>(
-  collection?: ISkeletonCollection,
+export function remove<T extends PureModel>(
+  collection?: PureCollection,
   options?: IRequestOptions,
   views?: View[]
 ): Promise<ResponseView<T>> {

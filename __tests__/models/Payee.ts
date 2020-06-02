@@ -1,9 +1,9 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/4 11:27. *
  ***************************************************/
-import { skeleton, Model, prop } from '../../src'
+import { Model, prop } from '../../src'
 
-export default class Payee extends skeleton(Model) {
+export default class Payee extends Model {
   static type = 'form.Payees.Mine'
   static endpoint = '/form/payees/mine'
 

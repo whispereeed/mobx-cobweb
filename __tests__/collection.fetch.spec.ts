@@ -1,6 +1,6 @@
 import { collection, useFixtureGetById, useFixturesByGET } from './config'
 import { modelToJSON, getRefId, IIdentifier } from 'datx'
-import { fetchModelRefs, GenericView } from '../src'
+import { fetchModelRefs, View } from '../src'
 import Me from './models/Me'
 import Staff from './models/Staff'
 
@@ -24,7 +24,7 @@ describe('collection.fetch', () => {
     expect(me.staff.id).toEqual('XRA9koBTaA0000:gongyanyu')
     expect(modelToJSON(me)).toMatchSnapshot()
     expect(modelToJSON(me.staff)).toMatchSnapshot()
-    const meV = new GenericView(Me, collection, null, [me])
+    const meV = new View(Me, collection, null, [me])
     expect(meV.list[0] === me).toBeTruthy()
   })
 
@@ -39,7 +39,7 @@ describe('collection.fetch', () => {
     expect(me.staff.id).toEqual('XRA9koBTaA0000:gongyanyu')
     expect(modelToJSON(me)).toMatchSnapshot()
     expect(modelToJSON(me.staff)).toMatchSnapshot()
-    const meV = new GenericView(Me, collection, null, [me])
+    const meV = new View(Me, collection, null, [me])
     expect(meV.list[0] === me).toBeTruthy()
   })
 })

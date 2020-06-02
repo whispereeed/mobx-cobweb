@@ -7,6 +7,7 @@ import { IDictionary } from 'datx-utils'
 
 export interface IRequestOptions {
   headers?: IHeaders
+
   // body
   data?: any
 

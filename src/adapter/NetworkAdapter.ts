@@ -3,7 +3,7 @@
  ***************************************************/
 import { IIdentifier, IType } from 'datx'
 import { IDictionary } from 'datx-utils'
-import { IHeaders, INetworkAdapter, IRequestOptions, IResponseData, IResponseHeaders } from '../../interfaces'
+import { IHeaders, INetworkAdapter, IRequestOptions, IResponseData, IResponseHeaders } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { isBrowser } from '../helpers/utils'
 
