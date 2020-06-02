@@ -1,5 +1,6 @@
 __tests__
 src
+coverage
 .prettierrc
 jest.config.js
 package-lock.json
@@ -7,3 +8,4 @@ rollup.config.js
 TODO.md
 tsconfig.build.json
 tsconfig.json
+
