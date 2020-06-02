@@ -2,11 +2,25 @@
   "name": "mobx-cobweb",
   "version": "0.0.1",
   "description": "ORM for Frontend",
-  "license": "MIT",
   "main": "dist/lib/index.js",
   "module": "dist/esm/index.js",
   "types": "./types/index.d.ts",
   "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whispereeed/mobx-cobweb.git"
+  },
+  "keywords": [
+    "mobx",
+    "cobweb",
+    "orm"
+  ],
+  "author": "nanyuantingfeng <nanyuantingfeng@aliyun.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/whispereeed/mobx-cobweb/issues"
+  },
+  "homepage": "https://github.com/whispereeed/mobx-cobweb#readme",
   "scripts": {
     "build": "rm -rf dist && npm run optimize && npm run copy",
     "optimize": "npm run build:lib && npm run build:esm && npm run build:types",
