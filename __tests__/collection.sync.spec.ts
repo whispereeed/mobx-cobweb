@@ -1,6 +1,7 @@
 import { collection, useFixturesByGET } from './config'
 import { modelToJSON } from 'datx'
 import Department from './models/Department'
+const path = require('path')
 
 describe('collection.sync', () => {
   let scope: any = null
@@ -24,7 +25,7 @@ describe('collection.sync', () => {
     expect(modelToJSON(dd)).toMatchSnapshot()
   }
 
-  const data: object[] = require('./fixtures/organization.departments.json').items
+  const data: object[] = require(path.join(__dirname, './fixtures/organization.departments.json')).items
 
   test('should sync IRawData', () => {
     const sf = collection.sync<Department>({

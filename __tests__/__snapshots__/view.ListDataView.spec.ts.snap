@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListDataView should be fetch data by \`infinite\` 1`] = `
+exports[`ListDataView should be fetched data by \`infinite\` 1`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": false,
@@ -61,7 +61,7 @@ Object {
 }
 `;
 
-exports[`ListDataView should be fetch data by \`page\` 1`] = `
+exports[`ListDataView should be fetched data by \`page\` 1`] = `
 Array [
   Object {
     "__META__": Object {
@@ -346,7 +346,7 @@ Array [
 ]
 `;
 
-exports[`ListDataView should be fetch data by \`page\` 2`] = `
+exports[`ListDataView should be fetched data by \`page\` 2`] = `
 Array [
   Object {
     "__META__": Object {
@@ -599,7 +599,7 @@ Array [
 ]
 `;
 
-exports[`ListDataView should be fetch data by \`page\` 3`] = `
+exports[`ListDataView should be fetched data by \`page\` 3`] = `
 Array [
   Object {
     "__META__": Object {
@@ -850,7 +850,7 @@ Array [
 ]
 `;
 
-exports[`ListDataView should be fetch data by \`page\` 4`] = `
+exports[`ListDataView should be fetched data by \`page\` 4`] = `
 Array [
   Object {
     "__META__": Object {
@@ -1246,7 +1246,7 @@ Array [
 ]
 `;
 
-exports[`ListDataView should be fetch data by \`page\` 5`] = `
+exports[`ListDataView should be fetched data by \`page\` 5`] = `
 Array [
   Object {
     "__META__": Object {

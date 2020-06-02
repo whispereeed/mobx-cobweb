@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`collection.fetch should be fetch a Model By Id/Ids 1`] = `
+exports[`collection.fetch should be fetched a Model By Id/Ids 1`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": false,
@@ -27,7 +27,7 @@ Object {
 }
 `;
 
-exports[`collection.fetch should be fetch a Model By Id/Ids 2`] = `
+exports[`collection.fetch should be fetched a Model By Id/Ids 2`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": true,
@@ -91,7 +91,7 @@ Object {
 }
 `;
 
-exports[`collection.fetch should be fetch all Refs Models <fetchModelRefs> 1`] = `
+exports[`collection.fetch should be fetched all Refs Models fetchModelRefs 1`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": false,
@@ -118,7 +118,7 @@ Object {
 }
 `;
 
-exports[`collection.fetch should be fetch all Refs Models <fetchModelRefs> 2`] = `
+exports[`collection.fetch should be fetched all Refs Models fetchModelRefs 2`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": true,
