@@ -53,7 +53,7 @@ export class ResponseView<T extends PureModel | PureModel[]> {
     this.collection = collection
     this.requestOptions = requestOptions
     this.rawResponse = rawResponse
-    this.modelType = getModelType(rawResponse.data.type)
+    this.modelType = getModelType(rawResponse.data!.type)
     this.status = rawResponse.status
 
     if (views) {
@@ -94,17 +94,17 @@ export class ResponseView<T extends PureModel | PureModel[]> {
       return this
     }
 
-    const newId = getModelId(record)
-    const type = getModelType(record)
+    const newId = getModelId(record!)
+    const type = getModelType(record!)
 
-    const viewIndexes = this.views.map((view) => view.list.indexOf(record))
+    const viewIndexes = this.views.map((view) => view.list.indexOf(record!))
 
     if (this.collection) {
       this.collection.removeOne(type, newId)
       this.collection.add(data)
     }
 
-    updateModel(data, modelToJSON(record))
+    updateModel(data, modelToJSON(record!))
     updateModelId(data, newId)
 
     this.views.forEach((view, index) => {

@@ -5,7 +5,7 @@ import { IModelConstructor, PureCollection, PureModel } from 'datx'
 import { IRawModel } from 'datx-utils'
 import type { INetActionsMixin } from '../interfaces/INetActionsMixin'
 import { IRequestOptions } from '../interfaces'
-import { fetchModelRefs, removeModel, saveModel } from '..'
+import { fetchModelRefs, removeModel, saveModel } from '../helpers/model'
 
 export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) {
   const BaseClass = Base as typeof PureModel

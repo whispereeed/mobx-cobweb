@@ -1,6 +1,9 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 12:55. *
  ***************************************************/
+
+import { action } from 'mobx'
+import { IRawModel, mapItems } from 'datx-utils'
 import {
   getModelId,
   getModelType,
@@ -14,19 +17,11 @@ import {
 } from 'datx'
 
 import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
-
-import {
-  clearAllCache,
-  clearCacheByType,
-  flattenModel,
-  GenericModel,
-  IRequestOptions,
-  removeModel,
-  ResponseView
-} from '..'
-
-import { action } from 'mobx'
-import { IRawModel, mapItems } from 'datx-utils'
+import { clearAllCache, clearCacheByType } from '../helpers/cache'
+import { ResponseView } from '../ResponseView'
+import { flattenModel, removeModel } from '../helpers/model'
+import { IRequestOptions } from '../interfaces'
+import { GenericModel } from '../GenericModel'
 import { query } from '../helpers/NetworkUtils'
 import { isBrowser } from '../helpers/utils'
 
@@ -66,7 +61,12 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
         ids = undefined
       }
 
-      return query<T>(modelType, options, this, undefined, ids).then((res) => this.__handleErrors<T>(res))
+      return query<T>(modelType, options, this, undefined, ids).then((res) => {
+        if (res.error) {
+          throw res.error
+        }
+        return res
+      })
     }
 
     @action removeOne(
@@ -112,14 +112,6 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
     @action reset() {
       super.reset()
       clearAllCache()
-    }
-
-    private __handleErrors<T extends PureModel>(response: ResponseView<T>) {
-      if (response.error) {
-        throw response.error
-      }
-
-      return response
     }
 
     private __addRecord<T extends PureModel>(item: any, type: IType): T {

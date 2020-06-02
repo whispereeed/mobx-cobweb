@@ -2,9 +2,9 @@
   "name": "mobx-cobweb",
   "version": "0.0.1",
   "description": "ORM for Frontend",
-  "main": "dist/lib/index.js",
-  "module": "dist/esm/index.js",
-  "types": "./types/index.d.ts",
+  "main": "dist/index.lib.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "sideEffects": false,
   "repository": {
     "type": "git",
@@ -22,17 +22,14 @@
   },
   "homepage": "https://github.com/whispereeed/mobx-cobweb#readme",
   "scripts": {
-    "build": "rm -rf dist && npm run optimize && npm run copy",
-    "optimize": "npm run build:lib && npm run build:esm && npm run build:types",
-    "copy": "cp package.json README.md .npmignore dist",
-    "publish2npm": "npm publish dist",
-    "build:lib": "tsc --rootDir src --outDir dist/lib --module commonjs",
-    "build:esm": "tsc --rootDir src --outDir dist/esm --module esnext",
-    "build:types": "tsc --rootDir src --outDir dist/types --emitDeclarationOnly --declaration",
-    "test": "jest"
+    "build": "rm -rf dist && rollup -c",
+    "test": "jest --coverage",
+    "benchmark": "jest benchmark",
+    "prepublish": "npm run build"
   },
   "peerDependencies": {
-    "tslib": "^2"
+    "tslib": "^2",
+    "mobx": "^4.2.0 || ^5.5.0"
   },
   "resolutions": {
     "fsevents": ""
@@ -45,15 +42,17 @@
     "isomorphic-fetch": "^2.2.1",
     "jest": "^26.0.1",
     "jest-cli": "^26.0.1",
+    "mobx": "^5.9.4",
     "nock": "^12.0.3",
+    "rollup": "^2.12.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "rollup-plugin-uglify": "^6.0.4",
     "ts-jest": "^26.1.0",
+    "tslib": "^2.0.0",
     "typescript": "^3.9.3"
   },
   "dependencies": {
     "datx": "^1.0.1",
-    "datx-utils": "^1.0.0",
-    "mobx": "^5",
-    "tslib": "^2",
-    "reflect-metadata": "latest"
+    "datx-utils": "^1.0.0"
   }
 }
