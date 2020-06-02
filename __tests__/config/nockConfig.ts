@@ -54,3 +54,33 @@ export function useFixtureGetByIds(key: string) {
     return JSON.stringify({ items: object, count: ids.length })
   })
 }
+
+export function useFixtureGetChildrenById(key: string) {
+  CURRENT_SCOPE.persist()
+    .post(new RegExp(key + '/.+/children'))
+    .reply(200, (uri: string, body: any) => {
+      const id = uri.replace(key, '').replace('/api/v1/', '').replace('/children', '')
+      const { limit } = body
+      const { start, count } = limit
+      const json = MAPPER[key]
+      const object = json.items.filter((k: any) => k.parentId === id)
+      const items = object.slice(start, start + count)
+      return JSON.stringify({ items: items, count: object.length })
+    })
+}
+
+export function useFixtureGetParentsById(key: string) {
+  CURRENT_SCOPE.get(new RegExp(key + '/.+/parents')).reply(200, (uri: string) => {
+    const id = uri.replace(key, '').replace('/api/v1/', '').replace('/parents', '')
+    const json = MAPPER[key]
+    const findOne = (id: string) => json.items.find((k: any) => k.id === id)
+    let current = findOne(id)
+    const object = []
+    while (current) {
+      current = findOne(current.parentId)
+      if (current) object.push(current)
+    }
+
+    return JSON.stringify({ items: object, count: object.length })
+  })
+}

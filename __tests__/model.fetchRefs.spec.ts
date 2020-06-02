@@ -14,7 +14,7 @@ describe('Modal fetchRefs', () => {
     collection.removeAll(Staff)
   })
 
-  test('should be fetch Model by at Model instance', async () => {
+  test('should be fetched Model by at Model instance', async () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()

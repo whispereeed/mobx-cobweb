@@ -76,15 +76,20 @@ export function prepareQS(params: IDictionary<string>): string {
     .join('&')
 }
 
-export function prefixURL(url: string, baseURL: string) {
-  if (URL_REGEX.test(url)) return url
-  if (!baseURL.endsWith('/')) {
-    baseURL += '/'
+export function prefixURL(url: string, baseURL: string, actionURL: string = '') {
+  let oo = `${baseURL}///${url}///${actionURL}`
+
+  if (URL_REGEX.test(url)) {
+    oo = `${url}///${actionURL}`
   }
-  if (url.startsWith('/')) {
-    url = url.slice(1)
+
+  oo = oo.replace(/[/]{3,}/g, '/')
+
+  if (oo.endsWith('/')) {
+    oo = oo.slice(0, -1)
   }
-  return `${baseURL}${url}`
+
+  return oo
 }
 
 export function appendParams(url: string, qs: string): string {

@@ -10,10 +10,9 @@ describe('ListDataView', () => {
   beforeEach(() => {
     scope = useFixturesByGET()
     collection.removeAll(PropertySet)
-    collection.removeAll(PropertySet)
   })
 
-  test('should be fetch data by `page`', async () => {
+  test('should be fetched data by `page`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
     const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
     const jestFn = jest.fn(() => listDataView.isLoading)
@@ -66,7 +65,7 @@ describe('ListDataView', () => {
     expect(jestFn).toBeCalledTimes(11)
   })
 
-  test('should be fetch data by `infinite`', async () => {
+  test('should be fetched data by `infinite`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
 
     const listDataView = new ListDataView<PropertySet>(PropertySet, collection)

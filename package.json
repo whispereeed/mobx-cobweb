@@ -32,13 +32,13 @@
     "jest": "^26.0.1",
     "jest-cli": "^26.0.1",
     "nock": "^12.0.3",
-    "ts-jest": "^26.0.0",
+    "ts-jest": "^26.1.0",
     "typescript": "^3.9.3"
   },
   "dependencies": {
     "datx": "^1.0.1",
     "datx-utils": "^1.0.0",
-    "mobx": "^4 || ^5",
+    "mobx": "^5",
     "tslib": "^2",
     "reflect-metadata": "latest"
   }

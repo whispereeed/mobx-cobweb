@@ -17,5 +17,6 @@ export { clearAllCache, clearCacheByType } from './helpers/cache'
 export { Collection } from './Collection'
 export { Model } from './Model'
 
-export { ListDataView } from './dataviews/ListDataView'
+export { ListDataView } from './views/ListDataView'
+export { TreeDataView } from './views/TreeDataView'
 export { NetworkAdapter } from './adapter/NetworkAdapter'

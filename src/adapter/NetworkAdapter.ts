@@ -34,7 +34,7 @@ export class NetworkAdapter implements INetworkAdapter {
     const options = props.options || {}
 
     const url = prepareURL(props.endpoint, props.type, props.ids)
-    const fixedURL = appendParams(prefixURL(url, this.baseUrl), prepareQS(options.params))
+    const fixedURL = appendParams(prefixURL(url, this.baseUrl, options.url), prepareQS(options.params))
 
     const requestHeaders: IDictionary<string> = options.headers || {}
     let uppercaseMethod = props.method.toUpperCase()

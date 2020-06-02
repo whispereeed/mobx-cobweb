@@ -13,7 +13,7 @@ describe('collection.fetch', () => {
     collection.removeAll(Staff)
   })
 
-  test('should be fetch a Model By Id/Ids', async () => {
+  test('should be fetched a Model By Id/Ids', async () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()
@@ -28,7 +28,7 @@ describe('collection.fetch', () => {
     expect(meV.list[0] === me).toBeTruthy()
   })
 
-  test('should be fetch all Refs Models <fetchModelRefs>', async () => {
+  test('should be fetched all Refs Models fetchModelRefs', async () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()
