@@ -1,5 +1,5 @@
 {
-  "name": "@whispered/skeleton-orm",
+  "name": "mobx-cobweb",
   "version": "0.0.1",
   "description": "ORM for Frontend",
   "license": "MIT",
