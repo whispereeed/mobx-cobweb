@@ -1,14 +1,4 @@
-import {
-  getModelCollection,
-  getModelMetaKey,
-  getModelType,
-  getRefId,
-  IIdentifier,
-  IType,
-  modelToJSON,
-  PureModel,
-  setModelMetaKey
-} from 'datx'
+import { getModelCollection, getModelMetaKey, getModelType, getRefId, IIdentifier, IType, modelToJSON, PureModel, setModelMetaKey } from 'datx'
 
 import { IRawModel, META_FIELD } from 'datx-utils'
 
@@ -48,7 +38,7 @@ function handleResponse<T extends PureModel>(record: T, prop?: string): (respons
         return responseRecord
       } else {
         setModelMetaKey(record, MODEL_PERSISTED_FIELD, true)
-        return response.replaceData(record).data as T
+        return response.replace(record).data as T
       }
     }
   )
@@ -57,16 +47,16 @@ function handleResponse<T extends PureModel>(record: T, prop?: string): (respons
 export async function saveModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<T> {
   const collection = getModelCollection(model) as Collection
   const data = modelToJSON(model)
-  const requestMethod = isModelPersisted(model) ? update : create
+  const request = isModelPersisted(model) ? update : create
   options.data = data
 
-  const result = await requestMethod<T>(collection, options)
+  const result = await request<T>(collection, options)
   const response: T = handleResponse<T>(model)(result)
   clearCacheByType(getModelType(model))
   return response
 }
 
-export async function removeModel<T>(model: T, options: IRequestOptions = {}): Promise<void> {
+export async function removeModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<void> {
   const collection = getModelCollection(model) as Collection
 
   const isPersisted = isModelPersisted(model)
@@ -85,13 +75,10 @@ export async function removeModel<T>(model: T, options: IRequestOptions = {}): P
 }
 
 export function flattenModel(data: any, type: IType): IRawModel | null {
-  if (!data) {
-    return null
-  }
+  if (!data) return null
 
   return {
     ...data,
-
     [META_FIELD]: {
       id: data.id,
       [MODEL_PERSISTED_FIELD]: Boolean(data.id),

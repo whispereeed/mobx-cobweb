@@ -4,17 +4,7 @@
 
 import { action } from 'mobx'
 import { IRawModel, mapItems } from 'datx-utils'
-import {
-  getModelId,
-  getModelType,
-  ICollectionConstructor,
-  IIdentifier,
-  IModelConstructor,
-  IType,
-  PureCollection,
-  PureModel,
-  updateModel
-} from 'datx'
+import { getModelId, getModelType, ICollectionConstructor, IIdentifier, IModelConstructor, IType, PureCollection, PureModel, updateModel } from 'datx'
 
 import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
 import { clearAllCache, clearCacheByType } from '../helpers/cache'
@@ -49,11 +39,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       return mapItems(data, (item: any) => this.__addRecord<P>(item, type)) as any
     }
 
-    fetch<T extends PureModel>(
-      type: IType | T | IModelConstructor<T>,
-      ids?: any,
-      options?: any
-    ): Promise<ResponseView<T | T[]>> {
+    @action fetch<T extends PureModel>(type: IType | T | IModelConstructor<T>, ids?: any, options?: any): Promise<ResponseView<T | T[]>> {
       const modelType = getModelType(type)
 
       if (arguments.length === 2 && Object.prototype.toString.call(ids) === '[object Object]') {
@@ -87,7 +73,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       const model = modelId !== undefined && this.findOne(type, modelId)
 
       if (model && modelId !== undefined && getModelId(model) !== modelId) {
-        // The model is not in the collection and we shouldn't remove a random one
+        // The model is not in the collection, we shouldn't remove it
         return Promise.resolve()
       }
 

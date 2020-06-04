@@ -1,39 +1,30 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import {
-  getModelId,
-  getModelType,
-  IType,
-  modelToJSON,
-  PureCollection,
-  PureModel,
-  updateModel,
-  updateModelId,
-  View
-} from 'datx'
+import { getModelId, getModelType, IType, modelToJSON, PureCollection, PureModel, updateModel, updateModelId, View } from 'datx'
+import { IDictionary } from 'datx-utils'
 import { action } from 'mobx'
 
 import { GenericModel } from './GenericModel'
 
-import { IError, IResponseHeaders, IRequestOptions, IRawResponse, IHeaders, $PickOf } from './interfaces'
+import { IError, IRequestOptions, IRawResponse, $PickOf, ISingleOrMulti } from './interfaces'
 import { Collection } from './Collection'
 import { error } from './helpers/utils'
 
-export class ResponseView<T extends PureModel | PureModel[]> {
+export class ResponseView<T extends ISingleOrMulti<PureModel>> {
   public data: T | null = null
 
   public meta: object
 
-  public headers?: IResponseHeaders
+  public headers?: Headers
 
-  public requestHeaders?: IHeaders
+  public requestHeaders?: IDictionary<string>
 
-  public error?: Array<IError> | Error
+  public error?: IError[] | Error
 
   public status?: number
 
-  public views: Array<View> = []
+  public views: View[] = []
 
   public readonly collection?: PureCollection
 
@@ -48,7 +39,7 @@ export class ResponseView<T extends PureModel | PureModel[]> {
     collection?: PureCollection,
     requestOptions?: IRequestOptions,
     overrideData?: T,
-    views?: Array<View>
+    views?: View[]
   ) {
     this.collection = collection
     this.requestOptions = requestOptions
@@ -87,7 +78,7 @@ export class ResponseView<T extends PureModel | PureModel[]> {
     this.error = rawResponse.error
   }
 
-  @action public replaceData(data: T): ResponseView<T> {
+  @action public replace(data: T): ResponseView<T> {
     const record = this.data
 
     if (record === data) {

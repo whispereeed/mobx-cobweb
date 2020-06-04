@@ -31,7 +31,7 @@ export class TreeDataView<T extends PureModel> {
     this.isLoading = true
     const listDataView = new ListDataView<T>(this.modelType, this.collection)
     await listDataView.search({
-      url: `/${id}/children`,
+      action: `/${id}/children`,
       selector: { limit: [0, 10] }
     })
     this.isLoading = false
@@ -41,7 +41,7 @@ export class TreeDataView<T extends PureModel> {
   @action async fetchParents(model: PureModel): Promise<ResponseView<T[]>> {
     const id = getModelId(model)
     this.isLoading = true
-    const response = await this.collection.fetch<T>(this.modelType, { url: `/${id}/parents` })
+    const response = await this.collection.fetch<T>(this.modelType, { action: `/${id}/parents` })
     this.isLoading = false
     return response
   }

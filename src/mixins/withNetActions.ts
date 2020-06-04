@@ -3,9 +3,10 @@
  ***************************************************/
 import { IModelConstructor, PureCollection, PureModel } from 'datx'
 import { IRawModel } from 'datx-utils'
-import type { INetActionsMixin } from '../interfaces/INetActionsMixin'
+import { INetActionsMixin } from '../interfaces/INetActionsMixin'
 import { IRequestOptions } from '../interfaces'
 import { fetchModelRefs, removeModel, saveModel } from '../helpers/model'
+import { action } from 'mobx'
 
 export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) {
   const BaseClass = Base as typeof PureModel
@@ -18,15 +19,15 @@ export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) 
       super(rawData, collection)
     }
 
-    public save(options?: IRequestOptions): Promise<this> {
+    @action public save(options?: IRequestOptions): Promise<this> {
       return saveModel(this, options)
     }
 
-    public remove(options?: IRequestOptions): Promise<void> {
+    @action public remove(options?: IRequestOptions): Promise<void> {
       return removeModel(this, options)
     }
 
-    public async fetchRefs() {
+    @action public async fetchRefs() {
       await fetchModelRefs(this)
     }
   }

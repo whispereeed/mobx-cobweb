@@ -3,15 +3,15 @@
  ***************************************************/
 import { IIdentifier, IType } from 'datx'
 import { IDictionary } from 'datx-utils'
-import { IHeaders, INetworkAdapter, IRequestOptions, IResponseData, IResponseHeaders } from '../interfaces'
+import { INetworkAdapter, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { isBrowser } from '../helpers/utils'
 
 export class NetworkAdapter implements INetworkAdapter {
-  constructor(public baseUrl: string, public fetchReference?: typeof fetch) {
-    if (!fetchReference) {
+  constructor(public baseUrl: string, public fetchInstance?: typeof fetch) {
+    if (!fetchInstance) {
       if (isBrowser) {
-        this.fetchReference = window.fetch
+        this.fetchInstance = window.fetch
       } else {
         throw new Error('Fetch reference needs to be defined before using the network')
       }
@@ -27,14 +27,14 @@ export class NetworkAdapter implements INetworkAdapter {
   prepare(props: {
     type: IType
     endpoint: string
-    ids?: IIdentifier | IIdentifier[]
+    ids?: ISingleOrMulti<IIdentifier>
     options?: IRequestOptions
     method?: string
   }): { url: string; options?: any; cacheKey: string } {
     const options = props.options || {}
 
     const url = prepareURL(props.endpoint, props.type, props.ids)
-    const fixedURL = appendParams(prefixURL(url, this.baseUrl, options.url), prepareQS(options.params))
+    const fixedURL = appendParams(prefixURL(url, this.baseUrl, options.action), prepareQS(options.params))
 
     const requestHeaders: IDictionary<string> = options.headers || {}
     let uppercaseMethod = props.method.toUpperCase()
@@ -57,7 +57,7 @@ export class NetworkAdapter implements INetworkAdapter {
 
     const isBodySupported = uppercaseMethod !== 'GET' && uppercaseMethod !== 'HEAD'
     const defaultHeaders = this.defaultFetchOptions.headers || {}
-    const reqHeaders: IHeaders = Object.assign({}, defaultHeaders, requestHeaders) as IHeaders
+    const reqHeaders: IDictionary<string> = Object.assign({}, defaultHeaders, requestHeaders)
 
     const options2 = Object.assign({}, this.defaultFetchOptions, {
       body: (isBodySupported && JSON.stringify(body)) || undefined,
@@ -70,24 +70,24 @@ export class NetworkAdapter implements INetworkAdapter {
 
   async fetch(url: string, options: any): Promise<IResponseData> {
     let status: number
-    let headers: IResponseHeaders
+    let headers: Headers
     const request: Promise<void> = Promise.resolve()
     const requestHeaders = options.headers
     try {
       let responseData: any
       try {
         await request
-        let response: Response = await this.fetchReference(url, options)
+        let response: Response = await this.fetchInstance(url, options)
         status = response.status
         headers = response.headers
         responseData = await response.json()
-      } catch (error1) {
+      } catch (error) {
         if (status === 204) {
           responseData = null
         }
-
-        throw error1
+        throw error
       }
+
       let result: IResponseData = {}
 
       if (responseData.value) {
@@ -104,8 +104,8 @@ export class NetworkAdapter implements INetworkAdapter {
       }
 
       return { data: result, headers, requestHeaders, status }
-    } catch (error2) {
-      return this.onError({ error: error2, headers, requestHeaders, status })
+    } catch (error) {
+      return this.onError({ error, headers, requestHeaders, status })
     }
   }
 

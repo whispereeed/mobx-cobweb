@@ -1,13 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 16:42. *
  ***************************************************/
-import {
-  collection,
-  useFixtureGetById,
-  useFixtureGetChildrenById,
-  useFixtureGetParentsById, useFixtureLimitByPOST,
-  useFixturesByGET
-} from './config'
+import { collection, useFixtureGetById, useFixtureGetChildrenById, useFixtureGetParentsById, useFixturesByGET } from './config'
 import Department from './models/Department'
 import { TreeDataView } from '../src'
 

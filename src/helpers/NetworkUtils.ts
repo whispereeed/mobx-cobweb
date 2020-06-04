@@ -6,7 +6,7 @@ import { IIdentifier, IType, PureCollection, PureModel, View } from 'datx'
 import { getCache, saveCache } from './cache'
 import { getValue, isBrowser } from './utils'
 
-import { IRequestOptions, IRawResponse, INetworkAdapter, IResponseData, $PickOf } from '../interfaces'
+import { IRequestOptions, IRawResponse, INetworkAdapter, IResponseData, $PickOf, ISingleOrMulti } from '../interfaces'
 
 import { ResponseView } from '../ResponseView'
 
@@ -15,8 +15,8 @@ const config: { cache: boolean; adapter: INetworkAdapter } = {
   adapter: null
 }
 
-function packResponse<O>(responseData: IResponseData, modelType: IType, collection: PureCollection): IRawResponse<O> {
-  const { data = {}, ...others } = responseData
+function packResponse<T>(responseData: IResponseData, modelType: IType, collection: PureCollection): IRawResponse<T> {
+  const { data = {} as any, ...others } = responseData
   // data : {data : * , meta : *}
   data.type = modelType
 
@@ -27,7 +27,7 @@ function packResponse<O>(responseData: IResponseData, modelType: IType, collecti
   }
 }
 
-function getModelEndpointUrl(type: IType, collection: PureCollection): string {
+function getModelEndpointURL(type: IType, collection: PureCollection): string {
   const StaticCollection = collection.constructor as typeof PureCollection
   const QueryModel: any = StaticCollection.types.filter((item) => item.type === type)[0]
   const endpoint = getValue<string>(QueryModel['endpoint'])
@@ -39,23 +39,21 @@ function getModelEndpointUrl(type: IType, collection: PureCollection): string {
   return endpoint
 }
 
-interface ICollectionFetchOpts {
+interface IDoFetchOptions {
+  collection: PureCollection
+  options: IRequestOptions
   modelType?: IType
-  options?: IRequestOptions
-  method?: string
-  collection?: PureCollection
-  ids?: IIdentifier | IIdentifier[]
-  views?: Array<View>
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+  ids?: ISingleOrMulti<IIdentifier>
+  views?: View[]
 }
 
-async function collectionFetch<M extends PureModel | PureModel[]>(
-  reqOptions: ICollectionFetchOpts
-): Promise<ResponseView<M>> {
-  const { options, method = 'GET', collection, views, modelType, ids } = reqOptions
+async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoFetchOptions): Promise<ResponseView<M>> {
+  const { options, method = 'GET', collection, views, modelType, ids } = doFetchOptions
 
   const prepared = config.adapter.prepare({
     type: modelType,
-    endpoint: getModelEndpointUrl(modelType, collection),
+    endpoint: getModelEndpointURL(modelType, collection),
     ids: ids,
     options,
     method
@@ -64,7 +62,7 @@ async function collectionFetch<M extends PureModel | PureModel[]>(
   const staticCollection = collection && (collection.constructor as { cache?: boolean })
   const collectionCache = staticCollection && staticCollection.cache
   const isCacheSupported = method.toUpperCase() === 'GET'
-  const skipCache = reqOptions.options && reqOptions.options.skipCache
+  const skipCache = doFetchOptions.options && doFetchOptions.options.skipCache
 
   if (config.cache && isCacheSupported && collectionCache && !skipCache) {
     const cache = getCache(prepared.cacheKey)
@@ -89,14 +87,14 @@ export function setNetworkAdapter(adapter: INetworkAdapter) {
   config.adapter = adapter
 }
 
-export function query<M extends PureModel | PureModel[]>(
+export function query<M extends ISingleOrMulti<PureModel>>(
   modelType: IType,
   options?: IRequestOptions,
   collection?: PureCollection,
-  views?: Array<View>,
-  ids?: IIdentifier | IIdentifier[]
+  views?: View[],
+  ids?: ISingleOrMulti<IIdentifier>
 ): Promise<ResponseView<M>> {
-  return collectionFetch<M>({
+  return doFetch<M>({
     modelType,
     options,
     collection,
@@ -106,12 +104,8 @@ export function query<M extends PureModel | PureModel[]>(
   })
 }
 
-export function create<T extends PureModel>(
-  collection?: PureCollection,
-  options?: IRequestOptions,
-  views?: View[]
-): Promise<ResponseView<T>> {
-  return collectionFetch<T>({
+export function create<T extends PureModel>(collection?: PureCollection, options?: IRequestOptions, views?: View[]): Promise<ResponseView<T>> {
+  return doFetch<T>({
     collection,
     method: 'POST',
     options: options,
@@ -119,12 +113,8 @@ export function create<T extends PureModel>(
   })
 }
 
-export function update<T extends PureModel>(
-  collection?: PureCollection,
-  options?: IRequestOptions,
-  views?: View[]
-): Promise<ResponseView<T>> {
-  return collectionFetch<T>({
+export function update<T extends PureModel>(collection?: PureCollection, options?: IRequestOptions, views?: View[]): Promise<ResponseView<T>> {
+  return doFetch<T>({
     collection,
     method: 'PATCH',
     options: options,
@@ -132,12 +122,8 @@ export function update<T extends PureModel>(
   })
 }
 
-export function remove<T extends PureModel>(
-  collection?: PureCollection,
-  options?: IRequestOptions,
-  views?: View[]
-): Promise<ResponseView<T>> {
-  return collectionFetch<T>({
+export function remove<T extends PureModel>(collection?: PureCollection, options?: IRequestOptions, views?: View[]): Promise<ResponseView<T>> {
+  return doFetch<T>({
     collection,
     method: 'DELETE',
     options: options,

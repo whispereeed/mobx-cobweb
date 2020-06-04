@@ -5,16 +5,18 @@ import { getModelType, IType, PureModel } from 'datx'
 
 import { ResponseView } from '../ResponseView'
 
+import { ISingleOrMulti } from '../interfaces'
+
 export interface ICache {
-  response: ResponseView<PureModel | PureModel[]>
+  response: ResponseView<ISingleOrMulti<PureModel>>
   timestamp: number
   type: IType
   url: string
 }
 
-let cacheStorage: Array<ICache> = []
+let cacheStorage: ICache[] = []
 
-export function saveCache(url: string, response: ResponseView<PureModel | PureModel[]>, modelType?: string) {
+export function saveCache(url: string, response: ResponseView<ISingleOrMulti<PureModel>>, modelType?: string) {
   if (response && 'data' in response && (!('error' in response) || !response.error) && response.data) {
     // The type might need to be 100% correct - used only to clear the cache
     const type = modelType || getModelType(response.data instanceof Array ? response.data[0] : response.data)

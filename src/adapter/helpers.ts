@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/28 17:44. *
  ***************************************************/
-import { INestedArray } from '../interfaces'
+import { INestedArray, ISingleOrMulti } from '../interfaces'
 import { IIdentifier, IType } from 'datx'
 import { IDictionary } from 'datx-utils'
 
@@ -16,7 +16,7 @@ interface IQueryParamLimit {
 }
 
 interface IQueryParams {
-  orderBy?: Array<IQueryParamOrder>
+  orderBy?: IQueryParamOrder[]
   limit?: IQueryParamLimit
   dims?: string
   filterBy?: string
@@ -31,7 +31,7 @@ function prepareFilters(filters: string | string[]): string {
   return filters2.join('&&')
 }
 
-function prepareOrders(orders?: string[]): Array<IQueryParamOrder> {
+function prepareOrders(orders?: string[]): IQueryParamOrder[] {
   if (!orders) return undefined
   return orders.map((key) => {
     let oo = { value: key, order: 'ASC' }
@@ -39,7 +39,7 @@ function prepareOrders(orders?: string[]): Array<IQueryParamOrder> {
       oo = { value: key.slice(0, -1), order: 'DESC' }
     }
     return oo
-  }) as Array<IQueryParamOrder>
+  }) as IQueryParamOrder[]
 }
 
 function prepareSelect(select: string | INestedArray<string>): string {
@@ -64,8 +64,8 @@ function prepareLimit(limit: [number, number]): IQueryParamLimit {
   return { start: limit[0], count: limit[1] }
 }
 
-export function prepareURL(endpoint: string, type: IType, ids?: IIdentifier | IIdentifier[]) {
-  if (ids) endpoint += Array.isArray(ids) ? `/[${ids.join(',')}]` : `/\$${ids}`
+export function prepareURL(endpoint: string, type: IType, ids?: ISingleOrMulti<IIdentifier>) {
+  if (ids != undefined) endpoint += Array.isArray(ids) ? `/[${ids.join(',')}]` : `/\$${ids}`
   return endpoint
 }
 
@@ -76,19 +76,18 @@ export function prepareQS(params: IDictionary<string>): string {
     .join('&')
 }
 
-export function prefixURL(url: string, baseURL: string, actionURL: string = '') {
-  let oo = `${baseURL}///${url}///${actionURL}`
-
-  if (URL_REGEX.test(url)) {
-    oo = `${url}///${actionURL}`
+export function prefixURL(url: string, baseURL: string, action?: string | ((url: string) => string)) {
+  if (!action) action = ''
+  let oo: string
+  if (typeof action === 'string') {
+    oo = URL_REGEX.test(url) ? `${url}///${action}` : `${baseURL}///${url}///${action}`
+    oo = oo.replace(/[/]{3,}/g, '/')
+    if (oo.endsWith('/')) oo = oo.slice(0, -1)
+  } else if (typeof action === 'function') {
+    oo = URL_REGEX.test(url) ? `${url}` : `${baseURL}///${url}`
+    oo = oo.replace(/[/]{3,}/g, '/')
+    oo = action(oo)
   }
-
-  oo = oo.replace(/[/]{3,}/g, '/')
-
-  if (oo.endsWith('/')) {
-    oo = oo.slice(0, -1)
-  }
-
   return oo
 }
 
