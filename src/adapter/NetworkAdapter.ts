@@ -29,7 +29,7 @@ export class NetworkAdapter implements INetworkAdapter {
     endpoint: string
     ids?: ISingleOrMulti<IIdentifier>
     options?: IRequestOptions
-    method?: string
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
   }): { url: string; options?: any; cacheKey: string } {
     const options = props.options || {}
 

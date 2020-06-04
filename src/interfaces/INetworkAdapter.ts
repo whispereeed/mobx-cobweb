@@ -12,7 +12,7 @@ export interface INetworkAdapter {
     endpoint: string
     ids?: ISingleOrMulti<IIdentifier>
     options?: IRequestOptions
-    method?: string
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
   }): { url: string; options?: any; cacheKey: string }
 
   fetch(url: string, options: any): Promise<IResponseData>
