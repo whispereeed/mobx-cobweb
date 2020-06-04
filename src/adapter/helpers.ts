@@ -18,7 +18,6 @@ interface IQueryParamLimit {
 interface IQueryParams {
   orderBy?: IQueryParamOrder[]
   limit?: IQueryParamLimit
-  dims?: string
   filterBy?: string
   select?: string
 }
@@ -110,7 +109,6 @@ export function prepareSelector(selector: any): IQueryParams {
     filterBy: prepareFilters(selector.filters),
     orderBy: prepareOrders(selector.orders),
     select: prepareSelect(selector.select),
-    limit: prepareLimit(selector.limit),
-    dims: selector.dims
+    limit: prepareLimit(selector.limit)
   }
 }

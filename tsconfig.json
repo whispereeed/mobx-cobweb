@@ -17,6 +17,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "removeComments": true,
+    "outDir": "dist",
     "strictNullChecks": false,
     "inlineSourceMap": false,
     "emitDecoratorMetadata": true,

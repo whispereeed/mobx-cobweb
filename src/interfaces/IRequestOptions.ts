@@ -16,7 +16,6 @@ export interface IRequestOptions {
     orders?: string[]
     limit?: [number, number]
     select?: string | INestedArray<string>
-    dims?: string
   }
 
   // qs
@@ -25,8 +24,7 @@ export interface IRequestOptions {
   // url fix
   action?: string | ((url: string) => string)
 
-  // 'GET' | 'POST'
-  method?: string
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
   skipCache?: boolean
 }
