@@ -74,7 +74,7 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
   }
 }
 
-export function flattenModel(data: any, type: IType): IRawModel | null {
+export function flattenModel(data: any, type: IType): IRawModel {
   if (!data) return null
 
   return {
