@@ -10,4 +10,8 @@ export class Collection extends withNetPatches(_Collection) {
       this.types.push(O)
     }
   }
+
+  register<T extends PureModel>(O: IModelConstructor<T>) {
+    ;((this.constructor as unknown) as Collection).register(O)
+  }
 }

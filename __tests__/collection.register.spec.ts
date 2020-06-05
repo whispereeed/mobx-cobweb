@@ -15,18 +15,20 @@ describe('collection.register', () => {
     collection.removeAll(Staff)
   })
 
-  test('should be used registered Model', async () => {
+  test('should be used static function collection.register(Model)', async () => {
     useFixtureGetById(Staff.endpoint)
-    const response = await collection.fetch(Staff, 'XRA9koBTaA0000:gongyanyu')
+    const response = await collection.fetch<Staff>(Staff, 'XRA9koBTaA0000:gongyanyu')
     const staff = response.data
 
+    expect(staff).toBeInstanceOf(Staff)
+
     class StaffVM extends Model {
-      static type = 'vm::Staff'
+      static type = 'vm::Staff_2'
 
       @prop.toOne(Staff) staff: Staff
       @prop ccc: string
 
-      @action doit(ccc: string) {
+      @action test(ccc: string) {
         this.ccc = ccc
         this.staff.name = ccc
       }
@@ -39,10 +41,46 @@ describe('collection.register', () => {
     expect(staffVM.ccc).toBe('xxxxx')
     expect(staffVM.staff).toBe(staff)
 
-    const fn = jest.fn(() => staffVM.staff.name)
+    const fn = jest.fn(() => staff.name)
     autorun(fn)
 
-    staffVM.doit('dddd')
+    staffVM.test('dddd')
+    expect(staffVM.ccc).toBe('dddd')
+    expect(staffVM.staff.name).toBe('dddd')
+    expect(fn).toBeCalledTimes(2)
+  })
+
+  test('should be used instance function collection.register(Model)', async () => {
+    useFixtureGetById(Staff.endpoint)
+    const response = await collection.fetch<Staff>(Staff, 'XRA9koBTaA0000:gongyanyu')
+    const staff = response.data
+
+    expect(staff).toBeInstanceOf(Staff)
+
+    class StaffVM extends Model {
+      static type = 'vm::Staff'
+
+      @prop.toOne(Staff) staff: Staff
+      @prop ccc: string
+
+      @action test(ccc: string) {
+        this.ccc = ccc
+        this.staff.name = ccc
+      }
+    }
+
+    collection.register(StaffVM)
+
+    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }))
+
+    expect(staffVM.ccc).toBe('xxxxx')
+    expect(staffVM.staff).toBe(staff)
+    expect(staffVM.staff.id).toBe(staff.id)
+
+    const fn = jest.fn(() => staff.name)
+    autorun(fn)
+
+    staffVM.test('dddd')
     expect(staffVM.ccc).toBe('dddd')
     expect(staffVM.staff.name).toBe('dddd')
     expect(fn).toBeCalledTimes(2)

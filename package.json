@@ -42,7 +42,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jest": "^26.0.1",
     "jest-cli": "^26.0.1",
-    "mobx": "^5.9.4",
+    "mobx": "^4.15.4",
     "nock": "^12.0.3",
     "rollup": "^2.12.0",
     "rollup-plugin-typescript2": "^0.27.1",
