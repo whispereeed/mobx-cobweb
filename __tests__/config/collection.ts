@@ -4,7 +4,7 @@ import Staff from '../models/Staff'
 import Department from '../models/Department'
 import PropertySet from '../models/PropertySet'
 
-class Store extends Collection {
+export class Store extends Collection {
   static types = [GenericModel, Me, Staff, Department, PropertySet]
 }
 
