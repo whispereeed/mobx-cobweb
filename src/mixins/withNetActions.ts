@@ -27,8 +27,8 @@ export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) 
       return removeModel(this, options)
     }
 
-    @action public async fetchRefs() {
-      await fetchModelRefs(this)
+    @action public async fetchRefs(options?: IRequestOptions) {
+      await fetchModelRefs(this, options)
     }
   }
 

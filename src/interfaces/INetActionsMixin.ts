@@ -7,5 +7,5 @@ import { PureModel } from 'datx'
 export interface INetActionsMixin<T = PureModel> {
   save(options?: IRequestOptions): Promise<this>
   remove(options?: IRequestOptions): Promise<void>
-  fetchRefs(): Promise<void>
+  fetchRefs(options?: IRequestOptions): Promise<void>
 }

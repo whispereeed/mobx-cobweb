@@ -94,14 +94,9 @@ export function appendParams(url: string, qs: string): string {
   let newUrl = url
   if (qs && qs.length) {
     const separator = newUrl.indexOf('?') === -1 ? '?' : '&'
-    newUrl += separator + encodeParam(qs)
+    newUrl += separator + qs
   }
   return newUrl
-}
-
-export function encodeParam(param: string) {
-  // Manually decode field-value separator (=)
-  return encodeURIComponent(param).replace('%3D', '=')
 }
 
 export function prepareSelector(selector: any): IQueryParams {

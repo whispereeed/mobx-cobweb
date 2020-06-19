@@ -88,9 +88,19 @@ export function flattenModel(data: any, type: IType): IRawModel {
   }
 }
 
-export function fetchModelRefs<T extends PureModel>(model: T) {
+export function fetchModelRefs<T extends PureModel>(model: T, options: IRequestOptions = {}) {
   const collection = getModelCollection(model) as Collection
   const refs = getModelMetaKey(model, 'refs')
-  const map = Object.keys(refs).map((ref) => collection.fetch(refs[ref].model, getRefId(model, ref) as IIdentifier[]))
+
+  const map = Object.keys(refs)
+    .map((ref) => {
+      const ids = getRefId(model, ref) as IIdentifier[]
+      if (!ids || ids.length === 0) {
+        return undefined
+      }
+      return collection.fetch(refs[ref].model, ids, options)
+    })
+    .filter(Boolean)
+
   return Promise.all(map)
 }

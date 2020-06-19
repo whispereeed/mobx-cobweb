@@ -8,17 +8,19 @@ import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from 
 import { isBrowser } from '../helpers/utils'
 
 export class NetworkAdapter implements INetworkAdapter {
-  constructor(public baseUrl: string, public fetchInstance?: typeof fetch) {
+  constructor(public baseUrl: string, public fetchInstance?: typeof fetch, options?: any) {
     if (!fetchInstance) {
       if (isBrowser) {
-        this.fetchInstance = window.fetch
+        this.fetchInstance = window.fetch.bind(window)
       } else {
         throw new Error('Fetch reference needs to be defined before using the network')
       }
     }
+
+    this.defaultFetchOptions = Object.assign({}, this.defaultFetchOptions, options)
   }
 
-  defaultFetchOptions = {
+  defaultFetchOptions: any = {
     headers: {
       'content-type': 'application/json'
     }
@@ -34,7 +36,9 @@ export class NetworkAdapter implements INetworkAdapter {
     const options = props.options || {}
 
     const url = prepareURL(props.endpoint, props.type, props.ids)
-    const fixedURL = appendParams(prefixURL(url, this.baseUrl, options.action), prepareQS(options.params))
+    const { headers: defaultHeaders, params: defaultParams, ...defaultOthers } = this.defaultFetchOptions
+
+    const fixedURL = appendParams(prefixURL(url, this.baseUrl, options.action), prepareQS(Object.assign({}, defaultParams, options.params)))
 
     const requestHeaders: IDictionary<string> = options.headers || {}
     let uppercaseMethod = props.method.toUpperCase()
@@ -56,10 +60,9 @@ export class NetworkAdapter implements INetworkAdapter {
     }
 
     const isBodySupported = uppercaseMethod !== 'GET' && uppercaseMethod !== 'HEAD'
-    const defaultHeaders = this.defaultFetchOptions.headers || {}
     const reqHeaders: IDictionary<string> = Object.assign({}, defaultHeaders, requestHeaders)
 
-    const options2 = Object.assign({}, this.defaultFetchOptions, {
+    const options2 = Object.assign({}, defaultOthers, {
       body: (isBodySupported && JSON.stringify(body)) || undefined,
       headers: reqHeaders,
       method: uppercaseMethod
