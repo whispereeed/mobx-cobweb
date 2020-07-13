@@ -6,7 +6,7 @@ import { IIdentifier, IType, PureCollection, PureModel, View } from 'datx'
 import { getCache, saveCache } from './cache'
 import { getValue, isBrowser } from './utils'
 
-import { IRequestOptions, IRawResponse, INetworkAdapter, IResponseData, $PickOf, ISingleOrMulti } from '../interfaces'
+import { IRequestOptions, IRawResponse, INetworkAdapter, IResponseData, $PickOf, ISingleOrMulti, IRequestMethod } from '../interfaces'
 
 import { ResponseView } from '../ResponseView'
 
@@ -43,7 +43,7 @@ interface IDoFetchOptions {
   collection: PureCollection
   options: IRequestOptions
   modelType?: IType
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+  method: IRequestMethod
   ids?: ISingleOrMulti<IIdentifier>
   views?: View[]
 }

@@ -13,11 +13,8 @@ export interface INetPatchesCollection<T extends PureCollection> {
   sync<T extends PureModel>(type: IModelConstructor<T> | IType, data: object): T
 
   fetch<T extends PureModel>(type: IType | T | IModelConstructor<T>, options?: IRequestOptions): Promise<ResponseView<T[]>>
-
   fetch<T extends PureModel>(type: IType | T | IModelConstructor<T>, ids: undefined | null, options?: IRequestOptions): Promise<ResponseView<T[]>>
-
   fetch<T extends PureModel>(type: IType | T | IModelConstructor<T>, id?: IIdentifier, options?: IRequestOptions): Promise<ResponseView<T>>
-
   fetch<T extends PureModel>(type: IType | T | IModelConstructor<T>, ids?: IIdentifier[], options?: IRequestOptions): Promise<ResponseView<T[]>>
 
   removeOne(type: IType | typeof PureModel, id: IIdentifier, remote?: boolean | IRequestOptions): Promise<void>

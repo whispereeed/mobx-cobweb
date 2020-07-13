@@ -3,7 +3,7 @@
  ***************************************************/
 import { IIdentifier, IType } from 'datx'
 import { IDictionary } from 'datx-utils'
-import { INetworkAdapter, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
+import { INetworkAdapter, IRequestMethod, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { isBrowser } from '../helpers/utils'
 
@@ -31,7 +31,7 @@ export class NetworkAdapter implements INetworkAdapter {
     endpoint: string
     ids?: ISingleOrMulti<IIdentifier>
     options?: IRequestOptions
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+    method?: IRequestMethod
   }): { url: string; options?: any; cacheKey: string } {
     const options = props.options || {}
 

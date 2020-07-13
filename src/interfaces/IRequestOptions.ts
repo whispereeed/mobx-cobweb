@@ -4,6 +4,8 @@
 import { INestedArray } from './types'
 import { IDictionary } from 'datx-utils'
 
+export type IRequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+
 export interface IRequestOptions {
   headers?: IDictionary<string>
 
@@ -24,7 +26,7 @@ export interface IRequestOptions {
   // url fix
   action?: string | ((url: string) => string)
 
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+  method?: IRequestMethod
 
   skipCache?: boolean
 }
