@@ -104,29 +104,47 @@ export function query<M extends ISingleOrMulti<PureModel>>(
   })
 }
 
-export function create<T extends PureModel>(collection?: PureCollection, options?: IRequestOptions, views?: View[]): Promise<ResponseView<T>> {
+export function create<T extends PureModel>(
+  modelType: IType,
+  options?: IRequestOptions,
+  collection?: PureCollection,
+  views?: View[]
+): Promise<ResponseView<T>> {
   return doFetch<T>({
+    modelType,
     collection,
-    method: 'POST',
-    options: options,
-    views
+    options,
+    views,
+    method: 'POST'
   })
 }
 
-export function update<T extends PureModel>(collection?: PureCollection, options?: IRequestOptions, views?: View[]): Promise<ResponseView<T>> {
+export function update<T extends PureModel>(
+  modelType: IType,
+  options?: IRequestOptions,
+  collection?: PureCollection,
+  views?: View[]
+): Promise<ResponseView<T>> {
   return doFetch<T>({
+    modelType,
     collection,
-    method: 'PATCH',
-    options: options,
-    views
+    options,
+    views,
+    method: 'PATCH'
   })
 }
 
-export function remove<T extends PureModel>(collection?: PureCollection, options?: IRequestOptions, views?: View[]): Promise<ResponseView<T>> {
+export function remove<T extends PureModel>(
+  modelType: IType,
+  options?: IRequestOptions,
+  collection?: PureCollection,
+  views?: View[]
+): Promise<ResponseView<T>> {
   return doFetch<T>({
+    modelType,
     collection,
-    method: 'DELETE',
-    options: options,
-    views
+    options,
+    views,
+    method: 'DELETE'
   })
 }

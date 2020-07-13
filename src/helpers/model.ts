@@ -47,12 +47,15 @@ function handleResponse<T extends PureModel>(record: T, prop?: string): (respons
 export async function saveModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<T> {
   const collection = getModelCollection(model) as Collection
   const data = modelToJSON(model)
+  delete data.__META__
+
   const request = isModelPersisted(model) ? update : create
   options.data = data
+  const modelType = getModelType(model)
 
-  const result = await request<T>(collection, options)
+  const result = await request<T>(modelType, options, collection)
   const response: T = handleResponse<T>(model)(result)
-  clearCacheByType(getModelType(model))
+  clearCacheByType(modelType)
   return response
 }
 
@@ -62,7 +65,8 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
   const isPersisted = isModelPersisted(model)
 
   if (isPersisted) {
-    let response = await remove(collection, options)
+    const modelType = getModelType(model)
+    let response = await remove(modelType, options, collection)
     if (response.error) {
       throw response.error
     }
