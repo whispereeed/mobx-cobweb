@@ -65,9 +65,9 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
   const skipCache = doFetchOptions.options && doFetchOptions.options.skipCache
 
   if (config.cache && isCacheSupported && collectionCache && !skipCache) {
-    const cache = getCache(prepared.cacheKey)
-    if (cache) {
-      return Promise.resolve((cache.response as unknown) as ResponseView<M>)
+    const response = getCache(prepared.cacheKey, modelType)
+    if (response) {
+      return Promise.resolve((response as unknown) as ResponseView<M>)
     }
   }
 
@@ -77,7 +77,7 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
   const resp = new ResponseView<M>(collectionResponse, collection, options, undefined, views)
 
   if (config.cache && isCacheSupported) {
-    saveCache(prepared.url, resp)
+    saveCache(prepared.url, resp, modelType)
   }
 
   return resp

@@ -12,7 +12,7 @@ export type { IRequestOptions } from './interfaces/IRequestOptions'
 export { ResponseView } from './ResponseView'
 export { GenericModel } from './GenericModel'
 export { setNetworkAdapter } from './helpers/NetworkUtils'
-export { clearAllCache, clearCacheByType } from './helpers/cache'
+export { clearCache, clearCacheByType } from './helpers/cache'
 
 export { Collection } from './Collection'
 export { Model } from './Model'

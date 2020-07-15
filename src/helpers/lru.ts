@@ -1,0 +1,102 @@
+/***************************************************
+ * Created by nanyuantingfeng on 2020/7/15 17:47. *
+ ***************************************************/
+
+class Node<T> {
+  key: string | number
+  data: any
+  next: Node<T>
+  prev: Node<T>
+  constructor(key: string | number, data: T) {
+    this.key = key
+    this.data = data
+    this.next = null
+    this.prev = null
+  }
+}
+
+export default class LRU<T> {
+  private keys: object
+  private capacity: number
+  private head: Node<T>
+  private tail: Node<T>
+
+  constructor(capacity: number) {
+    this.capacity = capacity
+    this.clear()
+  }
+
+  clear() {
+    this.keys = {}
+    this.head = new Node('', null)
+    this.tail = new Node('', null)
+    this.head.next = this.tail
+    this.tail.prev = this.head
+  }
+
+  private __remove(node: Node<T>) {
+    const prev = node.prev
+    const next = node.next
+    prev.next = next
+    next.prev = prev
+  }
+
+  private __add(node: Node<T>) {
+    const realTail = this.tail.prev
+    realTail.next = node
+    this.tail.prev = node
+    node.prev = realTail
+    node.next = this.tail
+  }
+
+  public get(key: string | number): T {
+    const node = this.keys[key]
+    if (node == undefined) return null
+
+    this.__remove(node)
+    this.__add(node)
+    return node.data
+  }
+
+  public set(key: string | number, value: T) {
+    // remove node from 'old' position
+    const node = this.keys[key]
+    if (node) this.__remove(node)
+
+    // create new node and add at tail
+    const newNode = new Node(key, value)
+    this.__add(newNode)
+    this.keys[key] = newNode
+
+    // if we are over capacity then remove oldest node - its at the head
+    if (Object.keys(this.keys).length > this.capacity) {
+      const realHead = this.head.next
+      this.__remove(realHead)
+      delete this.keys[realHead.key]
+    }
+  }
+
+  public remove(key: string | number) {
+    const node = this.keys[key]
+    if (node == undefined) return null
+    this.__remove(node)
+  }
+
+  public forEach(fn: (node: Node<T>) => void) {
+    let pointer = this.head
+    let i = -1
+    while (++i < this.capacity) {
+      pointer = pointer.next
+      if (pointer === null) break
+      fn(pointer)
+    }
+  }
+
+  toString() {
+    const oo = []
+    this.forEach((node) => {
+      oo.push(node.key)
+    })
+    return oo.filter(Boolean).join(' <-> ')
+  }
+}

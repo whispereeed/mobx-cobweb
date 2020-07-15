@@ -7,7 +7,7 @@ import { IRawModel, mapItems } from 'datx-utils'
 import { getModelId, getModelType, ICollectionConstructor, IIdentifier, IModelConstructor, IType, PureCollection, PureModel, updateModel } from 'datx'
 
 import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
-import { clearAllCache, clearCacheByType } from '../helpers/cache'
+import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { flattenModel, removeModel } from '../helpers/model'
 import { IRequestOptions } from '../interfaces'
@@ -86,7 +86,6 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       }
 
       clearCacheByType(type)
-
       return Promise.resolve()
     }
 
@@ -97,7 +96,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
 
     @action reset() {
       super.reset()
-      clearAllCache()
+      clearCache()
     }
 
     private __addRecord<T extends PureModel>(item: any, type: IType): T {

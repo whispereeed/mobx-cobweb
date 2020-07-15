@@ -2,36 +2,32 @@
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
 import { getModelType, IType, PureModel } from 'datx'
-
 import { ResponseView } from '../ResponseView'
-
 import { ISingleOrMulti } from '../interfaces'
+import LRU from './lru'
 
-export interface ICache {
-  response: ResponseView<ISingleOrMulti<PureModel>>
-  timestamp: number
-  type: IType
-  url: string
-}
+const cache = new LRU<ResponseView<ISingleOrMulti<PureModel>>>(20)
 
-let cacheStorage: ICache[] = []
-
-export function saveCache(url: string, response: ResponseView<ISingleOrMulti<PureModel>>, modelType?: string) {
+export function saveCache(url: string, response: ResponseView<ISingleOrMulti<PureModel>>, modelType: IType) {
   if (response && 'data' in response && (!('error' in response) || !response.error) && response.data) {
     // The type might need to be 100% correct - used only to clear the cache
     const type = modelType || getModelType(response.data instanceof Array ? response.data[0] : response.data)
-    cacheStorage.push({ response, timestamp: Date.now(), type, url })
+    cache.set(`${url}@@@#${type}`, response)
   }
 }
 
-export function getCache(url: string): ICache | undefined {
-  return cacheStorage.find((item) => item.url === url)
+export function getCache(url: string, type: IType) {
+  return cache.get(`${url}@@@#${type}`)
 }
 
-export function clearAllCache() {
-  cacheStorage.length = 0
+export function clearCache() {
+  cache.clear()
 }
 
 export function clearCacheByType(type: IType) {
-  cacheStorage = cacheStorage.filter((item) => item.type !== type)
+  cache.forEach((node) => {
+    if (String(node.key).endsWith(`@@@#${type}`)) {
+      cache.remove(node.key)
+    }
+  })
 }
