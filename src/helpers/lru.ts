@@ -16,22 +16,14 @@ class Node<T> {
 }
 
 export default class LRU<T> {
-  private keys: object
   private capacity: number
+  private keys: object
   private head: Node<T>
   private tail: Node<T>
 
   constructor(capacity: number) {
     this.capacity = capacity
     this.clear()
-  }
-
-  clear() {
-    this.keys = {}
-    this.head = new Node('', null)
-    this.tail = new Node('', null)
-    this.head.next = this.tail
-    this.tail.prev = this.head
   }
 
   private __remove(node: Node<T>) {
@@ -49,7 +41,7 @@ export default class LRU<T> {
     node.next = this.tail
   }
 
-  public get(key: string | number): T {
+  get(key: string | number): T {
     const node = this.keys[key]
     if (node == undefined) return null
 
@@ -58,7 +50,7 @@ export default class LRU<T> {
     return node.data
   }
 
-  public set(key: string | number, value: T) {
+  set(key: string | number, value: T) {
     // remove node from 'old' position
     const node = this.keys[key]
     if (node) this.__remove(node)
@@ -76,13 +68,13 @@ export default class LRU<T> {
     }
   }
 
-  public remove(key: string | number) {
+  remove(key: string | number) {
     const node = this.keys[key]
     if (node == undefined) return null
     this.__remove(node)
   }
 
-  public forEach(fn: (node: Node<T>) => void) {
+  forEach(fn: (node: Node<T>) => void) {
     let pointer = this.head
     let i = -1
     while (++i < this.capacity) {
@@ -92,11 +84,17 @@ export default class LRU<T> {
     }
   }
 
+  clear() {
+    this.keys = {}
+    this.head = new Node('', null)
+    this.tail = new Node('', null)
+    this.head.next = this.tail
+    this.tail.prev = this.head
+  }
+
   toString() {
     const oo = []
-    this.forEach((node) => {
-      oo.push(node.key)
-    })
+    this.forEach((node) => oo.push(node.key))
     return oo.filter(Boolean).join(' <-> ')
   }
 }
