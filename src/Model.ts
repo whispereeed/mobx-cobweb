@@ -1,10 +1,13 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 12:53. *
  ***************************************************/
-import { Model as _Model } from 'datx'
+import { IModelConstructor, Model as _Model } from 'datx'
 import { withNetActions } from './mixins/withNetActions'
+import { INetActionsMixin } from './interfaces/INetActionsMixin'
 
-export class Model extends withNetActions(_Model) {
+const WithNetActionModel: IModelConstructor<_Model & INetActionsMixin<_Model>> = withNetActions(_Model)
+
+export class Model extends WithNetActionModel {
   toString() {
     return JSON.stringify(this.valueOf())
   }

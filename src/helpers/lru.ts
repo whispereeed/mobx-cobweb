@@ -17,7 +17,7 @@ class Node<T> {
 
 export default class LRU<T> {
   private capacity: number
-  private keys: object
+  private keys: Record<string | number, Node<T>>
   private head: Node<T>
   private tail: Node<T>
 
@@ -68,7 +68,7 @@ export default class LRU<T> {
     }
   }
 
-  remove(key: string | number) {
+  remove(key: string | number): void {
     const node = this.keys[key]
     if (node == undefined) return null
     this.__remove(node)
@@ -93,7 +93,7 @@ export default class LRU<T> {
   }
 
   toString() {
-    const oo = []
+    const oo: Array<string | number> = []
     this.forEach((node) => oo.push(node.key))
     return oo.filter(Boolean).join(' <-> ')
   }

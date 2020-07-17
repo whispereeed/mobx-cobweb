@@ -13,25 +13,16 @@ import { error } from './helpers/utils'
 
 export class ResponseView<T extends ISingleOrMulti<PureModel>> {
   public data: T | null = null
-
   public meta: object
-
   public headers?: Headers
-
   public requestHeaders?: IDictionary<string>
-
   public error?: IError[] | Error
-
   public status?: number
-
   public views: View[] = []
 
   public readonly collection?: PureCollection
-
   public readonly requestOptions?: IRequestOptions
-
   public readonly rawResponse: IRawResponse<$PickOf<T, object[], object>>
-
   public readonly modelType: IType
 
   constructor(
