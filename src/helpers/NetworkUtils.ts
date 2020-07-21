@@ -64,9 +64,10 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
   const isCacheSupported = method.toUpperCase() === 'GET'
   const skipCache = doFetchOptions.options && doFetchOptions.options.skipCache
 
-  if (config.cache && isCacheSupported && collectionCache && !skipCache) {
+  if (config.cache && isCacheSupported && collectionCache && !skipCache && prepared.cacheKey) {
     const response = getCache(prepared.cacheKey, modelType)
     if (response) {
+      console.info(`cache captured at ${prepared.cacheKey}`)
       return Promise.resolve((response as unknown) as ResponseView<M>)
     }
   }
@@ -74,13 +75,13 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
   const response1 = await config.adapter.fetch(prepared.url, prepared.options)
   const response2: IRawResponse<$PickOf<M, object[], object>> = packResponse(response1, modelType, collection)
   const collectionResponse = Object.assign(response2, { collection })
-  const resp = new ResponseView<M>(collectionResponse, collection, options, undefined, views)
+  const response = new ResponseView<M>(collectionResponse, collection, options, undefined, views)
 
   if (config.cache && isCacheSupported) {
-    saveCache(prepared.url, resp, modelType)
+    saveCache(prepared.cacheKey, modelType, response)
   }
 
-  return resp
+  return response
 }
 
 export function setNetworkAdapter(adapter: INetworkAdapter) {

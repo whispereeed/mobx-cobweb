@@ -16,7 +16,7 @@ class Node<T> {
 }
 
 export default class LRU<T> {
-  private capacity: number
+  private readonly capacity: number
   private keys: Record<string | number, Node<T>>
   private head: Node<T>
   private tail: Node<T>

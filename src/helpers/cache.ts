@@ -8,16 +8,16 @@ import LRU from './lru'
 
 const cache = new LRU<ResponseView<ISingleOrMulti<PureModel>>>(32)
 
-export function saveCache(url: string, response: ResponseView<ISingleOrMulti<PureModel>>, modelType: IType) {
+export function saveCache(url: string, modelType: IType, response: ResponseView<ISingleOrMulti<PureModel>>) {
   if (response && 'data' in response && (!('error' in response) || !response.error) && response.data) {
     // The type might need to be 100% correct - used only to clear the cache
     const type = modelType || getModelType(response.data instanceof Array ? response.data[0] : response.data)
-    cache.set(`${url}@@@#${type}`, response)
+    cache.set(`${url}@@${type}`, response)
   }
 }
 
 export function getCache(url: string, type: IType) {
-  return cache.get(`${url}@@@#${type}`)
+  return cache.get(`${url}@@${type}`)
 }
 
 export function clearCache() {

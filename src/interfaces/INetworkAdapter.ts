@@ -13,7 +13,7 @@ export interface INetworkAdapter {
     ids?: ISingleOrMulti<IIdentifier>
     options?: IRequestOptions
     method?: IRequestMethod
-  }): { url: string; options?: any; cacheKey: string }
+  }): { url: string; options?: any; cacheKey?: string }
 
   fetch(url: string, options: any): Promise<IResponseData>
 

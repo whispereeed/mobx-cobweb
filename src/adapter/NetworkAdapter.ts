@@ -5,17 +5,17 @@ import { IIdentifier, IType } from 'datx'
 import { IDictionary } from 'datx-utils'
 import { INetworkAdapter, IRequestMethod, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
-import { isBrowser } from '../helpers/utils'
+import { isBrowser, isEmptyObject } from '../helpers/utils'
 
 export class NetworkAdapter implements INetworkAdapter {
   private readonly baseUrl: string
   private readonly fetchInstance: typeof fetch
+  protected defaultFetchOptions: any = { headers: { 'content-type': 'application/json' } }
 
   constructor(baseUrl: string)
   constructor(baseUrl: string, fetchInstance?: typeof fetch)
   constructor(baseUrl: string, options?: Partial<{ params: any; headers: any }>)
   constructor(baseUrl: string, fetchInstance?: typeof fetch, options?: Partial<{ params: any; headers: any }>)
-
   constructor(baseUrl: string, fetchInstance?: any, options?: any) {
     this.baseUrl = baseUrl
 
@@ -36,15 +36,13 @@ export class NetworkAdapter implements INetworkAdapter {
     }
   }
 
-  defaultFetchOptions: any = { headers: { 'content-type': 'application/json' } }
-
   prepare(props: {
     type: IType
     endpoint: string
     ids?: ISingleOrMulti<IIdentifier>
     options?: IRequestOptions
     method?: IRequestMethod
-  }): { url: string; options?: any; cacheKey: string } {
+  }): { url: string; options?: any; cacheKey?: string } {
     const options = props.options || {}
 
     const url = prepareURL(props.endpoint, props.type, props.ids)
@@ -56,31 +54,31 @@ export class NetworkAdapter implements INetworkAdapter {
     let uppercaseMethod = props.method.toUpperCase()
     let body = options.data
     let cacheKey = undefined
+    let selectBody = undefined
 
-    if (uppercaseMethod === 'GET' && options.selector) {
-      const selectBody = prepareSelector(options.selector)
+    if (options.selector) {
+      selectBody = prepareSelector(options.selector)
+      body = { ...body, ...selectBody }
+    }
 
-      const selectBodyString = JSON.stringify(selectBody)
-      if (selectBodyString !== '{}') {
+    if (uppercaseMethod === 'GET') {
+      if (!isEmptyObject(selectBody)) {
         // If it's a `selector` call, switch to the `POST` procedure
         // to ensure the parameter integrity of the `body`
         uppercaseMethod = 'POST'
-        body = { ...body, ...selectBody }
       }
-
-      cacheKey = fixedURL + ':' + selectBodyString
+      cacheKey = `${fixedURL}@@${body ? JSON.stringify(body) : ''}`
     }
 
     const isBodySupported = uppercaseMethod !== 'GET' && uppercaseMethod !== 'HEAD'
     const reqHeaders: IDictionary<string> = Object.assign({}, defaultHeaders, requestHeaders)
-
-    const options2 = Object.assign({}, defaultOthers, {
+    const optionsO = Object.assign({}, defaultOthers, {
       body: (isBodySupported && JSON.stringify(body)) || undefined,
       headers: reqHeaders,
       method: uppercaseMethod
     })
 
-    return { url: fixedURL, options: options2, cacheKey }
+    return { url: fixedURL, options: optionsO, cacheKey }
   }
 
   async fetch(url: string, options: any): Promise<IResponseData> {
