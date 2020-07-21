@@ -8,23 +8,35 @@ import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from 
 import { isBrowser } from '../helpers/utils'
 
 export class NetworkAdapter implements INetworkAdapter {
-  constructor(public baseUrl: string, public fetchInstance?: typeof fetch, options?: any) {
-    if (!fetchInstance) {
-      if (isBrowser) {
-        this.fetchInstance = window.fetch.bind(window)
-      } else {
-        throw new Error('Fetch reference needs to be defined before using the network')
-      }
+  private readonly baseUrl: string
+  private readonly fetchInstance: typeof fetch
+
+  constructor(baseUrl: string)
+  constructor(baseUrl: string, fetchInstance?: typeof fetch)
+  constructor(baseUrl: string, options?: Partial<{ params: any; headers: any }>)
+  constructor(baseUrl: string, fetchInstance?: typeof fetch, options?: Partial<{ params: any; headers: any }>)
+
+  constructor(baseUrl: string, fetchInstance?: any, options?: any) {
+    this.baseUrl = baseUrl
+
+    if (fetchInstance && typeof fetchInstance !== 'function') {
+      options = fetchInstance
+      fetchInstance = undefined
     }
 
+    this.fetchInstance = fetchInstance
     this.defaultFetchOptions = Object.assign({}, this.defaultFetchOptions, options)
-  }
 
-  defaultFetchOptions: any = {
-    headers: {
-      'content-type': 'application/json'
+    if (!fetchInstance && !isBrowser) {
+      throw new Error('Fetch reference needs to be defined before using the network')
+    }
+
+    if (isBrowser && !fetchInstance) {
+      this.fetchInstance = window.fetch.bind(window)
     }
   }
+
+  defaultFetchOptions: any = { headers: { 'content-type': 'application/json' } }
 
   prepare(props: {
     type: IType

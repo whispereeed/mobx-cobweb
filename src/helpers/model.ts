@@ -1,5 +1,4 @@
 import { getModelCollection, getModelMetaKey, getModelType, getRefId, IIdentifier, IType, modelToJSON, PureModel, setModelMetaKey } from 'datx'
-
 import { IRawModel, META_FIELD } from 'datx-utils'
 
 import { clearCacheByType } from './cache'

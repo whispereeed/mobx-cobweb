@@ -4,5 +4,4 @@
 import './network'
 
 export * from './collection'
-
 export * from './nockConfig'

@@ -16,6 +16,7 @@ export { clearCache, clearCacheByType } from './helpers/cache'
 
 export { Collection } from './Collection'
 export { Model } from './Model'
+export { SingletonModel } from './SingletonModel'
 
 export { ListDataView } from './views/ListDataView'
 export { TreeDataView } from './views/TreeDataView'
