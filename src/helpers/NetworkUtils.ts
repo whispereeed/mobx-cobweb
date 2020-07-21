@@ -6,14 +6,9 @@ import { IIdentifier, IType, PureCollection, PureModel, View } from 'datx'
 import { getCache, saveCache } from './cache'
 import { getValue, isBrowser } from './utils'
 
-import { IRequestOptions, IRawResponse, INetworkAdapter, IResponseData, $PickOf, ISingleOrMulti, IRequestMethod } from '../interfaces'
-
+import { IRequestOptions, IRawResponse, IResponseData, $PickOf, ISingleOrMulti, IRequestMethod } from '../interfaces'
 import { ResponseView } from '../ResponseView'
-
-const config: { cache: boolean; adapter: INetworkAdapter } = {
-  cache: isBrowser,
-  adapter: null
-}
+import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
 
 function packResponse<T>(responseData: IResponseData, modelType: IType, collection: PureCollection): IRawResponse<T> {
   const { data = {} as any, ...others } = responseData
@@ -40,7 +35,7 @@ function getModelEndpointURL(type: IType, collection: PureCollection): string {
 }
 
 interface IDoFetchOptions {
-  collection: PureCollection
+  collection: INetPatchesCollection<PureCollection> & PureCollection
   options: IRequestOptions
   modelType?: IType
   method: IRequestMethod
@@ -51,7 +46,7 @@ interface IDoFetchOptions {
 async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoFetchOptions): Promise<ResponseView<M>> {
   const { options, method = 'GET', collection, views, modelType, ids } = doFetchOptions
 
-  const prepared = config.adapter.prepare({
+  const prepared = collection.adapter.prepare({
     type: modelType,
     endpoint: getModelEndpointURL(modelType, collection),
     ids: ids,
@@ -64,7 +59,7 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
   const isCacheSupported = method.toUpperCase() === 'GET'
   const skipCache = doFetchOptions.options && doFetchOptions.options.skipCache
 
-  if (config.cache && isCacheSupported && collectionCache && !skipCache && prepared.cacheKey) {
+  if (isBrowser && isCacheSupported && collectionCache && !skipCache && prepared.cacheKey) {
     const response = getCache(prepared.cacheKey, modelType)
     if (response) {
       console.info(`cache captured at ${prepared.cacheKey}`)
@@ -72,26 +67,22 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
     }
   }
 
-  const response1 = await config.adapter.fetch(prepared.url, prepared.options)
+  const response1 = await collection.adapter.fetch(prepared.url, prepared.options)
   const response2: IRawResponse<$PickOf<M, object[], object>> = packResponse(response1, modelType, collection)
   const collectionResponse = Object.assign(response2, { collection })
   const response = new ResponseView<M>(collectionResponse, collection, options, undefined, views)
 
-  if (config.cache && isCacheSupported) {
+  if (isBrowser && isCacheSupported) {
     saveCache(prepared.cacheKey, modelType, response)
   }
 
   return response
 }
 
-export function setNetworkAdapter(adapter: INetworkAdapter) {
-  config.adapter = adapter
-}
-
 export function query<M extends ISingleOrMulti<PureModel>>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: PureCollection,
+  collection?: INetPatchesCollection<PureCollection> & PureCollection,
   views?: View[],
   ids?: ISingleOrMulti<IIdentifier>
 ): Promise<ResponseView<M>> {
@@ -108,7 +99,7 @@ export function query<M extends ISingleOrMulti<PureModel>>(
 export function create<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: PureCollection,
+  collection?: INetPatchesCollection<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return doFetch<T>({
@@ -123,7 +114,7 @@ export function create<T extends PureModel>(
 export function update<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: PureCollection,
+  collection?: INetPatchesCollection<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return doFetch<T>({
@@ -138,7 +129,7 @@ export function update<T extends PureModel>(
 export function remove<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: PureCollection,
+  collection?: INetPatchesCollection<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return doFetch<T>({

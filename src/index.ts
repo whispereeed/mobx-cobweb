@@ -11,7 +11,6 @@ export type { IRequestOptions } from './interfaces/IRequestOptions'
 
 export { ResponseView } from './ResponseView'
 export { GenericModel } from './GenericModel'
-export { setNetworkAdapter } from './helpers/NetworkUtils'
 export { clearCache, clearCacheByType } from './helpers/cache'
 
 export { Collection } from './Collection'

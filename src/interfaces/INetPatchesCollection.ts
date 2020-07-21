@@ -4,9 +4,13 @@
 import { IIdentifier, IModelConstructor, IType, PureCollection, PureModel } from 'datx'
 import { IRawData } from './IRawData'
 import { IRequestOptions } from './IRequestOptions'
-import { ResponseView } from '..'
+import { ResponseView } from '../ResponseView'
+import { INetworkAdapter } from './INetworkAdapter'
 
 export interface INetPatchesCollection<T extends PureCollection> {
+  adapter: INetworkAdapter
+  setNetworkAdapter(adapter: INetworkAdapter): void
+
   sync<T extends PureModel>(data?: IRawData<object[]>): T[]
   sync<T extends PureModel>(data?: IRawData<object>): T
   sync<T extends PureModel>(type: IModelConstructor<T> | IType, data: object[]): T[]

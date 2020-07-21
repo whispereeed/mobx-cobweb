@@ -1,7 +1,6 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 12:55. *
  ***************************************************/
-
 import { action } from 'mobx'
 import { IRawModel, mapItems } from 'datx-utils'
 import { getModelId, getModelType, ICollectionConstructor, IIdentifier, IModelConstructor, IType, PureCollection, PureModel, updateModel } from 'datx'
@@ -10,7 +9,7 @@ import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { flattenModel, removeModel } from '../helpers/model'
-import { IRequestOptions } from '../interfaces'
+import { INetworkAdapter, IRequestOptions } from '../interfaces'
 import { GenericModel } from '../GenericModel'
 import { query } from '../helpers/NetworkUtils'
 import { isBrowser } from '../helpers/utils'
@@ -22,6 +21,12 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
     static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(GenericModel) : [GenericModel]
     static cache: boolean = (BaseClass as any)[''] === undefined ? isBrowser : (BaseClass as any)['cache']
     static defaultModel = BaseClass.defaultModel || GenericModel
+
+    adapter: INetworkAdapter
+
+    setNetworkAdapter(adapter: INetworkAdapter) {
+      this.adapter = adapter
+    }
 
     @action sync<P extends PureModel>(raw: any, data?: any): P | P[] {
       if (!raw) return null
