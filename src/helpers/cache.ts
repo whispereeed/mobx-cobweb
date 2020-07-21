@@ -26,7 +26,7 @@ export function clearCache() {
 
 export function clearCacheByType(type: IType) {
   cache.forEach((node) => {
-    if (String(node.key).endsWith(`@@@#${type}`)) {
+    if (String(node.key).endsWith(`@@${type}`)) {
       cache.remove(node.key)
     }
   })

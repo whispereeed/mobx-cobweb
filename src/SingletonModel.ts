@@ -3,12 +3,14 @@
  ***************************************************/
 import { Model } from './Model'
 
-const __SingletonModel_ID__ = 'SINGLETON(0)'
-
 export class SingletonModel extends Model {
   static enableAutoId = false
+  static __ID__ = '__SINGLETON_MODEL__ID__(-1)'
+
   static preprocess(data: any) {
-    if (data) data.id = __SingletonModel_ID__
+    if (data) {
+      data.id = SingletonModel.__ID__
+    }
     return data
   }
 

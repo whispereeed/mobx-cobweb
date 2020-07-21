@@ -7,7 +7,7 @@ export default class Power extends Model {
   static type = 'charge.Powers'
   static endpoint = '/charge/powers'
 
-  @prop public powerCode: string
+  @prop.identifier public powerCode: string
   @prop public powerName: string
   @prop public chargeType: string
   @prop public state: string

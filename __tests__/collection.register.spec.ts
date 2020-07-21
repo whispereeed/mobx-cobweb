@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/5 13:38. *
  ***************************************************/
-import { collection, Store, useFixtureGetById, useFixturesByGET } from './config'
+import { collection, MyCollection, useFixtureGetById, useFixturesByGET } from './config'
 import Staff from './models/Staff'
 import { Model } from '../src'
 import { prop } from 'datx'
@@ -34,7 +34,7 @@ describe('collection.register', () => {
       }
     }
 
-    Store.register(StaffVM)
+    MyCollection.register(StaffVM)
 
     const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }))
 
