@@ -1,7 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import { NetworkAdapter } from '../../src'
-
-import { Collection, GenericModel } from '../../src'
+import { Collection, GenericModel, NetworkAdapter } from '../../src'
 import Me from '../models/Me'
 import Staff from '../models/Staff'
 import Department from '../models/Department'

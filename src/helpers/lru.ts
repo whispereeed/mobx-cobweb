@@ -43,6 +43,7 @@ export default class LRU<T> {
 
   get(key: string | number): T {
     const node = this.keys[key]
+    // tslint:disable-next-line:triple-equals
     if (node == undefined) return null
 
     this.__remove(node)
@@ -70,6 +71,7 @@ export default class LRU<T> {
 
   remove(key: string | number): void {
     const node = this.keys[key]
+    // tslint:disable-next-line:triple-equals
     if (node == undefined) return null
     this.__remove(node)
   }

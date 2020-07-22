@@ -25,10 +25,10 @@ function packResponse<T>(responseData: IResponseData, modelType: IType, collecti
 function getModelEndpointURL(type: IType, collection: PureCollection): string {
   const StaticCollection = collection.constructor as typeof PureCollection
   const QueryModel: any = StaticCollection.types.filter((item) => item.type === type)[0]
-  const endpoint = getValue<string>(QueryModel['endpoint'])
+  const endpoint = getValue<string>(QueryModel.endpoint)
 
   if (!endpoint) {
-    throw `No definition for endpoint was found at Model<${type}>`
+    throw new Error(`No definition for endpoint was found at Model<${type}>`)
   }
 
   return endpoint
@@ -49,7 +49,7 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
   const prepared = collection.adapter.prepare({
     type: modelType,
     endpoint: getModelEndpointURL(modelType, collection),
-    ids: ids,
+    ids,
     options,
     method
   })
@@ -60,10 +60,10 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
   const skipCache = doFetchOptions.options && doFetchOptions.options.skipCache
 
   if (isBrowser && isCacheSupported && collectionCache && !skipCache && prepared.cacheKey) {
-    const response = getCache(prepared.cacheKey, modelType)
-    if (response) {
-      console.info(`cache captured at ${prepared.cacheKey}`)
-      return Promise.resolve((response as unknown) as ResponseView<M>)
+    const _response = getCache(prepared.cacheKey, modelType)
+    if (_response) {
+      // console.info(`cache captured at ${prepared.cacheKey}`)
+      return Promise.resolve((_response as unknown) as ResponseView<M>)
     }
   }
 

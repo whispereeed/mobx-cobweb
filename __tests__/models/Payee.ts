@@ -20,10 +20,10 @@ export default class Payee extends Model {
   @prop public corporationId: any
   @prop public type: string //  "PERSONAL"
 
-  @prop public owner: string //CORPORATION
+  @prop public owner: string // CORPORATION
   @prop public cardNo: string
   @prop public logs: Array<{
-    action: string //"CREATE"
+    action: string // "CREATE"
     operatorId: string
     time: number
     attributes: any

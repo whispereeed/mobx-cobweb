@@ -21,7 +21,7 @@ export default class Menu extends Model {
   @prop public createTime: number
   @prop public updateTime: number
 
-  @prop public deviceType: string //"DESKTOP"
+  @prop public deviceType: string // "DESKTOP"
   @prop public label: string
   @prop public icon: string
   @prop public color: string

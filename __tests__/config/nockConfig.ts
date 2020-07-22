@@ -65,7 +65,7 @@ export function useFixtureGetChildrenById(key: string) {
       const json = MAPPER[key]
       const object = json.items.filter((k: any) => k.parentId === id)
       const items = object.slice(start, start + count)
-      return JSON.stringify({ items: items, count: object.length })
+      return JSON.stringify({ items, count: object.length })
     })
 }
 
@@ -73,7 +73,7 @@ export function useFixtureGetParentsById(key: string) {
   CURRENT_SCOPE.get(new RegExp(key + '/.+/parents')).reply(200, (uri: string) => {
     const id = uri.replace(key, '').replace('/api/v1/', '').replace('/parents', '')
     const json = MAPPER[key]
-    const findOne = (id: string) => json.items.find((k: any) => k.id === id)
+    const findOne = (_id: string) => json.items.find((k: any) => k.id === _id)
     let current = findOne(id)
     const object = []
     while (current) {

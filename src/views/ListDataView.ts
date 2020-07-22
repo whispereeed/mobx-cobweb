@@ -64,6 +64,7 @@ export class ListDataView<T extends PureModel> {
   }
 
   prev(): Promise<this> {
+    // tslint:disable-next-line:prefer-const
     let [start, count] = this.limit
     start -= count
     start = start <= 0 ? 0 : start
@@ -78,6 +79,7 @@ export class ListDataView<T extends PureModel> {
   }
 
   next(): Promise<this> {
+    // tslint:disable-next-line:prefer-const
     let [start, count] = this.limit
     start += count
     this.limit = [start, count]

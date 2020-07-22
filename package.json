@@ -1,6 +1,6 @@
 {
   "name": "mobx-cobweb",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "ORM for Frontend",
   "main": "dist/index.lib.js",
   "module": "dist/index.esm.js",

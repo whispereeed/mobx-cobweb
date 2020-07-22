@@ -53,8 +53,8 @@ export class NetworkAdapter implements INetworkAdapter {
     const requestHeaders: IDictionary<string> = options.headers || {}
     let uppercaseMethod = props.method.toUpperCase()
     let body = options.data
-    let cacheKey = undefined
-    let selectBody = undefined
+    let cacheKey
+    let selectBody
 
     if (options.selector) {
       selectBody = prepareSelector(options.selector)
@@ -90,7 +90,7 @@ export class NetworkAdapter implements INetworkAdapter {
       let responseData: any
       try {
         await request
-        let response: Response = await this.fetchInstance(url, options)
+        const response: Response = await this.fetchInstance(url, options)
         status = response.status
         headers = response.headers
         responseData = await response.json()
@@ -101,7 +101,7 @@ export class NetworkAdapter implements INetworkAdapter {
         throw error
       }
 
-      let result: IResponseData = {}
+      const result: IResponseData = {}
 
       if (responseData.value) {
         result.data = responseData.value

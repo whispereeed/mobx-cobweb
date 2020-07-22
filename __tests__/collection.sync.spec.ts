@@ -1,6 +1,7 @@
 import { collection, useFixturesByGET } from './config'
 import { modelToJSON } from 'datx'
 import Department from './models/Department'
+// tslint:disable-next-line:no-var-requires
 const path = require('path')
 
 describe('collection.sync', () => {
@@ -30,7 +31,7 @@ describe('collection.sync', () => {
   test('should sync IRawData', () => {
     const sf = collection.sync<Department>({
       type: 'organization.Department',
-      data: data
+      data
     })
     cases(sf)
   })

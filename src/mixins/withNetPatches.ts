@@ -19,7 +19,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
 
   class WithNetPatches extends BaseClass implements INetPatchesCollection<T> {
     static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(GenericModel) : [GenericModel]
-    static cache: boolean = (BaseClass as any)[''] === undefined ? isBrowser : (BaseClass as any)['cache']
+    static cache: boolean = (BaseClass as any)[''] === undefined ? isBrowser : (BaseClass as any).cache
     static defaultModel = BaseClass.defaultModel || GenericModel
 
     adapter: INetworkAdapter

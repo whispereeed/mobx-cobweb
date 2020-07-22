@@ -65,7 +65,7 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
 
   if (isPersisted) {
     const modelType = getModelType(model)
-    let response = await remove(modelType, options, collection)
+    const response = await remove(modelType, options, collection)
     if (response.error) {
       throw response.error
     }
@@ -86,7 +86,7 @@ export function flattenModel(data: any, type: IType): IRawModel {
       id: data.id,
       [MODEL_PERSISTED_FIELD]: Boolean(data.id),
       refs: {},
-      type: type
+      type,
     }
   }
 }
