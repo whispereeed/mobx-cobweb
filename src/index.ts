@@ -4,7 +4,8 @@
 export * from './interfaces'
 export * from './helpers/model'
 
-export { prop, View } from 'datx'
+export { View } from 'datx'
+export * from './decorators/attribute'
 
 export type { IRawResponse } from './interfaces/IRawResponse'
 export type { IRequestOptions } from './interfaces/IRequestOptions'

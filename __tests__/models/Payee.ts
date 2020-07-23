@@ -1,37 +1,37 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/4 11:27. *
  ***************************************************/
-import { Model, prop } from '../../src'
+import { identifier, Model, property } from '../../src'
 
 export default class Payee extends Model {
   static type = 'form.Payees.Mine'
   static endpoint = '/form/payees/mine'
 
-  @prop.identifier public id: string
+  @identifier public id: string
 
-  @prop public version: number
-  @prop public active: boolean
-  @prop public createTime: number
-  @prop public updateTime: number
+  @property public version: number
+  @property public active: boolean
+  @property public createTime: number
+  @property public updateTime: number
 
-  @prop public name: string
-  @prop public nameSpell: string
-  @prop public code: string
-  @prop public corporationId: any
-  @prop public type: string //  "PERSONAL"
+  @property public name: string
+  @property public nameSpell: string
+  @property public code: string
+  @property public corporationId: any
+  @property public type: string //  "PERSONAL"
 
-  @prop public owner: string // CORPORATION
-  @prop public cardNo: string
-  @prop public logs: Array<{
+  @property public owner: string // CORPORATION
+  @property public cardNo: string
+  @property public logs: Array<{
     action: string // "CREATE"
     operatorId: string
     time: number
     attributes: any
   }>
-  @prop public sort: string // "BANK"
+  @property public sort: string // "BANK"
 
-  @prop public staffId: string
-  @prop public visibility: {
+  @property public staffId: string
+  @property public visibility: {
     fullVisible: boolean
     staffs: null
     roles: null
@@ -39,16 +39,16 @@ export default class Payee extends Model {
     departmentsIncludeChildren: boolean
   }
 
-  @prop public branch: string
-  @prop public icon: string
-  @prop public bank: string
-  @prop public province: string
+  @property public branch: string
+  @property public icon: string
+  @property public bank: string
+  @property public province: string
 
-  @prop public city: string
-  @prop public certificateType: string
-  @prop public certificateNo: string
-  @prop public bankLinkNo: string
-  @prop public unionIcon: string
-  @prop public unionBank: string
-  @prop public isDefault: boolean
+  @property public city: string
+  @property public certificateType: string
+  @property public certificateNo: string
+  @property public bankLinkNo: string
+  @property public unionIcon: string
+  @property public unionBank: string
+  @property public isDefault: boolean
 }

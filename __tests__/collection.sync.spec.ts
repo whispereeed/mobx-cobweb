@@ -1,7 +1,6 @@
 import { collection, useFixturesByGET } from './config'
 import { modelToJSON } from 'datx'
 import Department from './models/Department'
-// tslint:disable-next-line:no-var-requires
 const path = require('path')
 
 describe('collection.sync', () => {

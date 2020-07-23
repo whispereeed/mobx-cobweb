@@ -1,26 +1,26 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/29 11:53. *
  ***************************************************/
-import { Model, prop } from '../../src'
+import { identifier, Model, property, referenceMany, referenceOne } from '../../src'
 
 export default class Department extends Model {
   static type = 'organization.Department'
   static endpoint = '/organization/departments'
 
-  @prop.identifier public id: string
+  @identifier public id: string
 
-  @prop public version: number
-  @prop public active: boolean
-  @prop public createTime: number
-  @prop public updateTime: number
+  @property public version: number
+  @property public active: boolean
+  @property public createTime: number
+  @property public updateTime: number
 
-  @prop public name: string
-  @prop public nameSpell: string
-  @prop public code: string
-  @prop public corporationId: any
+  @property public name: string
+  @property public nameSpell: string
+  @property public code: string
+  @property public corporationId: any
 
-  @prop.toOne(Department) public parentId: Department
-  @prop.toMany(Department) public children: Department[]
+  @referenceOne(Department) public parentId: Department
+  @referenceMany(Department) public children: Department[]
 
-  @prop public order: number
+  @property public order: number
 }

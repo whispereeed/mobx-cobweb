@@ -1,16 +1,16 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/4 11:22. *
  ***************************************************/
-import { Model, prop } from '../../src'
+import { Model, property } from '../../src'
 
 export default class PropertySet extends Model {
   static type = 'flow.PropertySet'
   static endpoint = '/flow/propertySet'
 
-  @prop public name: string
-  @prop public label: string
-  @prop public active: boolean
-  @prop public canAsDimension: boolean
-  @prop public ability: boolean
-  @prop public dataType: object
+  @property public name: string
+  @property public label: string
+  @property public active: boolean
+  @property public canAsDimension: boolean
+  @property public ability: boolean
+  @property public dataType: object
 }

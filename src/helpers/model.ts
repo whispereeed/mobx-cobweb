@@ -86,7 +86,7 @@ export function flattenModel(data: any, type: IType): IRawModel {
       id: data.id,
       [MODEL_PERSISTED_FIELD]: Boolean(data.id),
       refs: {},
-      type,
+      type
     }
   }
 }

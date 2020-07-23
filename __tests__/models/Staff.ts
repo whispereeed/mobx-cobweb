@@ -1,39 +1,35 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/29 11:49. *
  ***************************************************/
-import { Model, prop } from '../../src'
+import { identifier, Model, property, referenceMany, referenceOne } from '../../src'
 import Department from './Department'
 
 export default class Staff extends Model {
   static type = 'organization.Staff'
   static endpoint = '/organization/staffs/actives'
 
-  @prop.identifier public id: string
+  @identifier public id: string
 
-  @prop public version: number
-  @prop public active: boolean
-  @prop public createTime: number
-  @prop public updateTime: number
+  @property public version: number
+  @property public active: boolean
+  @property public createTime: number
+  @property public updateTime: number
 
-  @prop public name: string
-  @prop public nameSpell: string
-  @prop public code: string
-  @prop public corporationId: string
-  @prop public userId: string
-  @prop public avatar: string
-  @prop public email: string
-  @prop public cellphone: string
-  @prop public note: string
+  @property public name: string
+  @property public nameSpell: string
+  @property public code: string
+  @property public corporationId: string
+  @property public userId: string
+  @property public avatar: string
+  @property public email: string
+  @property public cellphone: string
+  @property public note: string
 
-  @prop.toMany(Department) public departments: Department[]
+  @referenceMany(Department) public departments: Department[]
+  @referenceOne(Department) public defaultDepartment: Department
 
-  @prop.toOne(Department) public defaultDepartment: Department
-
-  @prop public external: boolean
-
-  @prop public order: Record<string, string>
-
-  @prop public corporation: any
-
-  @prop public roles: any
+  @property public external: boolean
+  @property public order: Record<string, string>
+  @property public corporation: any
+  @property public roles: any
 }
