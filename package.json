@@ -52,7 +52,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "datx": "^1.0.1",
-    "datx-utils": "^1.0.0"
+    "@issues-beta/datx": "^2.0.0-beta.4",
+    "datx-utils": "^2.0.0-beta.3"
   }
 }

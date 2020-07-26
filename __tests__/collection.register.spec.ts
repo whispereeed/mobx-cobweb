@@ -3,8 +3,7 @@
  ***************************************************/
 import { collection, MyCollection, useFixtureGetById, useFixturesByGET } from './config'
 import Staff from './models/Staff'
-import { Model } from '../src'
-import { prop } from 'datx'
+import { Model, property, referenceOne } from '../src'
 import { action, autorun } from 'mobx'
 
 describe('collection.register', () => {
@@ -25,8 +24,8 @@ describe('collection.register', () => {
     class StaffVM extends Model {
       static type = 'vm::Staff_2'
 
-      @prop.toOne(Staff) staff: Staff
-      @prop ccc: string
+      @referenceOne(Staff) staff: Staff
+      @property ccc: string
 
       @action test(ccc: string) {
         this.ccc = ccc
@@ -36,7 +35,7 @@ describe('collection.register', () => {
 
     MyCollection.register(StaffVM)
 
-    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }))
+    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }, collection))
 
     expect(staffVM.ccc).toBe('xxxxx')
     expect(staffVM.staff).toBe(staff)
@@ -60,8 +59,8 @@ describe('collection.register', () => {
     class StaffVM extends Model {
       static type = 'vm::Staff'
 
-      @prop.toOne(Staff) staff: Staff
-      @prop ccc: string
+      @referenceOne(Staff) staff: Staff
+      @property ccc: string
 
       @action test(ccc: string) {
         this.ccc = ccc
@@ -69,9 +68,10 @@ describe('collection.register', () => {
       }
     }
 
+
     collection.register(StaffVM)
 
-    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }))
+    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }, collection))
 
     expect(staffVM.ccc).toBe('xxxxx')
     expect(staffVM.staff).toBe(staff)

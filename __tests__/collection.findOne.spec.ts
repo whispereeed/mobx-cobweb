@@ -1,6 +1,6 @@
 import { collection, useFixturesByGET } from './config'
 
-import { modelToJSON } from 'datx'
+import { modelToJSON } from '../src'
 import Staff from './models/Staff'
 import Me from './models/Me'
 

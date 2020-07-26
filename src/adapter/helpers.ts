@@ -2,8 +2,7 @@
  * Created by nanyuantingfeng on 2019/11/28 17:44. *
  ***************************************************/
 import { INestedArray, ISingleOrMulti } from '../interfaces'
-import { IIdentifier, IType } from 'datx'
-import { IDictionary } from 'datx-utils'
+import { IIdentifier, IType } from '@issues-beta/datx'
 
 interface IQueryParamOrder {
   value: string
@@ -68,7 +67,7 @@ export function prepareURL(endpoint: string, type: IType, ids?: ISingleOrMulti<I
   return endpoint
 }
 
-export function prepareQS(params: IDictionary<string>): string {
+export function prepareQS(params: Record<string, string>): string {
   if (!params) return undefined
   return Object.keys(params)
     .map((k) => `${k}=${params[k]}`)

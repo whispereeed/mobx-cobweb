@@ -1,10 +1,10 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { IIdentifier, IType, PureCollection, PureModel, View } from 'datx'
+import { IIdentifier, IType, PureCollection, PureModel, View } from '@issues-beta/datx'
 
 import { getCache, saveCache } from './cache'
-import { getValue, isBrowser } from './utils'
+import { error, getValue, isBrowser } from './utils'
 
 import { IRequestOptions, IRawResponse, IResponseData, $PickOf, ISingleOrMulti, IRequestMethod } from '../interfaces'
 import { ResponseView } from '../ResponseView'
@@ -28,7 +28,7 @@ function getModelEndpointURL(type: IType, collection: PureCollection): string {
   const endpoint = getValue<string>(QueryModel.endpoint)
 
   if (!endpoint) {
-    throw new Error(`No definition for endpoint was found at Model<${type}>`)
+    throw error(`No definition for endpoint was found at Model<${type}>`)
   }
 
   return endpoint

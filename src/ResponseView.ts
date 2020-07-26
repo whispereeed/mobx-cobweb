@@ -1,8 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { getModelId, getModelType, IType, modelToJSON, PureCollection, PureModel, updateModel, updateModelId, View } from 'datx'
-import { IDictionary } from 'datx-utils'
+import { getModelId, getModelType, IType, modelToJSON, PureCollection, PureModel, updateModel, updateModelId, View } from '@issues-beta/datx'
 import { action } from 'mobx'
 
 import { GenericModel } from './GenericModel'
@@ -15,7 +14,7 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
   public data: T | null = null
   public meta: object
   public headers?: Headers
-  public requestHeaders?: IDictionary<string>
+  public requestHeaders?: Record<string, string>
   public error?: IError[] | Error
   public status?: number
   public views: View[] = []

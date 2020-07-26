@@ -4,7 +4,44 @@
 export * from './interfaces'
 export * from './helpers/model'
 
-export { View } from 'datx'
+export {
+  View,
+  PureCollection,
+  PureModel,
+  updateModelId,
+  getRef,
+  getRefId,
+  initModelRef,
+  assignModel,
+  cloneModel,
+  getModelCollection,
+  getModelId,
+  getModelType,
+  getOriginalModel,
+  modelToJSON,
+  updateModel,
+  modelMapParse,
+  modelMapSerialize,
+  commitModel,
+  revertModel,
+  isAttributeDirty,
+  modelToDirtyJSON,
+  isCollection,
+  isModel,
+  isView,
+  IModelRef,
+  ICollectionConstructor,
+  IIdentifier,
+  IModelConstructor,
+  IType,
+  IViewConstructor,
+  PatchType,
+  ReferenceType,
+  Attribute,
+  Attribute as attribute,
+  ViewAttribute,
+  view
+} from '@issues-beta/datx'
 export * from './decorators/attribute'
 
 export type { IRawResponse } from './interfaces/IRawResponse'

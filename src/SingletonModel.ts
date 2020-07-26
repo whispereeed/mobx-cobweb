@@ -9,8 +9,4 @@ export class SingletonModel extends Model {
     if (data) data.id = -1
     return data
   }
-
-  toString() {
-    return JSON.stringify(this.valueOf())
-  }
 }

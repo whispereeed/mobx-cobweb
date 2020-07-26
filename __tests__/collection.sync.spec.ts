@@ -1,6 +1,6 @@
 import { collection, useFixturesByGET } from './config'
-import { modelToJSON } from 'datx'
 import Department from './models/Department'
+import { modelToJSON } from '../src'
 const path = require('path')
 
 describe('collection.sync', () => {
@@ -28,10 +28,7 @@ describe('collection.sync', () => {
   const data: object[] = require(path.join(__dirname, './fixtures/organization.departments.json')).items
 
   test('should sync IRawData', () => {
-    const sf = collection.sync<Department>({
-      type: 'organization.Department',
-      data
-    })
+    const sf = collection.sync<Department>({ type: 'organization.Department', data })
     cases(sf)
   })
 
