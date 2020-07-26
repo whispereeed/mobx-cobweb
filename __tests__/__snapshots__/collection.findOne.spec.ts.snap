@@ -1,0 +1,388 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collection.findOne should findOne at collection 1`] = `
+Object {
+  "__META__": Object {
+    "collection": undefined,
+    "fields": Object {
+      "active": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "avatar": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "cellphone": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporation": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporationId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "createTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "defaultDepartment": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "departments": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "email": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "external": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "nameSpell": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "note": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "order": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "roles": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "updateTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "userId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "version": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "XRA9koBTaA0000:gongyanyu",
+    "type": "organization.Staff",
+  },
+  "active": true,
+  "avatar": "",
+  "cellphone": null,
+  "code": "123321",
+  "corporation": undefined,
+  "corporationId": "XRA9koBTaA0000",
+  "createTime": 1561368150495,
+  "defaultDepartment": Object {
+    "id": "6Rk9l1WYNM0400:50128173",
+    "type": "organization.Department",
+  },
+  "departments": Array [
+    Object {
+      "id": "6Rk9l1WYNM0400:50128173",
+      "type": "organization.Department",
+    },
+  ],
+  "email": null,
+  "external": false,
+  "id": "XRA9koBTaA0000:gongyanyu",
+  "name": "龚彥宇",
+  "nameSpell": "GONGYANYU",
+  "note": null,
+  "order": Object {
+    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  },
+  "roles": undefined,
+  "updateTime": 1574093411607,
+  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
+  "version": 14,
+}
+`;
+
+exports[`collection.findOne should findOne at collection 2`] = `
+Object {
+  "__META__": Object {
+    "collection": undefined,
+    "fields": Object {
+      "active": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "avatar": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "cellphone": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporation": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporationId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "createTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "defaultDepartment": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "departments": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "email": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "external": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "nameSpell": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "note": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "order": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "roles": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "updateTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "userId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "version": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "XRA9koBTaA0000:gongyanyu",
+    "type": "organization.Staff",
+  },
+  "active": true,
+  "avatar": "",
+  "cellphone": null,
+  "code": "123321",
+  "corporation": undefined,
+  "corporationId": "XRA9koBTaA0000",
+  "createTime": 1561368150495,
+  "defaultDepartment": Object {
+    "id": "6Rk9l1WYNM0400:50128173",
+    "type": "organization.Department",
+  },
+  "departments": Array [
+    Object {
+      "id": "6Rk9l1WYNM0400:50128173",
+      "type": "organization.Department",
+    },
+  ],
+  "email": null,
+  "external": false,
+  "id": "XRA9koBTaA0000:gongyanyu",
+  "name": "龚彥宇",
+  "nameSpell": "GONGYANYU",
+  "note": null,
+  "order": Object {
+    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  },
+  "roles": undefined,
+  "updateTime": 1574093411607,
+  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
+  "version": 14,
+}
+`;
+
+exports[`collection.findOne should findOne at collection 3`] = `
+Object {
+  "__META__": Object {
+    "collection": undefined,
+    "fields": Object {
+      "active": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "avatar": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "cellphone": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporation": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporationId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "createTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "defaultDepartment": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "departments": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "email": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "external": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "nameSpell": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "note": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "order": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "roles": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "updateTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "userId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "version": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "XRA9koBTaA0000:gongyanyu",
+    "type": "organization.Staff",
+  },
+  "active": true,
+  "avatar": "",
+  "cellphone": null,
+  "code": "123321",
+  "corporation": undefined,
+  "corporationId": "XRA9koBTaA0000",
+  "createTime": 1561368150495,
+  "defaultDepartment": Object {
+    "id": "6Rk9l1WYNM0400:50128173",
+    "type": "organization.Department",
+  },
+  "departments": Array [
+    Object {
+      "id": "6Rk9l1WYNM0400:50128173",
+      "type": "organization.Department",
+    },
+  ],
+  "email": null,
+  "external": false,
+  "id": "XRA9koBTaA0000:gongyanyu",
+  "name": "龚彥宇",
+  "nameSpell": "GONGYANYU",
+  "note": null,
+  "order": Object {
+    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  },
+  "roles": undefined,
+  "updateTime": 1574093411607,
+  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
+  "version": 14,
+}
+`;
