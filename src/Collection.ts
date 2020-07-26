@@ -18,7 +18,7 @@ export class Collection extends WithNetPatchesCollection {
     ;((this.constructor as unknown) as Collection).register(O)
   }
 
-  findSingleton<T extends PureModel>(model?: IType | IModelConstructor<T>): T {
+  findOrphan<T extends PureModel>(model?: IType | IModelConstructor<T>): T {
     return this.findOne(model, -1)
   }
 }

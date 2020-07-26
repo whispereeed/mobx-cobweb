@@ -10,7 +10,6 @@ import { create, remove, update } from './network'
 import { action } from 'mobx'
 import { ResponseView } from '../ResponseView'
 import { Collection } from '../Collection'
-import { MetaModelField } from '@issues-beta/datx/dist/enums/MetaModelField'
 import { error } from './utils'
 
 function handleResponse<T extends PureModel>(record: T): (response: ResponseView<T>) => T {

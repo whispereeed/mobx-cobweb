@@ -1,10 +1,10 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/29 11:49. *
  ***************************************************/
-import { attribute, SingletonModel } from '../../src'
+import { attribute, OrphanModel } from '../../src'
 import Staff from './Staff'
 
-export default class Me extends SingletonModel {
+export default class Me extends OrphanModel {
   static type = 'organization.Staff.Me'
   static endpoint = '/organization/staffs/me'
 
