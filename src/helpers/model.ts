@@ -1,8 +1,8 @@
-import { getModelCollection, getModelType, getRefId, IModelRef, IType, modelToJSON, PureModel } from '@issues-beta/datx'
+import { getModelCollection, getModelType, getRefId, IModelRef, IType, modelToJSON, PureModel } from 'datx'
 import { getMeta, IRawModel, mapItems, META_FIELD } from 'datx-utils'
 import { action } from 'mobx'
 
-import { MODEL_PERSISTED_FIELD, isPersisted, setPersisted } from './consts'
+import { MODEL_PERSISTED_FIELD, isModelPersisted, setPersisted } from './consts'
 import { clearCacheByType } from './cache'
 import { IRequestOptions } from '../interfaces'
 
@@ -36,7 +36,7 @@ export async function saveModel<T extends PureModel>(model: T, options: IRequest
   const data = modelToJSON(model)
   delete data.__META__
 
-  const request = isPersisted(model) ? update : create
+  const request = isModelPersisted(model) ? update : create
   options.data = data
   const modelType = getModelType(model)
 
@@ -49,7 +49,7 @@ export async function saveModel<T extends PureModel>(model: T, options: IRequest
 export async function removeModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<void> {
   const collection = getModelCollection(model) as Collection
 
-  if (isPersisted(model)) {
+  if (isModelPersisted(model)) {
     const modelType = getModelType(model)
     const response = await remove(modelType, options, collection)
     if (response.error) {

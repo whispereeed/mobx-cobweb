@@ -7,7 +7,7 @@ export default class PropertySet extends Model {
   static type = 'flow.PropertySet'
   static endpoint = '/flow/propertySet'
 
-  @attribute({ isIdentifier: true }) public name: string
+  @attribute() public name: string
   @attribute() public label: string
   @attribute() public active: boolean
   @attribute() public canAsDimension: boolean

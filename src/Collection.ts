@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 12:55. *
  ***************************************************/
-import { Collection as _Collection, IModelConstructor, IType, PureModel, ICollectionConstructor } from '@issues-beta/datx'
+import { Collection as _Collection, IModelConstructor, IType, PureModel, ICollectionConstructor } from 'datx'
 import { withNetPatches } from './mixins/withNetPatches'
 import { INetPatchesCollection } from './interfaces/INetPatchesCollection'
 

@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 12:36. *
  ***************************************************/
-import { IModelConstructor, PureCollection, PureModel } from '@issues-beta/datx'
+import { IModelConstructor, PureCollection, PureModel } from 'datx'
 import { IRawModel } from 'datx-utils'
 import { INetActionsMixin } from '../interfaces/INetActionsMixin'
 import { IRequestOptions } from '../interfaces'

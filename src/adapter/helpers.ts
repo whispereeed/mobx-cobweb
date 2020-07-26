@@ -2,7 +2,7 @@
  * Created by nanyuantingfeng on 2019/11/28 17:44. *
  ***************************************************/
 import { INestedArray, ISingleOrMulti } from '../interfaces'
-import { IIdentifier, IType } from '@issues-beta/datx'
+import { IIdentifier, IType } from 'datx'
 
 interface IQueryParamOrder {
   value: string

@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 12:53. *
  ***************************************************/
-import { IModelConstructor, Model as _Model } from '@issues-beta/datx'
+import { IModelConstructor, Model as _Model } from 'datx'
 import { withNetActions } from './mixins/withNetActions'
 import { INetActionsMixin } from './interfaces/INetActionsMixin'
 

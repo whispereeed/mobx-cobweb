@@ -13,7 +13,7 @@ import {
   PureCollection,
   PureModel,
   updateModel
-} from '@issues-beta/datx'
+} from 'datx'
 
 import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
 import { clearCache, clearCacheByType } from '../helpers/cache'

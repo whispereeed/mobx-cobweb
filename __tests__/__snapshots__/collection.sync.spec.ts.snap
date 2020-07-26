@@ -1,0 +1,262 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collection.sync should sync IRawData 1`] = `
+Object {
+  "__META__": Object {
+    "collection": undefined,
+    "fields": Object {
+      "active": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "children": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporationId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "createTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "nameSpell": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "order": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "parentId": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "updateTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "version": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "6Rk9l1WYNM0400:50128173",
+    "type": "organization.Department",
+  },
+  "active": true,
+  "children": Array [
+    Object {
+      "id": "6Rk9l1WYNM0400:72152045",
+      "type": "organization.Department",
+    },
+  ],
+  "code": "",
+  "corporationId": "6Rk9l1WYNM0400",
+  "createTime": 1574211989469,
+  "id": "6Rk9l1WYNM0400:50128173",
+  "name": "研发总部",
+  "nameSpell": "YANFAZONGBU",
+  "order": 4,
+  "parentId": Object {
+    "id": "6Rk9l1WYNM0400:1",
+    "type": "organization.Department",
+  },
+  "updateTime": 1574211989469,
+  "version": 1,
+}
+`;
+
+exports[`collection.sync should sync data & type 1`] = `
+Object {
+  "__META__": Object {
+    "collection": undefined,
+    "fields": Object {
+      "active": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "children": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporationId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "createTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "nameSpell": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "order": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "parentId": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "updateTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "version": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "6Rk9l1WYNM0400:50128173",
+    "type": "organization.Department",
+  },
+  "active": true,
+  "children": Array [
+    Object {
+      "id": "6Rk9l1WYNM0400:72152045",
+      "type": "organization.Department",
+    },
+  ],
+  "code": "",
+  "corporationId": "6Rk9l1WYNM0400",
+  "createTime": 1574211989469,
+  "id": "6Rk9l1WYNM0400:50128173",
+  "name": "研发总部",
+  "nameSpell": "YANFAZONGBU",
+  "order": 4,
+  "parentId": Object {
+    "id": "6Rk9l1WYNM0400:1",
+    "type": "organization.Department",
+  },
+  "updateTime": 1574211989469,
+  "version": 1,
+}
+`;
+
+exports[`collection.sync should sync data & type:string  1`] = `
+Object {
+  "__META__": Object {
+    "collection": undefined,
+    "fields": Object {
+      "active": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "children": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "corporationId": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "createTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "nameSpell": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "order": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "parentId": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "updateTime": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "version": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "6Rk9l1WYNM0400:50128173",
+    "type": "organization.Department",
+  },
+  "active": true,
+  "children": Array [
+    Object {
+      "id": "6Rk9l1WYNM0400:72152045",
+      "type": "organization.Department",
+    },
+  ],
+  "code": "",
+  "corporationId": "6Rk9l1WYNM0400",
+  "createTime": 1574211989469,
+  "id": "6Rk9l1WYNM0400:50128173",
+  "name": "研发总部",
+  "nameSpell": "YANFAZONGBU",
+  "order": 4,
+  "parentId": Object {
+    "id": "6Rk9l1WYNM0400:1",
+    "type": "organization.Department",
+  },
+  "updateTime": 1574211989469,
+  "version": 1,
+}
+`;

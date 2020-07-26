@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 15:10. *
  ***************************************************/
-import { getModelId, getModelType, IModelConstructor, IType, PureModel } from '@issues-beta/datx'
+import { getModelId, getModelType, IModelConstructor, IType, PureModel } from 'datx'
 import { Collection } from '../Collection'
 import { ListDataView } from './ListDataView'
 import { ResponseView } from '../ResponseView'

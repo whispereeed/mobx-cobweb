@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { getModelType, IType, PureModel } from '@issues-beta/datx'
+import { getModelType, IType, PureModel } from 'datx'
 import { ResponseView } from '../ResponseView'
 import { ISingleOrMulti } from '../interfaces'
 import LRU from './lru'

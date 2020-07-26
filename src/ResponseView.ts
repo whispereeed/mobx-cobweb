@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { getModelId, getModelType, IType, modelToJSON, PureCollection, PureModel, updateModel, updateModelId, View } from '@issues-beta/datx'
+import { getModelId, getModelType, IType, modelToJSON, PureCollection, PureModel, updateModel, updateModelId, View } from 'datx'
 import { action } from 'mobx'
 
 import { GenericModel } from './GenericModel'
