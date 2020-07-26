@@ -114,19 +114,17 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
     private __addRecord<T extends PureModel>(item: any, type: IType): T {
       const StaticCollection = this.constructor as typeof PureCollection
       const id = item.id
-      let record: T = id === undefined ? null : this.findOne<T>(type, id)
-      // const Type = StaticCollection.types.find(item => getModelType(item) === type) || GenericModel
+      const record: T = id === undefined ? null : this.findOne<T>(type, id)
+
       const flattened: IRawModel = flattenModel(item, type)
 
       if (record) {
-        updateModel(record, flattened)
+        return updateModel(record, flattened)
       } else if (StaticCollection.types.filter((item) => item.type === type).length) {
-        record = this.add<T>(flattened, type)
+        return this.add<T>(flattened, type)
       } else {
-        record = this.add(new GenericModel(flattened)) as any
+        return this.add(new GenericModel(flattened)) as any
       }
-
-      return record
     }
   }
 

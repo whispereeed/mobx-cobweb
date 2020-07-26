@@ -1,13 +1,12 @@
 import { getModelCollection, getModelType, getRefId, IModelRef, IType, modelToJSON, PureModel } from '@issues-beta/datx'
 import { getMeta, IRawModel, mapItems, META_FIELD } from 'datx-utils'
+import { action } from 'mobx'
 
-import { clearCacheByType } from './cache'
 import { MODEL_PERSISTED_FIELD, isPersisted, setPersisted } from './consts'
-
+import { clearCacheByType } from './cache'
 import { IRequestOptions } from '../interfaces'
 
 import { create, remove, update } from './network'
-import { action } from 'mobx'
 import { ResponseView } from '../ResponseView'
 import { Collection } from '../Collection'
 import { error } from './utils'
@@ -78,7 +77,7 @@ export function flattenModel(data: any, type: IType): IRawModel {
   }
 }
 
-export function fetchModelRefs<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<any[]> {
+export function fetchModelRefs<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<Array<ResponseView<any>>> {
   const collection = getModelCollection(model) as Collection
   const { refs } = (model as any).meta!
   const _promises = Object.keys(refs).map((key) => {
@@ -93,13 +92,13 @@ export function fetchModelRefs<T extends PureModel>(model: T, options: IRequestO
   return Promise.all(_promises)
 }
 
-export function fetchModelRef<T extends PureModel>(model: T, key: string, options: IRequestOptions = {}) {
+export function fetchModelRef<T extends PureModel>(model: T, key: string, options: IRequestOptions = {}): Promise<ResponseView<any>> {
   const collection = getModelCollection(model) as Collection
-  const __fields: any = getMeta(model, 'fields', {})
-  if (!__fields) {
+  const fieldsDef: any = getMeta(model, 'fields', {})
+  if (!fieldsDef) {
     throw error(`fetchModelRef.key (${key}) must be a ref definition`)
   }
-  const fieldDef = __fields[key]
+  const fieldDef = fieldsDef[key]
   const type = fieldDef.referenceDef.model
   const id = mapItems(getRefId(model, key), (ref: IModelRef) => ref.id)
   return collection.fetch(type, id, options)

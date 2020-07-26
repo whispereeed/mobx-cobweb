@@ -10,5 +10,5 @@ export interface INetActionsMixin<T = PureModel> {
   remove(options?: IRequestOptions): Promise<void>
 
   fetchRef(field: string, options?: IRequestOptions): Promise<ResponseView<any>>
-  fetchRefs(options?: IRequestOptions): Promise<void>
+  fetchRefs(options?: IRequestOptions): Promise<Array<ResponseView<any>>>
 }
