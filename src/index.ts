@@ -42,7 +42,6 @@ export {
   ViewAttribute,
   view
 } from '@issues-beta/datx'
-export * from './decorators/attribute'
 
 export type { IRawResponse } from './interfaces/IRawResponse'
 export type { IRequestOptions } from './interfaces/IRequestOptions'

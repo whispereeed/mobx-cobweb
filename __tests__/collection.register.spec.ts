@@ -3,7 +3,7 @@
  ***************************************************/
 import { collection, MyCollection, useFixtureGetById, useFixturesByGET } from './config'
 import Staff from './models/Staff'
-import { Model, property, referenceOne } from '../src'
+import { Model, attribute } from '../src'
 import { action, autorun } from 'mobx'
 
 describe('collection.register', () => {
@@ -24,8 +24,8 @@ describe('collection.register', () => {
     class StaffVM extends Model {
       static type = 'vm::Staff_2'
 
-      @referenceOne(Staff) staff: Staff
-      @property ccc: string
+      @attribute({ toOne: Staff }) staff: Staff
+      @attribute() ccc: string
 
       @action test(ccc: string) {
         this.ccc = ccc
@@ -59,15 +59,14 @@ describe('collection.register', () => {
     class StaffVM extends Model {
       static type = 'vm::Staff'
 
-      @referenceOne(Staff) staff: Staff
-      @property ccc: string
+      @attribute({ toOne: Staff }) staff: Staff
+      @attribute() ccc: string
 
       @action test(ccc: string) {
         this.ccc = ccc
         this.staff.name = ccc
       }
     }
-
 
     collection.register(StaffVM)
 

@@ -1,37 +1,37 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/12/4 11:27. *
  ***************************************************/
-import { identifier, Model, property } from '../../src'
+import { attribute, Model } from '../../src'
 
 export default class Payee extends Model {
   static type = 'form.Payees.Mine'
   static endpoint = '/form/payees/mine'
 
-  @identifier public id: string
+  @attribute({ isIdentifier: true }) public id: string
 
-  @property public version: number
-  @property public active: boolean
-  @property public createTime: number
-  @property public updateTime: number
+  @attribute() public version: number
+  @attribute() public active: boolean
+  @attribute() public createTime: number
+  @attribute() public updateTime: number
 
-  @property public name: string
-  @property public nameSpell: string
-  @property public code: string
-  @property public corporationId: any
-  @property public type: string //  "PERSONAL"
+  @attribute() public name: string
+  @attribute() public nameSpell: string
+  @attribute() public code: string
+  @attribute() public corporationId: any
+  @attribute() public type: string //  "PERSONAL"
 
-  @property public owner: string // CORPORATION
-  @property public cardNo: string
-  @property public logs: Array<{
+  @attribute() public owner: string // CORPORATION
+  @attribute() public cardNo: string
+  @attribute() public logs: Array<{
     action: string // "CREATE"
     operatorId: string
     time: number
     attributes: any
   }>
-  @property public sort: string // "BANK"
+  @attribute() public sort: string // "BANK"
 
-  @property public staffId: string
-  @property public visibility: {
+  @attribute() public staffId: string
+  @attribute() public visibility: {
     fullVisible: boolean
     staffs: null
     roles: null
@@ -39,16 +39,16 @@ export default class Payee extends Model {
     departmentsIncludeChildren: boolean
   }
 
-  @property public branch: string
-  @property public icon: string
-  @property public bank: string
-  @property public province: string
+  @attribute() public branch: string
+  @attribute() public icon: string
+  @attribute() public bank: string
+  @attribute() public province: string
 
-  @property public city: string
-  @property public certificateType: string
-  @property public certificateNo: string
-  @property public bankLinkNo: string
-  @property public unionIcon: string
-  @property public unionBank: string
-  @property public isDefault: boolean
+  @attribute() public city: string
+  @attribute() public certificateType: string
+  @attribute() public certificateNo: string
+  @attribute() public bankLinkNo: string
+  @attribute() public unionIcon: string
+  @attribute() public unionBank: string
+  @attribute() public isDefault: boolean
 }
