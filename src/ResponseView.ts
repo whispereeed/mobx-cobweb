@@ -13,12 +13,10 @@ import {
   View
 } from 'datx'
 import { action } from 'mobx'
-
-import { GenericModel } from './GenericModel'
-
 import { IError, IRequestOptions, IRawResponse, $PickOf, ISingleOrMulti } from './interfaces'
 import { Collection } from './Collection'
 import { error } from './helpers/utils'
+import { Model } from './Model'
 
 export class ResponseView<T extends ISingleOrMulti<PureModel>> {
   public data: T | null = null
@@ -62,7 +60,7 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
           throw error('A save/remove operation should not return an array of results')
         }
 
-        this.data = overrideData || (new GenericModel(resp.data) as any)
+        this.data = overrideData || (new Model(resp.data) as any)
       }
     }
 

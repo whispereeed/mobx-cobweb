@@ -88,6 +88,22 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
   }
 }
 
+export function fetchModelRef<T extends PureModel>(
+  model: T,
+  key: string,
+  options: IRequestOptions = {}
+): Promise<ResponseView<any>> {
+  const collection = getModelCollection(model) as Collection
+  const fieldsDef: any = getMeta(model, 'fields', {})
+  if (!fieldsDef) {
+    throw error(`fetchModelRef.key (${key}) must be a ref definition`)
+  }
+  const fieldDef = fieldsDef[key]
+  const type = getModelRefType(fieldDef.referenceDef.model, fieldDef.referenceDef.defaultValue, model, key)
+  const id = mapItems(getRefId(model, key), (ref: IModelRef) => ref.id)
+  return collection.fetch(type, id, options)
+}
+
 export function fetchModelRefs<T extends PureModel>(
   model: T,
   options: IRequestOptions = {}
@@ -104,20 +120,4 @@ export function fetchModelRefs<T extends PureModel>(
     return collection.fetch<any>(refDef.type, refDef.id, options)
   })
   return Promise.all(promises)
-}
-
-export function fetchModelRef<T extends PureModel>(
-  model: T,
-  key: string,
-  options: IRequestOptions = {}
-): Promise<ResponseView<any>> {
-  const collection = getModelCollection(model) as Collection
-  const fieldsDef: any = getMeta(model, 'fields', {})
-  if (!fieldsDef) {
-    throw error(`fetchModelRef.key (${key}) must be a ref definition`)
-  }
-  const fieldDef = fieldsDef[key]
-  const type = getModelRefType(fieldDef.referenceDef.model, fieldDef.referenceDef.defaultValue, model, key)
-  const id = mapItems(getRefId(model, key), (ref: IModelRef) => ref.id)
-  return collection.fetch(type, id, options)
 }

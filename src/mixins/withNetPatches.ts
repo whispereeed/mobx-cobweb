@@ -10,7 +10,7 @@ import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { removeModel } from '../helpers/model'
 import { INetworkAdapter, IRequestOptions } from '../interfaces'
-import { GenericModel } from '../GenericModel'
+import { Model } from '../Model'
 import { query } from '../helpers/network'
 import { isBrowser } from '../helpers/utils'
 import { setModelPersisted } from '../helpers/consts'
@@ -19,9 +19,9 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
   const BaseClass = Base as typeof PureCollection
 
   class WithNetPatches extends BaseClass implements INetPatchesCollection<T> {
-    static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(GenericModel) : [GenericModel]
+    static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(Model) : [Model]
     static cache: boolean = (BaseClass as any)[''] === undefined ? isBrowser : (BaseClass as any).cache
-    static defaultModel = BaseClass.defaultModel || GenericModel
+    static defaultModel = BaseClass.defaultModel || Model
 
     adapter: INetworkAdapter
     setNetworkAdapter(adapter: INetworkAdapter) {
@@ -112,7 +112,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       } else if (StaticCollection.types.filter((item) => item.type === type).length) {
         record = this.add<T>(item, type)
       } else {
-        record = this.add(new GenericModel(item)) as any
+        record = this.add(new Model(item)) as any
       }
 
       setModelPersisted(record, Boolean(id))

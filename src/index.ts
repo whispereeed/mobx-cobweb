@@ -44,7 +44,6 @@ export * from './interfaces'
 export * from './helpers/model'
 
 export { ResponseView } from './ResponseView'
-export { GenericModel } from './GenericModel'
 export { clearCache, clearCacheByType } from './helpers/cache'
 
 export { Collection } from './Collection'
