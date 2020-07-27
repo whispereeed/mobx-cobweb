@@ -112,7 +112,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       } else if (StaticCollection.types.filter((item) => item.type === type).length) {
         record = this.add<T>(item, type)
       } else {
-        record = this.add(new Model(item)) as any
+        record = this.add(new Model(item, this)) as any
       }
 
       setModelPersisted(record, Boolean(id))
