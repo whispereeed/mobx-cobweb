@@ -4,7 +4,7 @@
 import { IIdentifier, IType, PureCollection, PureModel, View } from 'datx'
 
 import { getCache, saveCache } from './cache'
-import { getValue, isBrowser } from './utils'
+import { error, getValue, isBrowser } from './utils'
 
 import { IRequestOptions, IRawResponse, IResponseData, $PickOf, ISingleOrMulti, IRequestMethod } from '../interfaces'
 import { ResponseView } from '../ResponseView'
@@ -28,7 +28,7 @@ function getModelEndpointURL(type: IType, collection: PureCollection): string {
   const endpoint = getValue<string>(QueryModel.endpoint)
 
   if (!endpoint) {
-    throw new Error(`No definition for endpoint was found at Model<${type}>`)
+    throw error(`No definition for endpoint was found at Model<${type}>`)
   }
 
   return endpoint
@@ -67,10 +67,14 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
     }
   }
 
-  const response1 = await collection.adapter.fetch(prepared.url, prepared.options)
-  const response2: IRawResponse<$PickOf<M, object[], object>> = packResponse(response1, modelType, collection)
-  const collectionResponse = Object.assign(response2, { collection })
-  const response = new ResponseView<M>(collectionResponse, collection, options, undefined, views)
+  const fetchResponse = await collection.adapter.fetch(prepared.url, prepared.options)
+  const response = new ResponseView<M>(
+    packResponse(fetchResponse, modelType, collection),
+    collection,
+    options,
+    undefined,
+    views
+  )
 
   if (isBrowser && isCacheSupported) {
     saveCache(prepared.cacheKey, modelType, response)

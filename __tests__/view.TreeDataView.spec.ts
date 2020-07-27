@@ -15,7 +15,7 @@ describe('TreeDataView', () => {
 
   it('should be fetched children nodes', async () => {
     useFixtureGetById(Department.endpoint)
-    const response = await collection.fetch<Department>(Department, '6Rk9l1WYNM0400:50128174')
+    const response = await collection.fetch<Department>(Department, '005ddc160e41')
     const treeDataView = new TreeDataView<Department>(Department, collection)
     useFixtureGetChildrenById(Department.endpoint)
     const listDataView = await treeDataView.fetchChildren(response.data)
@@ -31,16 +31,15 @@ describe('TreeDataView', () => {
 
   it('should be fetched parent node', async () => {
     useFixtureGetById(Department.endpoint)
-    const response = await collection.fetch<Department>(Department, '6Rk9l1WYNM0400:83715815')
+    const response = await collection.fetch<Department>(Department, '91526189bc96')
     const treeDataView = new TreeDataView<Department>(Department, collection)
     useFixtureGetParentsById(Department.endpoint)
     const current = response.data
     const responseView = await treeDataView.fetchParents(current)
     expect(responseView.data).toBeInstanceOf(Array)
     expect(responseView.data.length).toBe(4)
-    const root = collection.findOne<Department>(Department, '6Rk9l1WYNM0400:1')
+    const root = collection.findOne<Department>(Department, '66f58b59c384')
     expect(root).toBeInstanceOf(Department)
-    expect(root.nameSpell).toBe('DING906XIN4.0HANSIYOUHUA')
     const a = collection.findOne<Department>(Department, current.parentId)
     const b = collection.findOne<Department>(Department, a.parentId)
     const c = collection.findOne<Department>(Department, b.parentId)

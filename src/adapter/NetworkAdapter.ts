@@ -2,10 +2,10 @@
  * Created by nanyuantingfeng on 2019/11/28 17:24. *
  ***************************************************/
 import { IIdentifier, IType } from 'datx'
-import { IDictionary } from 'datx-utils'
 import { INetworkAdapter, IRequestMethod, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
-import { isBrowser, isEmptyObject } from '../helpers/utils'
+import { error, isBrowser, isEmptyObject } from '../helpers/utils'
+import { isArrayLike } from 'mobx'
 
 export class NetworkAdapter implements INetworkAdapter {
   private readonly baseUrl: string
@@ -28,7 +28,7 @@ export class NetworkAdapter implements INetworkAdapter {
     this.defaultFetchOptions = Object.assign({}, this.defaultFetchOptions, options)
 
     if (!fetchInstance && !isBrowser) {
-      throw new Error('Fetch reference needs to be defined before using the network')
+      throw error('Fetch reference needs to be defined before using the network')
     }
 
     if (isBrowser && !fetchInstance) {
@@ -50,7 +50,7 @@ export class NetworkAdapter implements INetworkAdapter {
 
     const fixedURL = appendParams(prefixURL(url, this.baseUrl, options.action), prepareQS(Object.assign({}, defaultParams, options.params)))
 
-    const requestHeaders: IDictionary<string> = options.headers || {}
+    const requestHeaders: Record<string, string> = options.headers || {}
     let uppercaseMethod = props.method.toUpperCase()
     let body = options.data
     let cacheKey
@@ -71,7 +71,7 @@ export class NetworkAdapter implements INetworkAdapter {
     }
 
     const isBodySupported = uppercaseMethod !== 'GET' && uppercaseMethod !== 'HEAD'
-    const reqHeaders: IDictionary<string> = Object.assign({}, defaultHeaders, requestHeaders)
+    const reqHeaders: Record<string, string> = Object.assign({}, defaultHeaders, requestHeaders)
     const optionsO = Object.assign({}, defaultOthers, {
       body: (isBodySupported && JSON.stringify(body)) || undefined,
       headers: reqHeaders,
@@ -107,7 +107,7 @@ export class NetworkAdapter implements INetworkAdapter {
         result.data = responseData.value
       }
 
-      if (responseData.items && Array.isArray(responseData.items)) {
+      if (responseData.items && isArrayLike(responseData.items)) {
         result.data = responseData.items
         result.meta = { count: responseData.count }
       }

@@ -11,7 +11,7 @@ export function getValue<T>(target: T | (() => T)): T {
 }
 
 export function error(message: string): Error {
-  return new Error(`[skeleton-orm exception] ${message}`)
+  return new Error(`[mobx-cobweb exception] ${message}`)
 }
 
 export function isEmptyObject(obj: any) {

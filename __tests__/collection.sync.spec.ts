@@ -1,9 +1,9 @@
 import { collection, useFixturesByGET } from './config'
-import { modelToJSON } from 'datx'
 import Department from './models/Department'
+import { modelToJSON } from '../src'
 const path = require('path')
 
-describe('collection.sync', () => {
+describe('collection.sync by list-data', () => {
   let scope: any = null
 
   beforeAll(() => {
@@ -14,34 +14,41 @@ describe('collection.sync', () => {
     collection.removeAll(Department)
   })
 
-  const cases = (sf: Department[]) => {
-    expect(sf[0].children[0].parentId === sf[0]).toBeTruthy()
-    expect(collection.findAll(Department).length).toBe(2035)
-
-    const dd = collection.findOne<Department>(Department, '6Rk9l1WYNM0400:50128173')
-    expect(dd.parentId.id).toBe('6Rk9l1WYNM0400:1')
-    expect(dd.name).toBe('研发总部')
-    expect(dd.active).toBe(true)
-    expect(modelToJSON(dd)).toMatchSnapshot()
-  }
-
   const data: object[] = require(path.join(__dirname, './fixtures/organization.departments.json')).items
 
   test('should sync IRawData', () => {
-    const sf = collection.sync<Department>({
-      type: 'organization.Department',
-      data
-    })
-    cases(sf)
+    const sf = collection.sync<Department>({ type: 'organization.Department', data })
+    expect(sf[0].children[0].parentId === sf[0]).toBeTruthy()
+    expect(collection.findAll(Department).length).toBe(2035)
+
+    const dd = collection.findOne<Department>(Department, '875fdcddd47e')
+    expect(dd.parentId.id).toBe('66f58b59c384')
+    expect(dd.name).toBe('Bedfordshire')
+    expect(modelToJSON(dd)).toMatchSnapshot()
   })
+})
+
+describe('collection.sync by tree-data', () => {
+  let scope: any = null
+
+  beforeAll(() => {
+    scope = useFixturesByGET()
+  })
+
+  beforeEach(() => {
+    collection.removeAll(Department)
+  })
+
+  const data: object[] = require(path.join(__dirname, './fixtures/organization.departments.tree.json')).items
 
   test('should sync data & type', () => {
     const sf = collection.sync<Department>(Department, data)
-    cases(sf)
-  })
+    expect(sf[0].children[0].parentId === sf[0]).toBeTruthy()
+    expect(collection.findAll(Department).length).toBe(2035)
 
-  test('should sync data & type:string ', () => {
-    const sf = collection.sync<Department>('organization.Department', data)
-    cases(sf)
+    const dd = collection.findOne<Department>(Department, '875fdcddd47e')
+    expect(dd.parentId.id).toBe('66f58b59c384')
+    expect(dd.name).toBe('ADP')
+    expect(modelToJSON(dd)).toMatchSnapshot()
   })
 })

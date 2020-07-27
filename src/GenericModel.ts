@@ -4,6 +4,6 @@
 import { IModelConstructor, PureModel } from 'datx'
 import { withNetActions } from './mixins/withNetActions'
 import { INetActionsMixin } from './interfaces/INetActionsMixin'
-const WithNetActionModel: IModelConstructor<PureModel & INetActionsMixin<PureModel>> = withNetActions(PureModel)
+const WithNetActionModel: IModelConstructor<INetActionsMixin<PureModel> & PureModel> = withNetActions(PureModel)
 
 export class GenericModel extends WithNetActionModel {}

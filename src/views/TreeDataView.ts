@@ -11,7 +11,6 @@ import { action, observable } from 'mobx'
 export class TreeDataView<T extends PureModel> {
   protected collection: Collection
   protected modelType: IType
-
   @observable public isLoading: boolean = false
 
   constructor(modelType: IType | IModelConstructor<T>, collection: Collection) {
@@ -19,14 +18,13 @@ export class TreeDataView<T extends PureModel> {
     this.collection = collection
   }
 
-  @action async search(options: IRequestOptions): Promise<ResponseView<T[]>> {
+  @action public async search(options: IRequestOptions): Promise<ResponseView<T[]>> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
     this.isLoading = false
     return response
   }
-
-  @action async fetchChildren(model: PureModel): Promise<ListDataView<T>> {
+  @action public async fetchChildren(model: PureModel): Promise<ListDataView<T>> {
     const id = getModelId(model)
     this.isLoading = true
     const listDataView = new ListDataView<T>(this.modelType, this.collection)
@@ -37,8 +35,7 @@ export class TreeDataView<T extends PureModel> {
     this.isLoading = false
     return listDataView
   }
-
-  @action async fetchParents(model: PureModel): Promise<ResponseView<T[]>> {
+  @action public async fetchParents(model: PureModel): Promise<ResponseView<T[]>> {
     const id = getModelId(model)
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, { action: `/${id}/parents` })

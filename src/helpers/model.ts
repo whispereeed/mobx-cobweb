@@ -1,25 +1,42 @@
-import { getModelCollection, getModelMetaKey, getModelType, getRefId, IIdentifier, IType, modelToJSON, PureModel, setModelMetaKey } from 'datx'
-import { IRawModel, META_FIELD } from 'datx-utils'
+import {
+  getModelCollection,
+  getModelType,
+  getRefId,
+  IModelRef,
+  IType,
+  modelToJSON,
+  PureCollection,
+  PureModel
+} from 'datx'
+import { getMeta, IRawModel, mapItems, META_FIELD } from 'datx-utils'
+import { action, isArrayLike } from 'mobx'
 
+import { MODEL_PERSISTED_FIELD, isModelPersisted, setModelPersisted } from './consts'
 import { clearCacheByType } from './cache'
-import { MODEL_PERSISTED_FIELD, MODEL_PROP_FIELD, MODEL_QUEUE_FIELD, MODEL_RELATED_FIELD } from './consts'
-
 import { IRequestOptions } from '../interfaces'
 
-import { create, remove, update } from './NetworkUtils'
-import { action } from 'mobx'
+import { create, remove, update } from './network'
 import { ResponseView } from '../ResponseView'
 import { Collection } from '../Collection'
+import { error } from './utils'
+import { ParsedRefModel } from 'datx/dist/Attribute'
 
-function isModelPersisted(model: PureModel): boolean {
-  return getModelMetaKey(model, MODEL_PERSISTED_FIELD)
+function getModelRefType(
+  model: ParsedRefModel,
+  data: any,
+  parentModel: PureModel,
+  key: string,
+  collection?: PureCollection
+): IType {
+  if (typeof model === 'function') {
+    collection = collection || getModelCollection(parentModel)
+    return getModelType(model(data, parentModel, key, collection))
+  }
+
+  return model
 }
 
-function setModelPersisted(model: PureModel, status: boolean) {
-  setModelMetaKey(model, MODEL_PERSISTED_FIELD, status)
-}
-
-function handleResponse<T extends PureModel>(record: T, prop?: string): (response: ResponseView<T>) => T {
+function handleResponse<T extends PureModel>(record: T): (response: ResponseView<T>) => T {
   return action(
     (response: ResponseView<T>): T => {
       if (response.error) {
@@ -27,16 +44,12 @@ function handleResponse<T extends PureModel>(record: T, prop?: string): (respons
       }
 
       if (response.status === 204) {
-        setModelMetaKey(record, MODEL_PERSISTED_FIELD, true)
+        setModelPersisted(record, true)
         return record
       } else if (response.status === 202) {
-        const responseRecord = response.data as T
-        setModelMetaKey(responseRecord, MODEL_PROP_FIELD, prop)
-        setModelMetaKey(responseRecord, MODEL_QUEUE_FIELD, true)
-        setModelMetaKey(responseRecord, MODEL_RELATED_FIELD, record)
-        return responseRecord
+        return response.data as T
       } else {
-        setModelMetaKey(record, MODEL_PERSISTED_FIELD, true)
+        setModelPersisted(record, true)
         return response.replace(record).data as T
       }
     }
@@ -61,9 +74,7 @@ export async function saveModel<T extends PureModel>(model: T, options: IRequest
 export async function removeModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<void> {
   const collection = getModelCollection(model) as Collection
 
-  const isPersisted = isModelPersisted(model)
-
-  if (isPersisted) {
+  if (isModelPersisted(model)) {
     const modelType = getModelType(model)
     const response = await remove(modelType, options, collection)
     if (response.error) {
@@ -77,33 +88,36 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
   }
 }
 
-export function flattenModel(data: any, type: IType): IRawModel {
-  if (!data) return null
-
-  return {
-    ...data,
-    [META_FIELD]: {
-      id: data.id,
-      [MODEL_PERSISTED_FIELD]: Boolean(data.id),
-      refs: {},
-      type
+export function fetchModelRefs<T extends PureModel>(
+  model: T,
+  options: IRequestOptions = {}
+): Promise<Array<ResponseView<any>>> {
+  const collection = getModelCollection(model) as Collection
+  const { refs } = (model as any).meta!
+  const promises = Object.keys(refs).map((key) => {
+    const refDef = refs[key]
+    if (isArrayLike(refDef)) {
+      const _ids = refDef.map((d) => d.id)
+      const _type = refDef[0].type
+      return collection.fetch<any>(_type, _ids, options)
     }
-  }
+    return collection.fetch<any>(refDef.type, refDef.id, options)
+  })
+  return Promise.all(promises)
 }
 
-export function fetchModelRefs<T extends PureModel>(model: T, options: IRequestOptions = {}) {
+export function fetchModelRef<T extends PureModel>(
+  model: T,
+  key: string,
+  options: IRequestOptions = {}
+): Promise<ResponseView<any>> {
   const collection = getModelCollection(model) as Collection
-  const refs = getModelMetaKey(model, 'refs')
-
-  const map = Object.keys(refs)
-    .map((ref) => {
-      const ids = getRefId(model, ref) as IIdentifier[]
-      if (!ids || ids.length === 0) {
-        return undefined
-      }
-      return collection.fetch(refs[ref].model, ids, options)
-    })
-    .filter(Boolean)
-
-  return Promise.all(map)
+  const fieldsDef: any = getMeta(model, 'fields', {})
+  if (!fieldsDef) {
+    throw error(`fetchModelRef.key (${key}) must be a ref definition`)
+  }
+  const fieldDef = fieldsDef[key]
+  const type = getModelRefType(fieldDef.referenceDef.model, fieldDef.referenceDef.defaultValue, model, key)
+  const id = mapItems(getRefId(model, key), (ref: IModelRef) => ref.id)
+  return collection.fetch(type, id, options)
 }

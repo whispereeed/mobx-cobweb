@@ -1,6 +1,6 @@
 {
   "name": "mobx-cobweb",
-  "version": "0.0.7",
+  "version": "0.0.12",
   "description": "ORM for Frontend",
   "main": "dist/index.lib.js",
   "module": "dist/index.esm.js",
@@ -52,7 +52,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "datx": "^1.0.1",
-    "datx-utils": "^1.0.0"
+    "datx": "^2.0.0-beta.4",
+    "datx-utils": "^2.0.0-beta.4"
   }
 }

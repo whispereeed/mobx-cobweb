@@ -4,60 +4,22 @@ exports[`ListDataView should be fetched data by \`infinite\` 1`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": false,
-    "fields": Array [
-      "name",
-      "label",
-      "active",
-      "dataType",
-      "canAsDimension",
-      "ability",
-    ],
+    "collection": undefined,
+    "fields": Object {
+      "label": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
     "id": -52,
-    "refs": Object {},
     "type": "flow.PropertySet",
   },
-  "ability": undefined,
-  "active": true,
-  "canAsDimension": undefined,
-  "dataType": Object {
-    "elemType": Object {
-      "fields": Array [
-        Object {
-          "active": true,
-          "canAsDimension": false,
-          "dataType": Object {
-            "type": "dynamic",
-          },
-          "label": "业务对象明细",
-          "name": "dataLinkForm",
-        },
-        Object {
-          "active": true,
-          "canAsDimension": false,
-          "dataType": Object {
-            "entity": "datalink.DataLinkTemplate",
-            "type": "ref",
-          },
-          "label": "业务对象模板",
-          "name": "dataLinkTemplateId",
-        },
-        Object {
-          "active": true,
-          "canAsDimension": true,
-          "dataType": Object {
-            "entity": "system_支付计划",
-            "type": "ref",
-          },
-          "label": " 业务对象实例",
-          "name": "dataLinkId",
-        },
-      ],
-      "type": "complex",
-    },
-    "type": "list",
-  },
-  "label": "支付计划",
-  "name": "payPlan",
+  "label": "withdrawal",
+  "name": "Solutions",
 }
 `;
 
@@ -66,282 +28,202 @@ Array [
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
-      "id": -1,
-      "refs": Object {},
-      "type": "flow.PropertySet",
-    },
-    "ability": "pay",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "boolean",
-    },
-    "label": "按金额支付",
-    "name": "payPlanMode",
-  },
-  Object {
-    "__META__": Object {
-      "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
-      "id": -2,
-      "refs": Object {},
-      "type": "flow.PropertySet",
-    },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "fields": Array [
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "type": "dynamic",
-            },
-            "label": "业务对象明细",
-            "name": "dataLinkForm",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "entity": "datalink.DataLinkTemplate",
-              "type": "ref",
-            },
-            "label": "业务对象模板",
-            "name": "dataLinkTemplateId",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": true,
-            "dataType": Object {
-              "entity": "system_支付计划",
-              "type": "ref",
-            },
-            "label": " 业务对象实例",
-            "name": "dataLinkId",
-          },
-        ],
-        "type": "complex",
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
       },
-      "type": "list",
+      "id": -1,
+      "type": "flow.PropertySet",
     },
-    "label": "支付计划",
-    "name": "payPlan",
+    "label": "Cambridgeshire",
+    "name": "Accounts",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
+      "id": -2,
+      "type": "flow.PropertySet",
+    },
+    "label": "withdrawal",
+    "name": "Solutions",
+  },
+  Object {
+    "__META__": Object {
+      "MODEL_PERSISTED_FIELD": false,
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -3,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "dataLink",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "dynamic",
-    },
-    "label": "业务对象明细",
-    "name": "dataLinkForm",
+    "label": "Practical Wooden Shirt",
+    "name": "mint green",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -4,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "dataLink",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "datalink.DataLinkTemplate",
-      "type": "ref",
-    },
-    "label": "业务对象模板",
-    "name": "dataLinkTemplateId",
+    "label": "Falls",
+    "name": "pixel",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -5,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "dataLink",
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "datalink.DataLinkEntity",
-      "type": "ref",
-    },
-    "label": "业务对象实例",
-    "name": "dataLinkId",
+    "label": "array",
+    "name": "Isle of Man",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -6,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "print",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "scale": 0,
-      "type": "number",
-      "unit": "次",
-    },
-    "label": "打印次数",
-    "name": "printCount",
+    "label": "Rubber",
+    "name": "deploy",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -7,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "print",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "text",
-    },
-    "label": "打印状态",
-    "name": "printState",
+    "label": "Synergistic",
+    "name": "Home Loan Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -8,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "print",
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "organization.Staff",
-      "type": "ref",
-    },
-    "label": "最后打印人",
-    "name": "lastPrinter",
+    "label": "innovate",
+    "name": "Checking Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -9,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "print",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "date",
-    },
-    "label": "最后打印时间",
-    "name": "lastPrintTime",
+    "label": "Tools",
+    "name": "engage",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -10,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "",
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "basedata.Dimension.法人实体",
-      "type": "ref",
-    },
-    "label": "法人实体",
-    "name": "法人实体",
+    "label": "applications",
+    "name": "Dynamic",
   },
 ]
 `;
@@ -351,250 +233,202 @@ Array [
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
-      "id": -11,
-      "refs": Object {},
-      "type": "flow.PropertySet",
-    },
-    "ability": "requisition",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "elemType": Object {
-        "entity": "organization.Staff",
-        "type": "ref",
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
       },
-      "type": "list",
+      "id": -11,
+      "type": "flow.PropertySet",
     },
-    "label": "出行人",
-    "name": "travelers",
+    "label": "Small",
+    "name": "Soap",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -12,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "feeDetail",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "invoice",
-    },
-    "label": "发票",
-    "name": "invoiceForm",
+    "label": "front-end",
+    "name": "Auto Loan Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -13,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "requisition",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "requisition.RequisitionInfo",
-      "type": "ref",
-    },
-    "label": "补充申请",
-    "name": "linkRequisitionInfo",
+    "label": "Health",
+    "name": "reinvent",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -14,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "basedata.Enum.InvoiceType",
-      "type": "ref",
-    },
-    "label": "发票类型",
-    "name": "invoiceType",
+    "label": "firewall",
+    "name": "Connecticut",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -15,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "money",
-    },
-    "label": "不计税金额",
-    "name": "noTaxAmount",
+    "label": "North Dakota",
+    "name": "secured line",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -16,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "money",
-    },
-    "label": "税额",
-    "name": "taxAmount",
+    "label": "quantify",
+    "name": "Auto Loan Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -17,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "scale": 2,
-      "type": "number",
-      "unit": "%",
-    },
-    "label": "税率",
-    "name": "taxRate",
+    "label": "Kip",
+    "name": "Ameliorated",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -18,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "permit",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "permitOrder",
-    },
-    "label": "订单详情",
-    "name": "order",
+    "label": "Investor",
+    "name": "Infrastructure",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -19,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "trip",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "text",
-    },
-    "label": "行程明细ID",
-    "name": "tripId",
+    "label": "Investment Account",
+    "name": "West Virginia",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -20,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "trip",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "date",
-    },
-    "label": "行程日期",
-    "name": "tripDate",
+    "label": "Berkshire",
+    "name": "primary",
   },
 ]
 `;
@@ -604,248 +438,202 @@ Array [
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -21,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "datalink.DataLinkEntity.c61e09f00eb127406400",
-      "type": "ref",
-    },
-    "label": "实体galo",
-    "name": "u_实体galo",
+    "label": "Cambridgeshire",
+    "name": "Accounts",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -22,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "basedata.Dimension.汉字nwnvy1xz",
-      "type": "ref",
-    },
-    "label": "自hvk8l",
-    "name": "u_自hvk8l",
+    "label": "withdrawal",
+    "name": "Solutions",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -23,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "basedata.Dimension.项目",
-      "type": "ref",
-    },
-    "label": "项目cnyk",
-    "name": "u_项目cnyk",
+    "label": "Practical Wooden Shirt",
+    "name": "mint green",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -24,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "datalink.DataLinkEntity.c61909fcb981f9c21800",
-      "type": "ref",
-    },
-    "label": "普通赋值",
-    "name": "u_普通赋值",
+    "label": "Falls",
+    "name": "pixel",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -25,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "type": "date",
-    },
-    "label": "日期字段",
-    "name": "u_日期字段",
+    "label": "array",
+    "name": "Isle of Man",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -26,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "organization.Staff",
-      "type": "ref",
-    },
-    "label": "新人1118",
-    "name": "u_新人1118",
+    "label": "Rubber",
+    "name": "deploy",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -27,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "datalink.DataLinkEntity.87bf0a116b2443044c00",
-      "type": "ref",
-    },
-    "label": "全",
-    "name": "u_全",
+    "label": "Synergistic",
+    "name": "Home Loan Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -28,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "type": "money",
-    },
-    "label": "金额字段",
-    "name": "u_金额字段",
+    "label": "innovate",
+    "name": "Checking Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -29,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "type": "money",
-    },
-    "label": "金额字段2",
-    "name": "u_金额字段2",
+    "label": "Tools",
+    "name": "engage",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -30,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "type": "text",
-    },
-    "label": "文本字段",
-    "name": "u_文本字段",
+    "label": "applications",
+    "name": "Dynamic",
   },
 ]
 `;
@@ -855,393 +643,202 @@ Array [
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -31,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "fields": Array [
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "type": "dynamic",
-            },
-            "label": "业务对象明细",
-            "name": "dataLinkForm",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "entity": "datalink.DataLinkTemplate",
-              "type": "ref",
-            },
-            "label": "业务对象模板",
-            "name": "dataLinkTemplateId",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": true,
-            "dataType": Object {
-              "entity": "datalink.DataLinkEntity.f87b09df02bc37050400",
-              "type": "ref",
-            },
-            "label": " 业务对象实例",
-            "name": "dataLinkId",
-          },
-        ],
-        "type": "complex",
-      },
-      "type": "list",
-    },
-    "label": "S7小白菜改",
-    "name": "u_S7小白菜改",
+    "label": "Cambridgeshire",
+    "name": "Accounts",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -32,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "fields": Array [
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "type": "dynamic",
-            },
-            "label": "业务对象明细",
-            "name": "dataLinkForm",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "entity": "datalink.DataLinkTemplate",
-              "type": "ref",
-            },
-            "label": "业务对象模板",
-            "name": "dataLinkTemplateId",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": true,
-            "dataType": Object {
-              "entity": "datalink.DataLinkEntity.f87b09df02bc37050400",
-              "type": "ref",
-            },
-            "label": " 业务对象实例",
-            "name": "dataLinkId",
-          },
-        ],
-        "type": "complex",
-      },
-      "type": "list",
-    },
-    "label": "S7小白菜写",
-    "name": "u_S7小白菜写",
+    "label": "withdrawal",
+    "name": "Solutions",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -33,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "datalink.DataLinkEntity.ae2109df02bc37052800",
-      "type": "ref",
-    },
-    "label": "S7白菜读取",
-    "name": "u_S7白菜读取",
+    "label": "Practical Wooden Shirt",
+    "name": "mint green",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -34,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "fields": Array [
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "type": "dynamic",
-            },
-            "label": "业务对象明细",
-            "name": "dataLinkForm",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "entity": "datalink.DataLinkTemplate",
-              "type": "ref",
-            },
-            "label": "业务对象模板",
-            "name": "dataLinkTemplateId",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": true,
-            "dataType": Object {
-              "entity": "datalink.DataLinkEntity.ae2109df02bc37052800",
-              "type": "ref",
-            },
-            "label": " 业务对象实例",
-            "name": "dataLinkId",
-          },
-        ],
-        "type": "complex",
-      },
-      "type": "list",
-    },
-    "label": "S7白菜写入",
-    "name": "u_S7白菜写入",
+    "label": "Falls",
+    "name": "pixel",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -35,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "fields": Array [
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "type": "dynamic",
-            },
-            "label": "业务对象明细",
-            "name": "dataLinkForm",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "entity": "datalink.DataLinkTemplate",
-              "type": "ref",
-            },
-            "label": "业务对象模板",
-            "name": "dataLinkTemplateId",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": true,
-            "dataType": Object {
-              "entity": "datalink.DataLinkEntity.ae2109df02bc37052800",
-              "type": "ref",
-            },
-            "label": " 业务对象实例",
-            "name": "dataLinkId",
-          },
-        ],
-        "type": "complex",
-      },
-      "type": "list",
-    },
-    "label": "S7白菜改",
-    "name": "u_S7白菜改",
+    "label": "array",
+    "name": "Isle of Man",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -36,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "entity": "organization.Staff",
-        "type": "ref",
-      },
-      "type": "list",
-    },
-    "label": "多选员工",
-    "name": "u_多选员工",
+    "label": "Rubber",
+    "name": "deploy",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -37,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "entity": "organization.Staff",
-        "type": "ref",
-      },
-      "type": "list",
-    },
-    "label": "员工多选",
-    "name": "u_员工多选",
+    "label": "Synergistic",
+    "name": "Home Loan Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -38,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "entity": "organization.Staff",
-        "type": "ref",
+    "label": "innovate",
+    "name": "Checking Account",
+  },
+  Object {
+    "__META__": Object {
+      "MODEL_PERSISTED_FIELD": false,
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
       },
-      "type": "list",
-    },
-    "label": "员工多",
-    "name": "u_员工多",
-  },
-  Object {
-    "__META__": Object {
-      "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
       "id": -39,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "datalink.DataLinkEntity.d8a009f00eb127409800",
-      "type": "ref",
-    },
-    "label": "实体9lgt",
-    "name": "u_实体9lgt",
+    "label": "Tools",
+    "name": "engage",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "dataType",
-        "ability",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -40,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "datalink.DataLinkEntity.d8a009f00eb127409800",
-      "type": "ref",
-    },
-    "label": "测试d7tz",
-    "name": "u_测试d7tz",
+    "label": "applications",
+    "name": "Dynamic",
   },
 ]
 `;
@@ -1251,282 +848,202 @@ Array [
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
-      "id": -41,
-      "refs": Object {},
-      "type": "flow.PropertySet",
-    },
-    "ability": "pay",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "boolean",
-    },
-    "label": "按金额支付",
-    "name": "payPlanMode",
-  },
-  Object {
-    "__META__": Object {
-      "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "dataType",
-        "canAsDimension",
-        "ability",
-      ],
-      "id": -42,
-      "refs": Object {},
-      "type": "flow.PropertySet",
-    },
-    "ability": undefined,
-    "active": true,
-    "canAsDimension": undefined,
-    "dataType": Object {
-      "elemType": Object {
-        "fields": Array [
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "type": "dynamic",
-            },
-            "label": "业务对象明细",
-            "name": "dataLinkForm",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": false,
-            "dataType": Object {
-              "entity": "datalink.DataLinkTemplate",
-              "type": "ref",
-            },
-            "label": "业务对象模板",
-            "name": "dataLinkTemplateId",
-          },
-          Object {
-            "active": true,
-            "canAsDimension": true,
-            "dataType": Object {
-              "entity": "system_支付计划",
-              "type": "ref",
-            },
-            "label": " 业务对象实例",
-            "name": "dataLinkId",
-          },
-        ],
-        "type": "complex",
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
       },
-      "type": "list",
+      "id": -41,
+      "type": "flow.PropertySet",
     },
-    "label": "支付计划",
-    "name": "payPlan",
+    "label": "Cambridgeshire",
+    "name": "Accounts",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
+      "id": -42,
+      "type": "flow.PropertySet",
+    },
+    "label": "withdrawal",
+    "name": "Solutions",
+  },
+  Object {
+    "__META__": Object {
+      "MODEL_PERSISTED_FIELD": false,
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -43,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "dataLink",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "dynamic",
-    },
-    "label": "业务对象明细",
-    "name": "dataLinkForm",
+    "label": "Practical Wooden Shirt",
+    "name": "mint green",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -44,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "dataLink",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "entity": "datalink.DataLinkTemplate",
-      "type": "ref",
-    },
-    "label": "业务对象模板",
-    "name": "dataLinkTemplateId",
+    "label": "Falls",
+    "name": "pixel",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -45,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "dataLink",
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "datalink.DataLinkEntity",
-      "type": "ref",
-    },
-    "label": "业务对象实例",
-    "name": "dataLinkId",
+    "label": "array",
+    "name": "Isle of Man",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -46,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "print",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "scale": 0,
-      "type": "number",
-      "unit": "次",
-    },
-    "label": "打印次数",
-    "name": "printCount",
+    "label": "Rubber",
+    "name": "deploy",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -47,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "print",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "text",
-    },
-    "label": "打印状态",
-    "name": "printState",
+    "label": "Synergistic",
+    "name": "Home Loan Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -48,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "print",
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "organization.Staff",
-      "type": "ref",
-    },
-    "label": "最后打印人",
-    "name": "lastPrinter",
+    "label": "innovate",
+    "name": "Checking Account",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -49,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "print",
-    "active": true,
-    "canAsDimension": false,
-    "dataType": Object {
-      "type": "date",
-    },
-    "label": "最后打印时间",
-    "name": "lastPrintTime",
+    "label": "Tools",
+    "name": "engage",
   },
   Object {
     "__META__": Object {
       "MODEL_PERSISTED_FIELD": false,
-      "fields": Array [
-        "name",
-        "label",
-        "active",
-        "canAsDimension",
-        "ability",
-        "dataType",
-      ],
+      "collection": undefined,
+      "fields": Object {
+        "label": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+        "name": Object {
+          "defaultValue": undefined,
+          "referenceDef": false,
+        },
+      },
       "id": -50,
-      "refs": Object {},
       "type": "flow.PropertySet",
     },
-    "ability": "",
-    "active": true,
-    "canAsDimension": true,
-    "dataType": Object {
-      "entity": "basedata.Dimension.法人实体",
-      "type": "ref",
-    },
-    "label": "法人实体",
-    "name": "法人实体",
+    "label": "applications",
+    "name": "Dynamic",
   },
 ]
 `;

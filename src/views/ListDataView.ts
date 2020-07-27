@@ -22,7 +22,7 @@ export class ListDataView<T extends PureModel> {
     this.collection = collection
   }
 
-  @action async infinite(start: number, count: number): Promise<this> {
+  @action public async infinite(start: number, count: number): Promise<this> {
     this.limit = [start, count]
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, {
@@ -38,8 +38,7 @@ export class ListDataView<T extends PureModel> {
     this.meta = response.meta as any
     return undefined
   }
-
-  @action async search(options: IRequestOptions): Promise<this> {
+  @action public async search(options: IRequestOptions): Promise<this> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
     this.requestOptions = response.requestOptions
@@ -49,7 +48,7 @@ export class ListDataView<T extends PureModel> {
     return this
   }
 
-  first(): Promise<this> {
+  public first(): Promise<this> {
     const start = 0
     const count = this.limit[1]
     this.limit = [start, count]
@@ -62,8 +61,7 @@ export class ListDataView<T extends PureModel> {
       }
     })
   }
-
-  prev(): Promise<this> {
+  public prev(): Promise<this> {
     // tslint:disable-next-line:prefer-const
     let [start, count] = this.limit
     start -= count
@@ -77,8 +75,7 @@ export class ListDataView<T extends PureModel> {
       }
     })
   }
-
-  next(): Promise<this> {
+  public next(): Promise<this> {
     // tslint:disable-next-line:prefer-const
     let [start, count] = this.limit
     start += count
@@ -91,8 +88,7 @@ export class ListDataView<T extends PureModel> {
       }
     })
   }
-
-  last(): Promise<this> {
+  public last(): Promise<this> {
     const [, count] = this.limit
     const start = this.meta.count - count
     this.limit = [start, count]

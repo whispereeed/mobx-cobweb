@@ -5,7 +5,9 @@ import { Collection as _Collection, IModelConstructor, IType, PureModel, ICollec
 import { withNetPatches } from './mixins/withNetPatches'
 import { INetPatchesCollection } from './interfaces/INetPatchesCollection'
 
-const WithNetPatchesCollection: ICollectionConstructor<_Collection & INetPatchesCollection<_Collection>> = withNetPatches(_Collection)
+const WithNetPatchesCollection: ICollectionConstructor<
+  _Collection & INetPatchesCollection<_Collection>
+> = withNetPatches(_Collection)
 
 export class Collection extends WithNetPatchesCollection {
   static register<T extends PureModel>(O: IModelConstructor<T>) {
@@ -18,7 +20,7 @@ export class Collection extends WithNetPatchesCollection {
     ;((this.constructor as unknown) as Collection).register(O)
   }
 
-  findSingleton<T extends PureModel>(model?: IType | IModelConstructor<T>): T {
-    return this.findOne(model, -1)
+  findOrphan<T extends PureModel>(model?: IType | IModelConstructor<T>): T {
+    return this.findOne(model, '__$orphan_id__(0)')
   }
 }

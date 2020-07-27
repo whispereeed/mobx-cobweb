@@ -4,63 +4,52 @@ exports[`collection.findOne should findOne at collection 1`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": true,
-    "fields": Array [
-      "version",
-      "active",
-      "createTime",
-      "updateTime",
-      "name",
-      "nameSpell",
-      "code",
-      "corporationId",
-      "userId",
-      "id",
-      "avatar",
-      "email",
-      "cellphone",
-      "note",
-      "external",
-      "order",
-      "corporation",
-      "roles",
-    ],
-    "id": "XRA9koBTaA0000:gongyanyu",
-    "refs": Object {
+    "collection": undefined,
+    "fields": Object {
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
       "defaultDepartment": Object {
-        "model": "organization.Department",
-        "type": 0,
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
       },
       "departments": Object {
-        "model": "organization.Department",
-        "type": 1,
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
       },
     },
+    "id": "cdb28c900c75",
     "type": "organization.Staff",
   },
-  "active": true,
-  "avatar": "",
-  "cellphone": null,
-  "code": "123321",
-  "corporation": undefined,
-  "corporationId": "XRA9koBTaA0000",
-  "createTime": 1561368150495,
-  "defaultDepartment": "6Rk9l1WYNM0400:50128173",
-  "departments": Array [
-    "6Rk9l1WYNM0400:50128173",
-  ],
-  "email": null,
-  "external": false,
-  "id": "XRA9koBTaA0000:gongyanyu",
-  "name": "龚彥宇",
-  "nameSpell": "GONGYANYU",
-  "note": null,
-  "order": Object {
-    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  "code": 41738,
+  "defaultDepartment": Object {
+    "id": "66f58b59c384",
+    "type": "organization.Department",
   },
-  "roles": undefined,
-  "updateTime": 1574093411607,
-  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
-  "version": 14,
+  "departments": Array [
+    Object {
+      "id": "66f58b59c384",
+      "type": "organization.Department",
+    },
+  ],
+  "id": "cdb28c900c75",
+  "name": "Principal",
 }
 `;
 
@@ -68,63 +57,52 @@ exports[`collection.findOne should findOne at collection 2`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": true,
-    "fields": Array [
-      "version",
-      "active",
-      "createTime",
-      "updateTime",
-      "name",
-      "nameSpell",
-      "code",
-      "corporationId",
-      "userId",
-      "id",
-      "avatar",
-      "email",
-      "cellphone",
-      "note",
-      "external",
-      "order",
-      "corporation",
-      "roles",
-    ],
-    "id": "XRA9koBTaA0000:gongyanyu",
-    "refs": Object {
+    "collection": undefined,
+    "fields": Object {
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
       "defaultDepartment": Object {
-        "model": "organization.Department",
-        "type": 0,
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
       },
       "departments": Object {
-        "model": "organization.Department",
-        "type": 1,
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
       },
     },
+    "id": "cdb28c900c75",
     "type": "organization.Staff",
   },
-  "active": true,
-  "avatar": "",
-  "cellphone": null,
-  "code": "123321",
-  "corporation": undefined,
-  "corporationId": "XRA9koBTaA0000",
-  "createTime": 1561368150495,
-  "defaultDepartment": "6Rk9l1WYNM0400:50128173",
-  "departments": Array [
-    "6Rk9l1WYNM0400:50128173",
-  ],
-  "email": null,
-  "external": false,
-  "id": "XRA9koBTaA0000:gongyanyu",
-  "name": "龚彥宇",
-  "nameSpell": "GONGYANYU",
-  "note": null,
-  "order": Object {
-    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  "code": 41738,
+  "defaultDepartment": Object {
+    "id": "66f58b59c384",
+    "type": "organization.Department",
   },
-  "roles": undefined,
-  "updateTime": 1574093411607,
-  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
-  "version": 14,
+  "departments": Array [
+    Object {
+      "id": "66f58b59c384",
+      "type": "organization.Department",
+    },
+  ],
+  "id": "cdb28c900c75",
+  "name": "Principal",
 }
 `;
 
@@ -132,62 +110,51 @@ exports[`collection.findOne should findOne at collection 3`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": true,
-    "fields": Array [
-      "version",
-      "active",
-      "createTime",
-      "updateTime",
-      "name",
-      "nameSpell",
-      "code",
-      "corporationId",
-      "userId",
-      "id",
-      "avatar",
-      "email",
-      "cellphone",
-      "note",
-      "external",
-      "order",
-      "corporation",
-      "roles",
-    ],
-    "id": "XRA9koBTaA0000:gongyanyu",
-    "refs": Object {
+    "collection": undefined,
+    "fields": Object {
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
       "defaultDepartment": Object {
-        "model": "organization.Department",
-        "type": 0,
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
       },
       "departments": Object {
-        "model": "organization.Department",
-        "type": 1,
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
       },
     },
+    "id": "cdb28c900c75",
     "type": "organization.Staff",
   },
-  "active": true,
-  "avatar": "",
-  "cellphone": null,
-  "code": "123321",
-  "corporation": undefined,
-  "corporationId": "XRA9koBTaA0000",
-  "createTime": 1561368150495,
-  "defaultDepartment": "6Rk9l1WYNM0400:50128173",
-  "departments": Array [
-    "6Rk9l1WYNM0400:50128173",
-  ],
-  "email": null,
-  "external": false,
-  "id": "XRA9koBTaA0000:gongyanyu",
-  "name": "龚彥宇",
-  "nameSpell": "GONGYANYU",
-  "note": null,
-  "order": Object {
-    "XRA9koBTaA0000:19031410": "9043357214046142247",
+  "code": 41738,
+  "defaultDepartment": Object {
+    "id": "66f58b59c384",
+    "type": "organization.Department",
   },
-  "roles": undefined,
-  "updateTime": 1574093411607,
-  "userId": "tLwu5tpsk7etQAENLoON0giEiE",
-  "version": 14,
+  "departments": Array [
+    Object {
+      "id": "66f58b59c384",
+      "type": "organization.Department",
+    },
+  ],
+  "id": "cdb28c900c75",
+  "name": "Principal",
 }
 `;

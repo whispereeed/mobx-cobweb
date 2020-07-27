@@ -3,8 +3,7 @@
  ***************************************************/
 import { collection, MyCollection, useFixtureGetById, useFixturesByGET } from './config'
 import Staff from './models/Staff'
-import { Model } from '../src'
-import { prop } from 'datx'
+import { Model, attribute } from '../src'
 import { action, autorun } from 'mobx'
 
 describe('collection.register', () => {
@@ -17,7 +16,7 @@ describe('collection.register', () => {
 
   test('should be used static function collection.register(Model)', async () => {
     useFixtureGetById(Staff.endpoint)
-    const response = await collection.fetch<Staff>(Staff, 'XRA9koBTaA0000:gongyanyu')
+    const response = await collection.fetch<Staff>(Staff, 'cdb28c900c75')
     const staff = response.data
 
     expect(staff).toBeInstanceOf(Staff)
@@ -25,8 +24,8 @@ describe('collection.register', () => {
     class StaffVM extends Model {
       static type = 'vm::Staff_2'
 
-      @prop.toOne(Staff) staff: Staff
-      @prop ccc: string
+      @attribute({ toOne: Staff }) staff: Staff
+      @attribute() ccc: string
 
       @action test(ccc: string) {
         this.ccc = ccc
@@ -36,7 +35,7 @@ describe('collection.register', () => {
 
     MyCollection.register(StaffVM)
 
-    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }))
+    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'cdb28c900c75' }, collection))
 
     expect(staffVM.ccc).toBe('xxxxx')
     expect(staffVM.staff).toBe(staff)
@@ -52,7 +51,7 @@ describe('collection.register', () => {
 
   test('should be used instance function collection.register(Model)', async () => {
     useFixtureGetById(Staff.endpoint)
-    const response = await collection.fetch<Staff>(Staff, 'XRA9koBTaA0000:gongyanyu')
+    const response = await collection.fetch<Staff>(Staff, 'cdb28c900c75')
     const staff = response.data
 
     expect(staff).toBeInstanceOf(Staff)
@@ -60,8 +59,8 @@ describe('collection.register', () => {
     class StaffVM extends Model {
       static type = 'vm::Staff'
 
-      @prop.toOne(Staff) staff: Staff
-      @prop ccc: string
+      @attribute({ toOne: Staff }) staff: Staff
+      @attribute() ccc: string
 
       @action test(ccc: string) {
         this.ccc = ccc
@@ -71,7 +70,7 @@ describe('collection.register', () => {
 
     collection.register(StaffVM)
 
-    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }))
+    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'cdb28c900c75' }, collection))
 
     expect(staffVM.ccc).toBe('xxxxx')
     expect(staffVM.staff).toBe(staff)
