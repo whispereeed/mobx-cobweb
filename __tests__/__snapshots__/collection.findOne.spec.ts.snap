@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collection.findOne should findOne at collection 1`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "collection": undefined,
+    "fields": Object {
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "defaultDepartment": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "departments": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "cdb28c900c75",
+    "type": "organization.Staff",
+  },
+  "code": 41738,
+  "defaultDepartment": Object {
+    "id": "66f58b59c384",
+    "type": "organization.Department",
+  },
+  "departments": Array [
+    Object {
+      "id": "66f58b59c384",
+      "type": "organization.Department",
+    },
+  ],
+  "id": "cdb28c900c75",
+  "name": "Principal",
+}
+`;
+
+exports[`collection.findOne should findOne at collection 2`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "collection": undefined,
+    "fields": Object {
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "defaultDepartment": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "departments": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "cdb28c900c75",
+    "type": "organization.Staff",
+  },
+  "code": 41738,
+  "defaultDepartment": Object {
+    "id": "66f58b59c384",
+    "type": "organization.Department",
+  },
+  "departments": Array [
+    Object {
+      "id": "66f58b59c384",
+      "type": "organization.Department",
+    },
+  ],
+  "id": "cdb28c900c75",
+  "name": "Principal",
+}
+`;
+
+exports[`collection.findOne should findOne at collection 3`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "collection": undefined,
+    "fields": Object {
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "defaultDepartment": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "departments": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "cdb28c900c75",
+    "type": "organization.Staff",
+  },
+  "code": 41738,
+  "defaultDepartment": Object {
+    "id": "66f58b59c384",
+    "type": "organization.Department",
+  },
+  "departments": Array [
+    Object {
+      "id": "66f58b59c384",
+      "type": "organization.Department",
+    },
+  ],
+  "id": "cdb28c900c75",
+  "name": "Principal",
+}
+`;

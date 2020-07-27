@@ -1,0 +1,690 @@
+{
+  "items": [
+    {
+      "id": "367bb4d33367",
+      "name": "Gloves",
+      "code": 37250,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "6ae31b1e6dda",
+      "name": "AGP",
+      "code": 75359,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "b431a2178fc6",
+      "name": "Senior",
+      "code": 39526,
+      "departments": ["875fdcddd47e"],
+      "defaultDepartment": "875fdcddd47e"
+    },
+    {
+      "id": "6c1f68b35f1d",
+      "name": "homogeneous",
+      "code": 56513,
+      "departments": ["11717e256d95"],
+      "defaultDepartment": "11717e256d95"
+    },
+    {
+      "id": "17c20b16c32a",
+      "name": "Wooden",
+      "code": 20767,
+      "departments": ["10ee12be822c"],
+      "defaultDepartment": "10ee12be822c"
+    },
+    {
+      "id": "7edaf3903484",
+      "name": "Profound",
+      "code": 84054,
+      "departments": ["31f8c06a9508"],
+      "defaultDepartment": "31f8c06a9508"
+    },
+    {
+      "id": "934da9430c2e",
+      "name": "Auto Loan Account",
+      "code": 64138,
+      "departments": ["875fdcddd47e"],
+      "defaultDepartment": "875fdcddd47e"
+    },
+    {
+      "id": "cd2f2c62d505",
+      "name": "navigating",
+      "code": 41954,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "5751716d8ec0",
+      "name": "JSON",
+      "code": 92211,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "33b46a78f7c0",
+      "name": "secured line",
+      "code": 58584,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "1abcf735375c",
+      "name": "programming",
+      "code": 30338,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "5f73bf4be459",
+      "name": "New Jersey",
+      "code": 72049,
+      "departments": ["4a24ac804f52"],
+      "defaultDepartment": "4a24ac804f52"
+    },
+    {
+      "id": "cdb28c900c75",
+      "name": "Principal",
+      "code": 41738,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "a08386333c51",
+      "name": "Plastic",
+      "code": 92318,
+      "departments": ["005ddc160e41"],
+      "defaultDepartment": "005ddc160e41"
+    },
+    {
+      "id": "74197b1898b3",
+      "name": "1080p",
+      "code": 20163,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "f8fc05a235ec",
+      "name": "Gorgeous Wooden Soap",
+      "code": 8478,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "f3398dbb2dd0",
+      "name": "lavender",
+      "code": 12906,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "c89cc3444c84",
+      "name": "Plain",
+      "code": 4284,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "76d7db9bef56",
+      "name": "scalable",
+      "code": 81668,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "c640e18c4416",
+      "name": "explicit",
+      "code": 17512,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "267532093bdc",
+      "name": "human-resource",
+      "code": 45796,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "8bb5669d137a",
+      "name": "Reunion",
+      "code": 71204,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "cb1959169bb9",
+      "name": "Saudi Riyal",
+      "code": 58734,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "6a94ec9332dc",
+      "name": "Operations",
+      "code": 3010,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "f317e38f4639",
+      "name": "platforms",
+      "code": 5409,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "cdae8658657e",
+      "name": "Configuration",
+      "code": 84310,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "42567091d3f9",
+      "name": "Metal",
+      "code": 63480,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "a99c4a0a427f",
+      "name": "Clothing",
+      "code": 42625,
+      "departments": ["ae064259bd1a"],
+      "defaultDepartment": "ae064259bd1a"
+    },
+    {
+      "id": "1d5b703f2dc9",
+      "name": "calculating",
+      "code": 70250,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "73e9e2e16dd3",
+      "name": "Human",
+      "code": 42244,
+      "departments": ["11717e256d95"],
+      "defaultDepartment": "11717e256d95"
+    },
+    {
+      "id": "5e372aa8a700",
+      "name": "out-of-the-box",
+      "code": 94052,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "22295050e750",
+      "name": "hard drive",
+      "code": 17011,
+      "departments": ["9e900ddcab7f"],
+      "defaultDepartment": "9e900ddcab7f"
+    },
+    {
+      "id": "f949df3ebdf3",
+      "name": "zero defect",
+      "code": 68758,
+      "departments": ["23c98ec3341f"],
+      "defaultDepartment": "23c98ec3341f"
+    },
+    {
+      "id": "2fccbd4dd194",
+      "name": "syndicate",
+      "code": 6605,
+      "departments": ["11717e256d95"],
+      "defaultDepartment": "11717e256d95"
+    },
+    {
+      "id": "da871678f263",
+      "name": "enhance",
+      "code": 4857,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "4d9d2f187f84",
+      "name": "Officer",
+      "code": 30679,
+      "departments": ["11717e256d95"],
+      "defaultDepartment": "11717e256d95"
+    },
+    {
+      "id": "8336a0bc3f8b",
+      "name": "Jewelery",
+      "code": 66358,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "40a2af158313",
+      "name": "programming",
+      "code": 68647,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "69c7ef7426d7",
+      "name": "generate",
+      "code": 7192,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "7e397ce7ad1c",
+      "name": "Security",
+      "code": 12467,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "2be808cab53a",
+      "name": "Berkshire",
+      "code": 83128,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "ab1d345c3f58",
+      "name": "Alabama",
+      "code": 62765,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "8cee00391495",
+      "name": "Somoni",
+      "code": 65,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "5b6ef3ad4087",
+      "name": "Saint Helena",
+      "code": 87645,
+      "departments": ["67ec2a0d371a"],
+      "defaultDepartment": "67ec2a0d371a"
+    },
+    {
+      "id": "5f3eee013713",
+      "name": "redefine",
+      "code": 81428,
+      "departments": ["d189dfd1d217"],
+      "defaultDepartment": "d189dfd1d217"
+    },
+    {
+      "id": "0ba34acd25c8",
+      "name": "Portugal",
+      "code": 26081,
+      "departments": ["59c4bf33d768"],
+      "defaultDepartment": "59c4bf33d768"
+    },
+    {
+      "id": "d27bfc337951",
+      "name": "applications",
+      "code": 32732,
+      "departments": ["8c77cfae15a5"],
+      "defaultDepartment": "8c77cfae15a5"
+    },
+    {
+      "id": "4e9360e02f9a",
+      "name": "Corners",
+      "code": 18790,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "81d6afa9513d",
+      "name": "Savings Account",
+      "code": 27585,
+      "departments": ["aa7236e555fb", "5ae095910bc8"],
+      "defaultDepartment": "5ae095910bc8"
+    },
+    {
+      "id": "686a7645e6d9",
+      "name": "Computer",
+      "code": 11182,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "c4917a99e97c",
+      "name": "Incredible Fresh Soap",
+      "code": 82895,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "54e1adc0e024",
+      "name": "Industrial",
+      "code": 32612,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "e9edf68723ac",
+      "name": "Tactics",
+      "code": 22165,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "3fac08281386",
+      "name": "Intuitive",
+      "code": 45612,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "1248dfe4c3d8",
+      "name": "SDD",
+      "code": 91568,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "be47e9f6cc4c",
+      "name": "Chicken",
+      "code": 97815,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "1142d2292c68",
+      "name": "e-enable",
+      "code": 27822,
+      "departments": ["44f27f9a987e"],
+      "defaultDepartment": "44f27f9a987e"
+    },
+    {
+      "id": "51e2cd3692a6",
+      "name": "North Carolina",
+      "code": 25458,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "9f30ef737391",
+      "name": "Corporate",
+      "code": 41701,
+      "departments": ["59c4bf33d768"],
+      "defaultDepartment": "59c4bf33d768"
+    },
+    {
+      "id": "a2fc3626363f",
+      "name": "Engineer",
+      "code": 47400,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "41c90b7729a3",
+      "name": "neural",
+      "code": 68868,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "214a11ae22cc",
+      "name": "Virtual",
+      "code": 26826,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "8b1df93dd770",
+      "name": "withdrawal",
+      "code": 9779,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "af34c9aec875",
+      "name": "hard drive",
+      "code": 92025,
+      "departments": ["875fdcddd47e"],
+      "defaultDepartment": "875fdcddd47e"
+    },
+    {
+      "id": "904403f63c25",
+      "name": "fuchsia",
+      "code": 33815,
+      "departments": ["11717e256d95", "31f8c06a9508", "9908ce1a9805", "59c4bf33d768"],
+      "defaultDepartment": "59c4bf33d768"
+    },
+    {
+      "id": "d8546fa6865d",
+      "name": "Oregon",
+      "code": 41044,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "0f1f3cf282e1",
+      "name": "Jewelery",
+      "code": 75146,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "80a34cfaec8c",
+      "name": "cyan",
+      "code": 34383,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "a565ee20f677",
+      "name": "online",
+      "code": 25872,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "6e9bc184a078",
+      "name": "Beauty",
+      "code": 66489,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "43e117495c50",
+      "name": "Home",
+      "code": 12673,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "a7e35b353869",
+      "name": "Beauty",
+      "code": 92817,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "72eb3749d3a7",
+      "name": "invoice",
+      "code": 4652,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "861cd95437fb",
+      "name": "Unbranded",
+      "code": 7773,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "947e69e297fa",
+      "name": "redundant",
+      "code": 1683,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "c43743c38541",
+      "name": "GB",
+      "code": 94831,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "83b1ff35e1cc",
+      "name": "Executive",
+      "code": 49804,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "23ca74f26c5e",
+      "name": "Fundamental",
+      "code": 27329,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "da55284dd263",
+      "name": "Handmade",
+      "code": 86769,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "3aefb58cdbec",
+      "name": "New Leu",
+      "code": 85152,
+      "departments": ["875fdcddd47e", "005ddc160e41"],
+      "defaultDepartment": "875fdcddd47e"
+    },
+    {
+      "id": "99c963ec8440",
+      "name": "Virginia",
+      "code": 58944,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "efb255f639b8",
+      "name": "Credit Card Account",
+      "code": 77975,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "e598c542cdb4",
+      "name": "Liaison",
+      "code": 87695,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "1888260f7b8b",
+      "name": "Frozen",
+      "code": 12160,
+      "departments": ["909624ffaf0c", "bf4f4e9ff613", "7f62a242756b"],
+      "defaultDepartment": "909624ffaf0c"
+    },
+    {
+      "id": "d686d1a9bde9",
+      "name": "Investment Account",
+      "code": 3742,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "f2ac8cda1f00",
+      "name": "Director",
+      "code": 57668,
+      "departments": ["005ddc160e41"],
+      "defaultDepartment": "005ddc160e41"
+    },
+    {
+      "id": "1328838a5770",
+      "name": "Shoes",
+      "code": 42656,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "6e9344d98c23",
+      "name": "red",
+      "code": 86385,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "4658305ab8c1",
+      "name": "Customer",
+      "code": 72409,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "14b3e97e57f7",
+      "name": "Kansas",
+      "code": 9858,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "3e35f31ef034",
+      "name": "client-driven",
+      "code": 78032,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "424ce8f11a4d",
+      "name": "panel",
+      "code": 91946,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "e4f3a4f7c916",
+      "name": "eyeballs",
+      "code": 63776,
+      "departments": ["11717e256d95"],
+      "defaultDepartment": "11717e256d95"
+    },
+    {
+      "id": "8092dee88f5a",
+      "name": "orange",
+      "code": 637,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "247cd93b20cc",
+      "name": "wireless",
+      "code": 50977,
+      "departments": ["11717e256d95"],
+      "defaultDepartment": "11717e256d95"
+    },
+    {
+      "id": "4ca6a44e9f52",
+      "name": "orchid",
+      "code": 23967,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "35f64dbe4d42",
+      "name": "Senior",
+      "code": 64532,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    },
+    {
+      "id": "c1d66b8a3d66",
+      "name": "architect",
+      "code": 4562,
+      "departments": ["66f58b59c384"],
+      "defaultDepartment": "66f58b59c384"
+    }
+  ]
+}

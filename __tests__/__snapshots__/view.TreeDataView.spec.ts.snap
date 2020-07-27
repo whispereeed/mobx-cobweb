@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TreeDataView should be fetched children nodes 1`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "collection": undefined,
+    "fields": Object {
+      "children": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "parentId": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+    },
+    "id": "9e900ddcab7f",
+    "type": "organization.Department",
+  },
+  "children": Array [],
+  "code": 62427,
+  "id": "9e900ddcab7f",
+  "name": "Table",
+  "parentId": Object {
+    "id": "005ddc160e41",
+    "type": "organization.Department",
+  },
+}
+`;
+
+exports[`TreeDataView should be fetched parent node 1`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "collection": undefined,
+    "fields": Object {
+      "children": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "parentId": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+    },
+    "id": "005ddc160e41",
+    "type": "organization.Department",
+  },
+  "children": Array [
+    Object {
+      "id": "59c4bf33d768",
+      "type": "organization.Department",
+    },
+  ],
+  "code": 84416,
+  "id": "005ddc160e41",
+  "name": "incubate",
+  "parentId": Object {
+    "id": "aa7236e555fb",
+    "type": "organization.Department",
+  },
+}
+`;

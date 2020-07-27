@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collection.fetch should be fetched a Model By Id/Ids 1`] = `
+Object {
+  "__$orphan_id__": "__$orphan_id__(0)",
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": false,
+    "collection": undefined,
+    "fields": Object {
+      "__$orphan_id__": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "staff": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Staff",
+          "type": 0,
+        },
+      },
+    },
+    "id": "__$orphan_id__(0)",
+    "type": "organization.Staff.Me",
+  },
+  "staff": Object {
+    "id": "cdb28c900c75",
+    "type": "organization.Staff",
+  },
+}
+`;
+
+exports[`collection.fetch should be fetched a Model By Id/Ids 2`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "collection": undefined,
+    "fields": Object {
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "defaultDepartment": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "departments": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "cdb28c900c75",
+    "type": "organization.Staff",
+  },
+  "code": 41738,
+  "defaultDepartment": Object {
+    "id": "66f58b59c384",
+    "type": "organization.Department",
+  },
+  "departments": Array [
+    Object {
+      "id": "66f58b59c384",
+      "type": "organization.Department",
+    },
+  ],
+  "id": "cdb28c900c75",
+  "name": "Principal",
+}
+`;
+
+exports[`collection.fetch should be fetched all Refs Models fetchModelRefs 1`] = `
+Object {
+  "__$orphan_id__": "__$orphan_id__(0)",
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": false,
+    "collection": undefined,
+    "fields": Object {
+      "__$orphan_id__": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "staff": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Staff",
+          "type": 0,
+        },
+      },
+    },
+    "id": "__$orphan_id__(0)",
+    "type": "organization.Staff.Me",
+  },
+  "staff": Object {
+    "id": "cdb28c900c75",
+    "type": "organization.Staff",
+  },
+}
+`;
+
+exports[`collection.fetch should be fetched all Refs Models fetchModelRefs 2`] = `
+Object {
+  "__META__": Object {
+    "MODEL_PERSISTED_FIELD": true,
+    "collection": undefined,
+    "fields": Object {
+      "code": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "defaultDepartment": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "type": 0,
+        },
+      },
+      "departments": Object {
+        "defaultValue": undefined,
+        "referenceDef": Object {
+          "model": "organization.Department",
+          "property": undefined,
+          "type": 1,
+        },
+      },
+      "id": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+      "name": Object {
+        "defaultValue": undefined,
+        "referenceDef": false,
+      },
+    },
+    "id": "cdb28c900c75",
+    "type": "organization.Staff",
+  },
+  "code": 41738,
+  "defaultDepartment": Object {
+    "id": "66f58b59c384",
+    "type": "organization.Department",
+  },
+  "departments": Array [
+    Object {
+      "id": "66f58b59c384",
+      "type": "organization.Department",
+    },
+  ],
+  "id": "cdb28c900c75",
+  "name": "Principal",
+}
+`;
