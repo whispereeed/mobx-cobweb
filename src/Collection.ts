@@ -3,15 +3,17 @@
  ***************************************************/
 import { Collection as _Collection, IModelConstructor, IType, PureModel, ICollectionConstructor } from 'datx'
 import { withNetPatches } from './mixins/withNetPatches'
-import { INetPatchesCollection } from './interfaces/INetPatchesCollection'
+import { withStorage } from './mixins/withStorage'
+import { INetPatchesCollectionMixin } from './interfaces/INetPatchesCollectionMixin'
+import { IStorageCollectionMixin } from './interfaces/IStorageCollectionMixin'
 
 const WithNetPatchesCollection: ICollectionConstructor<
-  _Collection & INetPatchesCollection<_Collection>
-> = withNetPatches(_Collection)
+  IStorageCollectionMixin<_Collection> & INetPatchesCollectionMixin<_Collection> & _Collection
+> = withStorage(withNetPatches(_Collection))
 
 export class Collection extends WithNetPatchesCollection {
   static register<T extends PureModel>(O: IModelConstructor<T>) {
-    if (!this.types.find((Q) => Q === O)) {
+    if (!this.types.find((Q) => Q.type === O.type)) {
       this.types.push(O)
     }
   }

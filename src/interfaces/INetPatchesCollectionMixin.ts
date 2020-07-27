@@ -7,7 +7,7 @@ import { IRequestOptions } from './IRequestOptions'
 import { ResponseView } from '../ResponseView'
 import { INetworkAdapter } from './INetworkAdapter'
 
-export interface INetPatchesCollection<T extends PureCollection> {
+export interface INetPatchesCollectionMixin<T extends PureCollection> {
   adapter: INetworkAdapter
   setNetworkAdapter(adapter: INetworkAdapter): void
 

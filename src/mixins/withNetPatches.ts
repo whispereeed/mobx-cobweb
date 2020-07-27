@@ -3,9 +3,19 @@
  ***************************************************/
 import { action } from 'mobx'
 import { mapItems } from 'datx-utils'
-import { getModelId, getModelType, ICollectionConstructor, IIdentifier, IModelConstructor, IType, PureCollection, PureModel, updateModel } from 'datx'
+import {
+  getModelId,
+  getModelType,
+  ICollectionConstructor,
+  IIdentifier,
+  IModelConstructor,
+  IType,
+  PureCollection,
+  PureModel,
+  updateModel
+} from 'datx'
 
-import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
+import { INetPatchesCollectionMixin } from '../interfaces/INetPatchesCollectionMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { removeModel } from '../helpers/model'
@@ -18,7 +28,7 @@ import { setModelPersisted } from '../helpers/consts'
 export function withNetPatches<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
 
-  class WithNetPatches extends BaseClass implements INetPatchesCollection<T> {
+  class WithNetPatches extends BaseClass implements INetPatchesCollectionMixin<T> {
     static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(Model) : [Model]
     static cache: boolean = (BaseClass as any)[''] === undefined ? isBrowser : (BaseClass as any).cache
     static defaultModel = BaseClass.defaultModel || Model
@@ -43,7 +53,11 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
 
       return mapItems(data, (item: any) => this.__addRecord<P>(item, type)) as any
     }
-    @action fetch<T extends PureModel>(type: IType | T | IModelConstructor<T>, ids?: any, options?: any): Promise<ResponseView<T | T[]>> {
+    @action fetch<T extends PureModel>(
+      type: IType | T | IModelConstructor<T>,
+      ids?: any,
+      options?: any
+    ): Promise<ResponseView<T | T[]>> {
       const modelType = getModelType(type)
 
       if (arguments.length === 2 && Object.prototype.toString.call(ids) === '[object Object]') {
@@ -120,5 +134,5 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
     }
   }
 
-  return (WithNetPatches as unknown) as ICollectionConstructor<INetPatchesCollection<T> & T>
+  return (WithNetPatches as unknown) as ICollectionConstructor<INetPatchesCollectionMixin<T> & T>
 }

@@ -13,6 +13,7 @@ export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) 
 
   class WithNetActions extends BaseClass implements INetActionsMixin<T> {
     static endpoint: string | (() => string)
+
     constructor(rawData: IRawModel, collection?: PureCollection) {
       super(rawData, collection)
     }

@@ -6,9 +6,9 @@ import { IIdentifier, IType, PureCollection, PureModel, View } from 'datx'
 import { getCache, saveCache } from './cache'
 import { error, getValue, isBrowser } from './utils'
 
-import { IRequestOptions, IRawResponse, IResponseData, $PickOf, ISingleOrMulti, IRequestMethod } from '../interfaces'
+import { IRequestOptions, IRawResponse, IResponseData, ISingleOrMulti, IRequestMethod } from '../interfaces'
 import { ResponseView } from '../ResponseView'
-import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
+import { INetPatchesCollectionMixin } from '../interfaces/INetPatchesCollectionMixin'
 
 function packResponse<T>(responseData: IResponseData, modelType: IType, collection: PureCollection): IRawResponse<T> {
   const { data = {} as any, ...others } = responseData
@@ -35,7 +35,7 @@ function getModelEndpointURL(type: IType, collection: PureCollection): string {
 }
 
 interface IDoFetchOptions {
-  collection: INetPatchesCollection<PureCollection> & PureCollection
+  collection: INetPatchesCollectionMixin<PureCollection> & PureCollection
   options: IRequestOptions
   modelType?: IType
   method: IRequestMethod
@@ -86,7 +86,7 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
 export function query<M extends ISingleOrMulti<PureModel>>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: INetPatchesCollection<PureCollection> & PureCollection,
+  collection?: INetPatchesCollectionMixin<PureCollection> & PureCollection,
   views?: View[],
   ids?: ISingleOrMulti<IIdentifier>
 ): Promise<ResponseView<M>> {
@@ -103,7 +103,7 @@ export function query<M extends ISingleOrMulti<PureModel>>(
 export function create<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: INetPatchesCollection<PureCollection> & PureCollection,
+  collection?: INetPatchesCollectionMixin<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return doFetch<T>({
@@ -118,7 +118,7 @@ export function create<T extends PureModel>(
 export function update<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: INetPatchesCollection<PureCollection> & PureCollection,
+  collection?: INetPatchesCollectionMixin<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return doFetch<T>({
@@ -133,7 +133,7 @@ export function update<T extends PureModel>(
 export function remove<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: INetPatchesCollection<PureCollection> & PureCollection,
+  collection?: INetPatchesCollectionMixin<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return doFetch<T>({
