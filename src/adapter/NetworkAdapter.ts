@@ -5,6 +5,7 @@ import { IIdentifier, IType } from 'datx'
 import { INetworkAdapter, IRequestMethod, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { error, isBrowser, isEmptyObject } from '../helpers/utils'
+import { isArrayLike } from 'mobx'
 
 export class NetworkAdapter implements INetworkAdapter {
   private readonly baseUrl: string
@@ -106,7 +107,7 @@ export class NetworkAdapter implements INetworkAdapter {
         result.data = responseData.value
       }
 
-      if (responseData.items && Array.isArray(responseData.items)) {
+      if (responseData.items && isArrayLike(responseData.items)) {
         result.data = responseData.items
         result.meta = { count: responseData.count }
       }

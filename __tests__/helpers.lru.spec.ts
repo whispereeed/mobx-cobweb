@@ -3,7 +3,7 @@
  ***************************************************/
 import LRU from '../src/helpers/lru'
 
-describe('LRU TEST', () => {
+describe('LRU', () => {
   it('basic test', () => {
     const lru = new LRU(5)
 

@@ -1,7 +1,17 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { getModelId, getModelType, IType, modelToJSON, PureCollection, PureModel, updateModel, updateModelId, View } from 'datx'
+import {
+  getModelId,
+  getModelType,
+  IType,
+  modelToJSON,
+  PureCollection,
+  PureModel,
+  updateModel,
+  updateModelId,
+  View
+} from 'datx'
 import { action } from 'mobx'
 
 import { GenericModel } from './GenericModel'
@@ -62,7 +72,7 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
       }
     })
 
-    this.meta = (rawResponse.data && rawResponse.data.meta) || {}
+    this.meta = rawResponse.data?.meta || {}
     this.headers = rawResponse.headers
     this.requestHeaders = rawResponse.requestHeaders
     this.error = rawResponse.error

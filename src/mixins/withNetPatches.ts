@@ -2,27 +2,18 @@
  * Created by nanyuantingfeng on 2020/6/2 12:55. *
  ***************************************************/
 import { action } from 'mobx'
-import { IRawModel, mapItems } from 'datx-utils'
-import {
-  getModelId,
-  getModelType,
-  ICollectionConstructor,
-  IIdentifier,
-  IModelConstructor,
-  IType,
-  PureCollection,
-  PureModel,
-  updateModel
-} from 'datx'
+import { mapItems } from 'datx-utils'
+import { getModelId, getModelType, ICollectionConstructor, IIdentifier, IModelConstructor, IType, PureCollection, PureModel, updateModel } from 'datx'
 
 import { INetPatchesCollection } from '../interfaces/INetPatchesCollection'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
-import { flattenModel, removeModel } from '../helpers/model'
+import { removeModel } from '../helpers/model'
 import { INetworkAdapter, IRequestOptions } from '../interfaces'
 import { GenericModel } from '../GenericModel'
 import { query } from '../helpers/network'
 import { isBrowser } from '../helpers/utils'
+import { setModelPersisted } from '../helpers/consts'
 
 export function withNetPatches<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
@@ -111,20 +102,21 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       clearCache()
     }
 
-    private __addRecord<T extends PureModel>(item: any, type: IType): T {
+    private __addRecord<T extends PureModel>(item: Record<string, any>, type: IType): T {
       const StaticCollection = this.constructor as typeof PureCollection
       const id = item.id
-      const record: T = id === undefined ? null : this.findOne<T>(type, id)
-
-      const flattened: IRawModel = flattenModel(item, type)
+      let record: T = id === undefined ? null : this.findOne<T>(type, id)
 
       if (record) {
-        return updateModel(record, flattened)
+        record = updateModel(record, item)
       } else if (StaticCollection.types.filter((item) => item.type === type).length) {
-        return this.add<T>(flattened, type)
+        record = this.add<T>(item, type)
       } else {
-        return this.add(new GenericModel(flattened)) as any
+        record = this.add(new GenericModel(item)) as any
       }
+
+      setModelPersisted(record, Boolean(id))
+      return record
     }
   }
 

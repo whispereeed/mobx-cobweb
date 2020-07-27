@@ -16,7 +16,7 @@ describe('collection.register', () => {
 
   test('should be used static function collection.register(Model)', async () => {
     useFixtureGetById(Staff.endpoint)
-    const response = await collection.fetch<Staff>(Staff, 'XRA9koBTaA0000:gongyanyu')
+    const response = await collection.fetch<Staff>(Staff, 'cdb28c900c75')
     const staff = response.data
 
     expect(staff).toBeInstanceOf(Staff)
@@ -35,7 +35,7 @@ describe('collection.register', () => {
 
     MyCollection.register(StaffVM)
 
-    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }, collection))
+    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'cdb28c900c75' }, collection))
 
     expect(staffVM.ccc).toBe('xxxxx')
     expect(staffVM.staff).toBe(staff)
@@ -51,7 +51,7 @@ describe('collection.register', () => {
 
   test('should be used instance function collection.register(Model)', async () => {
     useFixtureGetById(Staff.endpoint)
-    const response = await collection.fetch<Staff>(Staff, 'XRA9koBTaA0000:gongyanyu')
+    const response = await collection.fetch<Staff>(Staff, 'cdb28c900c75')
     const staff = response.data
 
     expect(staff).toBeInstanceOf(Staff)
@@ -70,7 +70,7 @@ describe('collection.register', () => {
 
     collection.register(StaffVM)
 
-    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'XRA9koBTaA0000:gongyanyu' }, collection))
+    const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'cdb28c900c75' }, collection))
 
     expect(staffVM.ccc).toBe('xxxxx')
     expect(staffVM.staff).toBe(staff)

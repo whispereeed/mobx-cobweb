@@ -16,11 +16,11 @@ describe('collection.fetch', () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()
-    expect((getRefId(me, 'staff') as any).id).toBe('XRA9koBTaA0000:gongyanyu')
+    expect((getRefId(me, 'staff') as any).id).toBe('cdb28c900c75')
 
     useFixtureGetById(Staff.endpoint)
     await collection.fetch(Staff, (getRefId(me, 'staff') as any).id)
-    expect(me.staff.id).toEqual('XRA9koBTaA0000:gongyanyu')
+    expect(me.staff.id).toEqual('cdb28c900c75')
     expect(modelToJSON(me)).toMatchSnapshot()
     expect(modelToJSON(me.staff)).toMatchSnapshot()
     const meV = new View(Me, collection, null, [me])
@@ -31,11 +31,11 @@ describe('collection.fetch', () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()
-    expect((getRefId(me, 'staff') as any).id).toBe('XRA9koBTaA0000:gongyanyu')
+    expect((getRefId(me, 'staff') as any).id).toBe('cdb28c900c75')
 
     useFixtureGetById(Staff.endpoint)
     await fetchModelRefs(me)
-    expect(me.staff.id).toEqual('XRA9koBTaA0000:gongyanyu')
+    expect(me.staff.id).toEqual('cdb28c900c75')
     expect(modelToJSON(me)).toMatchSnapshot()
     expect(modelToJSON(me.staff)).toMatchSnapshot()
     const meV = new View(Me, collection, null, [me])

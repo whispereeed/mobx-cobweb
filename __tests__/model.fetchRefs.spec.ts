@@ -5,7 +5,7 @@ import Me from './models/Me'
 import { getRefId, IIdentifier } from '../src'
 import Department from './models/Department'
 
-describe('Modal fetchRefs', () => {
+describe('Modal fetchRefs/fetchRef', () => {
   let scope: any = null
 
   beforeEach(() => {
@@ -18,7 +18,7 @@ describe('Modal fetchRefs', () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
     expect(me.staff).toBeNull()
-    expect((getRefId(me, 'staff') as any).id).toBe('XRA9koBTaA0000:gongyanyu')
+    expect((getRefId(me, 'staff') as any).id).toBe('cdb28c900c75')
 
     useFixtureGetById(Staff.endpoint)
     const response = await collection.fetch<Staff>(Staff, (getRefId(me, 'staff') as any).id as IIdentifier)

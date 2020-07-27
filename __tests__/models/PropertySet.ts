@@ -9,8 +9,4 @@ export default class PropertySet extends Model {
 
   @attribute() public name: string
   @attribute() public label: string
-  @attribute() public active: boolean
-  @attribute() public canAsDimension: boolean
-  @attribute() public ability: boolean
-  @attribute() public dataType: object
 }

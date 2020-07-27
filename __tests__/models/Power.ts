@@ -9,17 +9,5 @@ export default class Power extends Model {
 
   @attribute({ isIdentifier: true }) public powerCode: string
   @attribute() public powerName: string
-  @attribute() public chargeType: string
   @attribute() public state: string
-  @attribute() public allowSetAuto: boolean
-  @attribute() public autoAdd: boolean
-  @attribute() public isVisible: boolean
-
-  @attribute() public chargeInfo: {
-    expireTime: number
-    sumPeopleCount: number
-    usedPeopleCount: number
-    startTime: number
-  }
-  @attribute() public histories: any[]
 }
