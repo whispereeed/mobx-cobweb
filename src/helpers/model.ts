@@ -2,7 +2,7 @@ import { getModelCollection, getModelType, getRefId, IModelRef, IType, modelToJS
 import { getMeta, IRawModel, mapItems, META_FIELD } from 'datx-utils'
 import { action } from 'mobx'
 
-import { MODEL_PERSISTED_FIELD, isModelPersisted, setPersisted } from './consts'
+import { MODEL_PERSISTED_FIELD, isModelPersisted, setModelPersisted } from './consts'
 import { clearCacheByType } from './cache'
 import { IRequestOptions } from '../interfaces'
 
@@ -19,12 +19,12 @@ function handleResponse<T extends PureModel>(record: T): (response: ResponseView
       }
 
       if (response.status === 204) {
-        setPersisted(record, true)
+        setModelPersisted(record, true)
         return record
       } else if (response.status === 202) {
         return response.data as T
       } else {
-        setPersisted(record, true)
+        setModelPersisted(record, true)
         return response.replace(record).data as T
       }
     }
@@ -55,7 +55,7 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
     if (response.error) {
       throw response.error
     }
-    setPersisted(model, false)
+    setModelPersisted(model, false)
   }
 
   if (collection) {
