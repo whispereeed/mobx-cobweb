@@ -16,7 +16,7 @@ import { IStorageCollectionMixin } from '../interfaces/IStorageCollectionMixin'
 import { error } from '../helpers/utils'
 
 export interface IStorageConfig {
-  name: string
+  storageKey?: string
   enableZip?: boolean
   storage?: {
     getItem<T>(key: string): string | Promise<T> | null
@@ -29,19 +29,19 @@ function withStorageCollection<T extends PureCollection>(Base: ICollectionConstr
 
   class WithLocalStorage extends BaseClass implements IStorageCollectionMixin<T> {
     static storageConfig: IStorageConfig = {
-      name: '__COBWEB_MODELS_',
+      storageKey: '__COBWEB_MODELS_',
       enableZip: false,
       storage: localStorage as any
     }
 
     public async load() {
       const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
-      const { enableZip, name, storage } = {
+      const { enableZip, storageKey, storage } = {
         ...WithLocalStorage.storageConfig,
         ...StaticCollection.storageConfig
       }
 
-      let data = await storage.getItem<string>(name)
+      let data = await storage.getItem<string>(storageKey)
       if (!data) return
       if (enableZip) data = LZ.decompress(data)
       this.insert(JSON.parse(data))
@@ -49,7 +49,7 @@ function withStorageCollection<T extends PureCollection>(Base: ICollectionConstr
 
     public recording() {
       const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
-      const { enableZip, name, storage } = {
+      const { enableZip, storageKey, storage } = {
         ...WithLocalStorage.storageConfig,
         ...StaticCollection.storageConfig
       }
@@ -58,7 +58,7 @@ function withStorageCollection<T extends PureCollection>(Base: ICollectionConstr
         const models = types.reduce((oo, type) => oo.concat(this.findAll(type).map(modelToJSON)), [])
         let data = JSON.stringify(models)
         if (enableZip) data = LZ.compress(data)
-        storage.setItem<string>(name, data)
+        storage.setItem<string>(storageKey, data)
       })
     }
   }
