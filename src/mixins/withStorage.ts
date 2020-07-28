@@ -1,12 +1,21 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/7/27 16:40. *
  ***************************************************/
-import { ICollectionConstructor, modelToJSON, PureCollection, PureModel } from '../datx'
+import {
+  ICollectionConstructor,
+  modelToJSON,
+  PureCollection,
+  PureModel,
+  IModelConstructor,
+  isCollection,
+  isModel
+} from '../datx'
 import { autorun } from 'mobx'
 import LZ from 'lz-string'
 import { IStorageCollectionMixin } from '../interfaces/IStorageCollectionMixin'
+import { error } from '../helpers/utils'
 
-export function withStorage<T extends PureCollection>(Base: ICollectionConstructor<T>) {
+function withStorageCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
 
   class WithLocalStorage extends BaseClass implements IStorageCollectionMixin<T> {
@@ -36,5 +45,39 @@ export function withStorage<T extends PureCollection>(Base: ICollectionConstruct
     }
   }
 
-  return (WithLocalStorage as unknown) as ICollectionConstructor<IStorageCollectionMixin<T> & T>
+  return (WithLocalStorage as unknown) as ICollectionConstructor<IStorageCollectionMixin<T> & T> & {
+    storageKey: string
+  }
+}
+
+function withStorageModel<T extends PureModel>(Base: IModelConstructor<T>) {
+  const BaseClass = Base as typeof PureModel
+
+  return BaseClass as IModelConstructor<T> & {
+    enableStorage: boolean
+  }
+}
+
+export function withStorage<T extends PureCollection>(
+  Base: ICollectionConstructor<T>
+): ICollectionConstructor<IStorageCollectionMixin<T> & T> & {
+  storageKey: string
+}
+
+export function withStorage<T extends PureModel>(
+  Base: IModelConstructor<T>
+): IModelConstructor<T> & {
+  enableStorage: boolean
+}
+
+export function withStorage(Base: any) {
+  if (isCollection(Base)) {
+    return withStorageCollection(Base as typeof PureCollection)
+  }
+
+  if (isModel(Base)) {
+    return withStorageModel(Base as typeof PureModel)
+  }
+
+  throw error(`withStorage is a mixin for Collection or Model.`)
 }

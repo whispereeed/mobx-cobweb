@@ -13,6 +13,6 @@ export class OrphanModel extends Model {
     return data
   }
 
-  @attribute({ isIdentifier: true, parse: () => ORPHAN_MODEL_ID_VAL })
+  @attribute({ isIdentifier: true })
   public [ORPHAN_MODEL_ID_KEY]: string
 }

@@ -146,5 +146,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
     }
   }
 
-  return (WithNetPatches as unknown) as ICollectionConstructor<INetPatchesCollectionMixin<T> & T>
+  return (WithNetPatches as unknown) as ICollectionConstructor<INetPatchesCollectionMixin<T> & T> & {
+    cache: boolean
+  }
 }

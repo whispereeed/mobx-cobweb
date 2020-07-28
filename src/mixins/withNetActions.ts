@@ -34,5 +34,7 @@ export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) 
     }
   }
 
-  return (WithNetActions as unknown) as IModelConstructor<INetActionsMixin<T> & T>
+  return (WithNetActions as unknown) as IModelConstructor<INetActionsMixin<T> & T> & {
+    endpoint: string | (() => string)
+  }
 }
