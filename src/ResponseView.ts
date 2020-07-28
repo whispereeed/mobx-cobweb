@@ -11,7 +11,7 @@ import {
   updateModel,
   updateModelId,
   View
-} from 'datx'
+} from './datx'
 import { action } from 'mobx'
 import { IError, IRequestOptions, IRawResponse, $PickOf, ISingleOrMulti } from './interfaces'
 import { Collection } from './Collection'

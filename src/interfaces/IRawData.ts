@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { IType } from 'datx'
+import { IType } from '../datx'
 
 export interface IRawData<D> {
   type: IType

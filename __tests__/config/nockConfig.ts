@@ -22,7 +22,7 @@ let CURRENT_SCOPE: nock.Scope
 export function useFixturesByGET() {
   CURRENT_SCOPE = nock(BASE_HOST)
   Object.keys(MAPPER).forEach((url) => {
-    CURRENT_SCOPE.get(url).reply(200, JSON.stringify(MAPPER[url]))
+    CURRENT_SCOPE.persist().get(url).reply(200, JSON.stringify(MAPPER[url]))
   })
   return CURRENT_SCOPE
 }

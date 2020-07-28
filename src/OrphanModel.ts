@@ -3,14 +3,16 @@
  ***************************************************/
 import { Model } from './Model'
 import { attribute } from './index'
+import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL } from './helpers/consts'
 
 export class OrphanModel extends Model {
-  static enableAutoId = false
-  static __$orphan_id__ = '__$orphan_id__(0)'
+  static enableAutoId = true
+
   static preprocess(data: any = {}) {
-    data.__$orphan_id__ = OrphanModel.__$orphan_id__
+    data[ORPHAN_MODEL_ID_KEY] = ORPHAN_MODEL_ID_VAL
     return data
   }
 
-  @attribute({ isIdentifier: true }) private __$orphan_id__: number
+  @attribute({ isIdentifier: true, parse: () => ORPHAN_MODEL_ID_VAL })
+  public [ORPHAN_MODEL_ID_KEY]: string
 }

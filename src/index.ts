@@ -38,7 +38,7 @@ export {
   Attribute as attribute,
   ViewAttribute,
   view
-} from 'datx'
+} from './datx'
 
 export * from './interfaces'
 export * from './helpers/model'

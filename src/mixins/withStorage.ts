@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/7/27 16:40. *
  ***************************************************/
-import { ICollectionConstructor, modelToJSON, PureCollection, PureModel } from 'datx'
+import { ICollectionConstructor, modelToJSON, PureCollection, PureModel } from '../datx'
 import { autorun } from 'mobx'
 import LZ from 'lz-string'
 import { IStorageCollectionMixin } from '../interfaces/IStorageCollectionMixin'
@@ -29,7 +29,7 @@ export function withStorage<T extends PureCollection>(Base: ICollectionConstruct
       )
 
       return autorun(() => {
-        const models = types.map((type) => this.findAll(type)).map(modelToJSON)
+        const models = types.reduce((oo, type) => oo.concat(this.findAll(type).map(modelToJSON)), [])
         const data = LZ.compress(JSON.stringify(models))
         localStorage.setItem(storageKey, data)
       })

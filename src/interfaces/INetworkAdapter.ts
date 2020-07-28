@@ -3,7 +3,7 @@
  ***************************************************/
 import { IResponseData } from './IRawData'
 import { IRequestMethod, IRequestOptions } from './IRequestOptions'
-import { IIdentifier, IType } from 'datx'
+import { IIdentifier, IType } from '../datx'
 import { ISingleOrMulti } from './types'
 
 export interface INetworkAdapter {

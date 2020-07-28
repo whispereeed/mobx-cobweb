@@ -41,4 +41,13 @@ describe('collection.fetch', () => {
     const meV = new View(Me, collection, null, [me])
     expect(meV.list[0] === me).toBeTruthy()
   })
+
+  test('should be use fetch multi times', async () => {
+    await collection.fetch(Me)
+    await collection.fetch(Me)
+    await collection.fetch(Me)
+    await collection.fetch(Me)
+    expect(collection.findAll(Me).length).toBe(1)
+    expect(collection.findAll(Staff).length).toBe(0)
+  })
 })

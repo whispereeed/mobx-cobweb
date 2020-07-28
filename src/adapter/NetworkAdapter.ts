@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/28 17:24. *
  ***************************************************/
-import { IIdentifier, IType } from 'datx'
+import { IIdentifier, IType } from '../datx'
 import { INetworkAdapter, IRequestMethod, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { error, isBrowser, isEmptyObject } from '../helpers/utils'

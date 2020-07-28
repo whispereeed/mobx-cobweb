@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 15:10. *
  ***************************************************/
-import { getModelType, IModelConstructor, IType, PureModel } from 'datx'
+import { getModelType, IModelConstructor, IType, PureModel } from '../datx'
 import { Collection } from '../Collection'
 import { action, observable } from 'mobx'
 import { IRequestOptions } from '../interfaces'

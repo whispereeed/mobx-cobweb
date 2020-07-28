@@ -2,7 +2,7 @@
  * Created by nanyuantingfeng on 2020/6/2 12:42. *
  ***************************************************/
 import { IRequestOptions } from './IRequestOptions'
-import { PureModel } from 'datx'
+import { PureModel } from '../datx'
 import { ResponseView } from '../ResponseView'
 
 export interface INetActionsMixin<T = PureModel> {

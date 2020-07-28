@@ -7,7 +7,7 @@ import {
   modelToJSON,
   PureCollection,
   PureModel
-} from 'datx'
+} from '../datx'
 import { getMeta, IRawModel, mapItems, META_FIELD } from 'datx-utils'
 import { action, isArrayLike } from 'mobx'
 
@@ -19,10 +19,9 @@ import { create, remove, update } from './network'
 import { ResponseView } from '../ResponseView'
 import { Collection } from '../Collection'
 import { error } from './utils'
-import { ParsedRefModel } from 'datx/dist/Attribute'
 
 function getModelRefType(
-  model: ParsedRefModel,
+  model: Function | any,
   data: any,
   parentModel: PureModel,
   key: string,

@@ -1,11 +1,12 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 12:55. *
  ***************************************************/
-import { Collection as _Collection, IModelConstructor, IType, PureModel, ICollectionConstructor } from 'datx'
+import { Collection as _Collection, IModelConstructor, IType, PureModel, ICollectionConstructor } from './datx'
 import { withNetPatches } from './mixins/withNetPatches'
 import { withStorage } from './mixins/withStorage'
 import { INetPatchesCollectionMixin } from './interfaces/INetPatchesCollectionMixin'
 import { IStorageCollectionMixin } from './interfaces/IStorageCollectionMixin'
+import { ORPHAN_MODEL_ID_VAL } from './helpers/consts'
 
 const WithNetPatchesCollection: ICollectionConstructor<
   IStorageCollectionMixin<_Collection> & INetPatchesCollectionMixin<_Collection> & _Collection
@@ -23,6 +24,6 @@ export class Collection extends WithNetPatchesCollection {
   }
 
   findOrphan<T extends PureModel>(model?: IType | IModelConstructor<T>): T {
-    return this.findOne(model, '__$orphan_id__(0)')
+    return this.findOne(model, ORPHAN_MODEL_ID_VAL)
   }
 }

@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 12:56. *
  ***************************************************/
-import { IIdentifier, IModelConstructor, IType, PureCollection, PureModel } from 'datx'
+import { IIdentifier, IModelConstructor, IType, PureCollection, PureModel } from '../datx'
 import { IRawData } from './IRawData'
 import { IRequestOptions } from './IRequestOptions'
 import { ResponseView } from '../ResponseView'

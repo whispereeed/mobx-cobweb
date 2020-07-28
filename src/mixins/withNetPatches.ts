@@ -2,7 +2,7 @@
  * Created by nanyuantingfeng on 2020/6/2 12:55. *
  ***************************************************/
 import { action } from 'mobx'
-import { mapItems } from 'datx-utils'
+import { getMeta, mapItems } from 'datx-utils'
 import {
   getModelId,
   getModelType,
@@ -13,7 +13,7 @@ import {
   PureCollection,
   PureModel,
   updateModel
-} from 'datx'
+} from '../datx'
 
 import { INetPatchesCollectionMixin } from '../interfaces/INetPatchesCollectionMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
@@ -23,7 +23,7 @@ import { INetworkAdapter, IRequestOptions } from '../interfaces'
 import { Model } from '../Model'
 import { query } from '../helpers/network'
 import { isBrowser } from '../helpers/utils'
-import { setModelPersisted } from '../helpers/consts'
+import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
 
 export function withNetPatches<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
@@ -118,18 +118,30 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
 
     private __addRecord<T extends PureModel>(item: Record<string, any>, type: IType): T {
       const StaticCollection = this.constructor as typeof PureCollection
-      const id = item.id
-      let record: T = id === undefined ? null : this.findOne<T>(type, id)
+      const ModelClass = StaticCollection.types.find((Q) => Q.type === type)
+      let record: T
 
-      if (record) {
-        record = updateModel(record, item)
-      } else if (StaticCollection.types.filter((item) => item.type === type).length) {
-        record = this.add<T>(item, type)
+      if (ModelClass) {
+        const idField = getMeta<string>(ModelClass, 'idField', 'id', true)
+        let id: IIdentifier
+
+        if (idField === ORPHAN_MODEL_ID_KEY) {
+          record = this.findOne<T>(type, ORPHAN_MODEL_ID_VAL)
+        } else {
+          id = item[idField]
+          record = id === undefined ? null : this.findOne<T>(type, id)
+        }
+
+        if (record) {
+          record = updateModel(record, item)
+        } else {
+          record = this.add<T>(item, type)
+        }
+        setModelPersisted(record, Boolean(id))
       } else {
         record = this.add(new Model(item, this)) as any
       }
 
-      setModelPersisted(record, Boolean(id))
       return record
     }
   }
