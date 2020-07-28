@@ -34,20 +34,28 @@ function withStorageCollection<T extends PureCollection>(Base: ICollectionConstr
       storage: localStorage as any
     }
 
-    public async load() {
+    load() {
       const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
       const { enableZip, storageKey, storage } = {
         ...WithLocalStorage.storageConfig,
         ...StaticCollection.storageConfig
       }
 
-      let data = await storage.getItem<string>(storageKey)
-      if (!data) return
-      if (enableZip) data = LZ.decompress(data)
-      this.insert(JSON.parse(data))
+      Promise.resolve(storage.getItem<string>(storageKey))
+        .then((data) => {
+          if (data) {
+            if (enableZip) data = LZ.decompress(data)
+            this.insert(JSON.parse(data))
+          }
+        })
+        .catch((e) => {
+          console.warn(`load local cache data fail. ${e}`)
+        })
+
+      return this
     }
 
-    public recording() {
+    recording() {
       const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
       const { enableZip, storageKey, storage } = {
         ...WithLocalStorage.storageConfig,

@@ -5,6 +5,6 @@ import { PureCollection } from '../datx'
 import { IReactionDisposer } from 'mobx'
 
 export interface IStorageCollectionMixin<T = PureCollection> {
-  load(): Promise<void>
+  load(): this
   recording(): IReactionDisposer
 }

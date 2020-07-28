@@ -8,10 +8,10 @@ import {
   PureCollection,
   PureModel
 } from '../datx'
-import { getMeta, IRawModel, mapItems, META_FIELD } from 'datx-utils'
+import { getMeta, mapItems } from 'datx-utils'
 import { action, isArrayLike } from 'mobx'
 
-import { MODEL_PERSISTED_FIELD, isModelPersisted, setModelPersisted } from './consts'
+import { isModelPersisted, setModelPersisted } from './consts'
 import { clearCacheByType } from './cache'
 import { IRequestOptions } from '../interfaces'
 
