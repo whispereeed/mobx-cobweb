@@ -15,38 +15,56 @@ import LZ from 'lz-string'
 import { IStorageCollectionMixin } from '../interfaces/IStorageCollectionMixin'
 import { error } from '../helpers/utils'
 
+export interface IStorageConfig {
+  name: string
+  enableZip?: boolean
+  storage?: {
+    getItem<T>(key: string): string | Promise<T> | null
+    setItem<T>(key: string, value: T): void | Promise<T>
+  }
+}
+
 function withStorageCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
 
   class WithLocalStorage extends BaseClass implements IStorageCollectionMixin<T> {
-    static storageKey = '__COBWEB_MODELS_'
+    static storageConfig: IStorageConfig = {
+      name: '__COBWEB_MODELS_',
+      enableZip: false,
+      storage: localStorage as any
+    }
 
-    public load() {
-      const StaticCollection = this.constructor as typeof PureCollection & { storageKey: string }
-      const persistKey = StaticCollection.storageKey
-      const data = localStorage.getItem(persistKey)
-      if (!data) return this
-      this.insert(JSON.parse(LZ.decompress(data)))
-      return this
+    public async load() {
+      const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
+      const { enableZip, name, storage } = {
+        ...WithLocalStorage.storageConfig,
+        ...StaticCollection.storageConfig
+      }
+
+      let data = await storage.getItem<string>(name)
+      if (!data) return
+      if (enableZip) data = LZ.decompress(data)
+      this.insert(JSON.parse(data))
     }
 
     public recording() {
-      const StaticCollection = this.constructor as typeof PureCollection & { storageKey: string }
-      const storageKey = StaticCollection.storageKey
-      const types = StaticCollection.types.filter(
-        (Q: typeof PureModel & { enableStorage: boolean }) => !!Q.enableStorage
-      )
-
+      const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
+      const { enableZip, name, storage } = {
+        ...WithLocalStorage.storageConfig,
+        ...StaticCollection.storageConfig
+      }
+      const types = StaticCollection.types.filter((Q: any) => !!Q.enableStorage)
       return autorun(() => {
         const models = types.reduce((oo, type) => oo.concat(this.findAll(type).map(modelToJSON)), [])
-        const data = LZ.compress(JSON.stringify(models))
-        localStorage.setItem(storageKey, data)
+        let data = JSON.stringify(models)
+        if (enableZip) data = LZ.compress(data)
+        storage.setItem<string>(name, data)
       })
     }
   }
 
   return (WithLocalStorage as unknown) as ICollectionConstructor<IStorageCollectionMixin<T> & T> & {
-    storageKey: string
+    storageConfig: IStorageConfig
   }
 }
 
@@ -61,7 +79,7 @@ function withStorageModel<T extends PureModel>(Base: IModelConstructor<T>) {
 export function withStorage<T extends PureCollection>(
   Base: ICollectionConstructor<T>
 ): ICollectionConstructor<IStorageCollectionMixin<T> & T> & {
-  storageKey: string
+  storageConfig: IStorageConfig
 }
 
 export function withStorage<T extends PureModel>(

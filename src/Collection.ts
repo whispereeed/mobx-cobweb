@@ -9,6 +9,7 @@ import { ORPHAN_MODEL_ID_VAL } from './helpers/consts'
 import { ICollectionConstructor } from './datx'
 import { INetPatchesCollectionMixin } from './interfaces/INetPatchesCollectionMixin'
 import { IStorageCollectionMixin } from './interfaces/IStorageCollectionMixin'
+import { IStorageConfig } from './mixins/withStorage'
 
 export class Collection extends withStorage(withNetPatches(_Collection)) {
   static register<T extends PureModel>(O: IModelConstructor<T>) {

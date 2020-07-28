@@ -28,7 +28,6 @@ export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) 
     @action public fetchRef(field: string, options?: IRequestOptions) {
       return fetchModelRef(this, field, options)
     }
-
     @action public fetchRefs(options?: IRequestOptions) {
       return fetchModelRefs(this, options)
     }
