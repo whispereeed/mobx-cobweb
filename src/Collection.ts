@@ -7,8 +7,8 @@ import { withStorage } from './mixins/withStorage'
 import { ORPHAN_MODEL_ID_VAL } from './helpers/consts'
 
 import { ICollectionConstructor } from './datx'
-import { INetPatchesCollectionMixin } from './interfaces/INetPatchesCollectionMixin'
-import { IStorageCollectionMixin } from './interfaces/IStorageCollectionMixin'
+import { INetPatchesMixin } from './interfaces/INetPatchesMixin'
+import { IStorageMixin } from './interfaces/IStorageMixin'
 import { IStorageConfig } from './mixins/withStorage'
 
 export class Collection extends withStorage(withNetPatches(_Collection)) {

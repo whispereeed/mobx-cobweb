@@ -7,6 +7,10 @@ import { INetActionsMixin } from '../interfaces/INetActionsMixin'
 import { IRequestOptions } from '../interfaces'
 import { fetchModelRef, fetchModelRefs, removeModel, saveModel } from '../helpers/model'
 import { action } from 'mobx'
+import { getModelCollection, getModelId, getModelType } from '@issues-beta/datx'
+import { error } from '../helpers/utils'
+import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
+import { ResponseView } from '../ResponseView'
 
 export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) {
   const BaseClass = Base as typeof PureModel
@@ -16,6 +20,14 @@ export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) 
 
     constructor(rawData: IRawModel, collection?: PureCollection) {
       super(rawData, collection)
+    }
+
+    @action public refresh(): Promise<ResponseView<T>> {
+      const collection: INetPatchesMixin<PureCollection> = getModelCollection(this) as any
+      if (!collection) {
+        throw error(`before calling model.refresh API, add the model to the collection first.`)
+      }
+      return collection.fetch<T>(getModelType(this), getModelId(this))
     }
 
     @action public save(options?: IRequestOptions): Promise<this> {

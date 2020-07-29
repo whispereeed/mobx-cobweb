@@ -17,8 +17,8 @@ import { IRequestOptions } from '../interfaces'
 
 import { create, remove, update } from './network'
 import { ResponseView } from '../ResponseView'
-import { Collection } from '../Collection'
 import { error } from './utils'
+import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 
 function getModelRefType(
   model: Function | any,
@@ -56,7 +56,7 @@ function handleResponse<T extends PureModel>(record: T): (response: ResponseView
 }
 
 export async function saveModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<T> {
-  const collection = getModelCollection(model) as Collection
+  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
   const data = modelToJSON(model)
   delete data.__META__
 
@@ -71,7 +71,7 @@ export async function saveModel<T extends PureModel>(model: T, options: IRequest
 }
 
 export async function removeModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<void> {
-  const collection = getModelCollection(model) as Collection
+  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
 
   if (isModelPersisted(model)) {
     const modelType = getModelType(model)
@@ -92,7 +92,7 @@ export function fetchModelRef<T extends PureModel>(
   key: string,
   options: IRequestOptions = {}
 ): Promise<ResponseView<any>> {
-  const collection = getModelCollection(model) as Collection
+  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
   const fieldsDef: any = getMeta(model, 'fields', {})
   if (!fieldsDef) {
     throw error(`fetchModelRef.key (${key}) must be a ref definition`)
@@ -107,7 +107,7 @@ export function fetchModelRefs<T extends PureModel>(
   model: T,
   options: IRequestOptions = {}
 ): Promise<Array<ResponseView<any>>> {
-  const collection = getModelCollection(model) as Collection
+  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
   const { refs } = (model as any).meta!
   const promises = Object.keys(refs).map((key) => {
     const refDef = refs[key]

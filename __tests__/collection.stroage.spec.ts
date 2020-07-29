@@ -2,9 +2,10 @@
  * Created by nanyuantingfeng on 2020/7/29 10:26. *
  ***************************************************/
 import { attribute, Collection, Model } from '../src'
+import { FSCache } from './config/fscache'
 
 describe('collection.storage', () => {
-  test('should be store Model to localStorage', async () => {
+  test('should be store Model to storage', async () => {
     class Foo extends Model {
       static type = 'foo'
       static enableStorage = true
@@ -15,7 +16,9 @@ describe('collection.storage', () => {
 
     class Store extends Collection {
       static types = [Foo]
-      static storageConfig = { storage: localStorage as any }
+      static storageConfig = {
+        storage: new FSCache()
+      }
     }
 
     const store = new Store()

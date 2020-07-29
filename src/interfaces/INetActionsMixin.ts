@@ -6,6 +6,7 @@ import { PureModel } from '../datx'
 import { ResponseView } from '../ResponseView'
 
 export interface INetActionsMixin<T = PureModel> {
+  refresh(): Promise<ResponseView<T>>
   save(options?: IRequestOptions): Promise<this>
   remove(options?: IRequestOptions): Promise<void>
 

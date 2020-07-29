@@ -14,9 +14,7 @@ import {
 } from './datx'
 import { action } from 'mobx'
 import { IError, IRequestOptions, IRawResponse, $PickOf, ISingleOrMulti } from './interfaces'
-import { Collection } from './Collection'
-import { error } from './helpers/utils'
-import { Model } from './Model'
+import { INetPatchesMixin } from './interfaces/INetPatchesMixin'
 
 export class ResponseView<T extends ISingleOrMulti<PureModel>> {
   public data: T | null = null
@@ -34,7 +32,7 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
 
   constructor(
     rawResponse: IRawResponse<$PickOf<T, object[], object>>,
-    collection?: PureCollection,
+    collection: PureCollection,
     requestOptions?: IRequestOptions,
     overrideData?: T,
     views?: View[]
@@ -49,20 +47,9 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
       this.views = views
     }
 
-    if (collection) {
-      this.data = overrideData ? collection.add<T>(overrideData) : (collection as Collection).sync<T>(rawResponse.data)
-    } else if (rawResponse.data) {
-      // The case when a record is not in a store and save/remove are used
-      const resp = rawResponse.data
-
-      if (resp.data) {
-        if (resp.data instanceof Array) {
-          throw error('A save/remove operation should not return an array of results')
-        }
-
-        this.data = overrideData || (new Model(resp.data) as any)
-      }
-    }
+    this.data = overrideData
+      ? collection.add<T>(overrideData)
+      : ((collection as unknown) as INetPatchesMixin<PureCollection>).sync<T>(rawResponse.data)
 
     this.views.forEach((view) => {
       if (this.data) {

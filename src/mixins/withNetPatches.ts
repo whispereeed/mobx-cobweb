@@ -15,7 +15,7 @@ import {
   updateModel
 } from '../datx'
 
-import { INetPatchesCollectionMixin } from '../interfaces/INetPatchesCollectionMixin'
+import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { removeModel } from '../helpers/model'
@@ -28,7 +28,7 @@ import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../
 export function withNetPatches<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
 
-  class WithNetPatches extends BaseClass implements INetPatchesCollectionMixin<T> {
+  class WithNetPatches extends BaseClass implements INetPatchesMixin<T> {
     static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(Model) : [Model]
     static cache: boolean = (BaseClass as any)[''] === undefined ? isBrowser : (BaseClass as any).cache
     static defaultModel = BaseClass.defaultModel || Model
@@ -146,7 +146,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
     }
   }
 
-  return (WithNetPatches as unknown) as ICollectionConstructor<INetPatchesCollectionMixin<T> & T> & {
+  return (WithNetPatches as unknown) as ICollectionConstructor<INetPatchesMixin<T> & T> & {
     cache: boolean
   }
 }

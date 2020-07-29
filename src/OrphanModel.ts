@@ -2,8 +2,14 @@
  * Created by nanyuantingfeng on 2020/7/21 11:40. *
  ***************************************************/
 import { Model } from './Model'
-import { attribute } from './index'
+import { Attribute } from './datx'
+import { ResponseView } from './ResponseView'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL } from './helpers/consts'
+import { action } from 'mobx'
+import { INetPatchesMixin } from './interfaces/INetPatchesMixin'
+import { PureCollection } from './datx'
+import { getModelCollection, getModelType } from '@issues-beta/datx'
+import { error } from './helpers/utils'
 
 export class OrphanModel extends Model {
   static enableAutoId = true
@@ -13,6 +19,14 @@ export class OrphanModel extends Model {
     return data
   }
 
-  @attribute({ isIdentifier: true })
+  @Attribute({ isIdentifier: true })
   public [ORPHAN_MODEL_ID_KEY]: string
+
+  @action public refresh(): Promise<ResponseView<this>> {
+    const collection: INetPatchesMixin<PureCollection> = getModelCollection(this) as any
+    if (!collection) {
+      throw error(`before calling model.refresh API, add the model to the collection first.`)
+    }
+    return collection.fetch<this, this>(getModelType(this))
+  }
 }

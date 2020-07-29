@@ -12,7 +12,7 @@ import {
 } from '../datx'
 import { autorun } from 'mobx'
 import LZ from 'lz-string'
-import { IStorageCollectionMixin } from '../interfaces/IStorageCollectionMixin'
+import { IStorageMixin } from '../interfaces/IStorageMixin'
 import { error } from '../helpers/utils'
 
 export interface IStorageConfig {
@@ -27,7 +27,7 @@ export interface IStorageConfig {
 function withStorageCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
 
-  class WithLocalStorage extends BaseClass implements IStorageCollectionMixin<T> {
+  class WithLocalStorage extends BaseClass implements IStorageMixin<T> {
     static storageConfig: IStorageConfig = {
       storageKey: '__COBWEB_MODELS_',
       enableZip: false
@@ -70,7 +70,7 @@ function withStorageCollection<T extends PureCollection>(Base: ICollectionConstr
     }
   }
 
-  return (WithLocalStorage as unknown) as ICollectionConstructor<IStorageCollectionMixin<T> & T> & {
+  return (WithLocalStorage as unknown) as ICollectionConstructor<IStorageMixin<T> & T> & {
     storageConfig: IStorageConfig
   }
 }
@@ -85,7 +85,7 @@ function withStorageModel<T extends PureModel>(Base: IModelConstructor<T>) {
 
 export function withStorage<T extends PureCollection>(
   Base: ICollectionConstructor<T>
-): ICollectionConstructor<IStorageCollectionMixin<T> & T> & {
+): ICollectionConstructor<IStorageMixin<T> & T> & {
   storageConfig: IStorageConfig
 }
 

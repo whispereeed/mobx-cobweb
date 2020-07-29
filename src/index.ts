@@ -46,9 +46,9 @@ export * from './helpers/model'
 export { ResponseView } from './ResponseView'
 export { clearCache, clearCacheByType } from './helpers/cache'
 
-export { Collection } from './Collection'
 export { Model } from './Model'
 export { OrphanModel } from './OrphanModel'
+export { Collection } from './Collection'
 
 export { ListDataView } from './views/ListDataView'
 export { TreeDataView } from './views/TreeDataView'

@@ -3,7 +3,7 @@
  ***************************************************/
 import { PureCollection } from '../datx'
 
-export interface IStorageCollectionMixin<T = PureCollection> {
+export interface IStorageMixin<T = PureCollection> {
   load(): Promise<void>
   recording(): () => void
 }
