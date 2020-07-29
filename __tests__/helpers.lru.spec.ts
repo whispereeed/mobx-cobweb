@@ -5,7 +5,7 @@ import LRU from '../src/helpers/lru'
 
 describe('LRU', () => {
   it('basic test', () => {
-    const lru = new LRU(5)
+    const lru = new LRU(5, 1000)
 
     lru.set(1, 1)
     expect(lru.toString()).toEqual('1')
@@ -29,8 +29,8 @@ describe('LRU', () => {
     expect(lru.toString()).toEqual('1 <-> 2 <-> 6 <-> 7 <-> 8')
   })
 
-  it('should run clean', () => {
-    const lru = new LRU(5)
+  it('should be run clean', () => {
+    const lru = new LRU(5, 1000)
     lru.set(1, 1)
     lru.set(2, 1)
     lru.set(3, 1)
@@ -39,8 +39,8 @@ describe('LRU', () => {
     expect(lru.toString()).toEqual('')
   })
 
-  it('should run remove', () => {
-    const lru = new LRU(5)
+  it('should be run remove', () => {
+    const lru = new LRU(5, 1000)
     lru.set(1, 1)
     lru.set(2, 1)
     lru.set(3, 1)
@@ -52,5 +52,18 @@ describe('LRU', () => {
     expect(lru.toString()).toEqual('1 <-> 4 <-> 3')
     lru.remove(4)
     expect(lru.toString()).toEqual('1 <-> 3')
+  })
+
+  it('should be remove at over maxAge', async () => {
+    const lru = new LRU(5, 1000)
+    lru.set(1, 1)
+    expect(lru.toString()).toEqual('1')
+    lru.set(2, 2)
+    expect(lru.toString()).toEqual('1 <-> 2')
+
+    await new Promise((resolve) => setTimeout(resolve, 1100))
+    expect(lru.get(2)).toBeNull()
+    expect(lru.toString()).toEqual('1')
+    expect(lru.get(1)).toBeNull()
   })
 })

@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`collection.storage should be store Model to localStorage 1`] = `
+Object {
+  "__META__": Object {
+    "collection": undefined,
+    "fields": Object {
+      "id": Object {
+        "referenceDef": false,
+      },
+      "name": Object {
+        "referenceDef": false,
+      },
+    },
+    "id": 0,
+    "type": "foo",
+  },
+  "id": 0,
+  "name": "aaaa",
+}
+`;

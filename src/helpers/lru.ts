@@ -7,11 +7,13 @@ class Node<T> {
   data: any
   next: Node<T>
   prev: Node<T>
+  timestamp: number
   constructor(key: string | number, data: T) {
     this.key = key
     this.data = data
     this.next = null
     this.prev = null
+    this.timestamp = Date.now()
   }
 }
 
@@ -20,9 +22,11 @@ export default class LRU<T> {
   private keys: Record<string | number, Node<T>>
   private head: Node<T>
   private tail: Node<T>
+  private maxAge: number
 
-  constructor(capacity: number) {
+  constructor(capacity: number, maxAge?: number) {
     this.capacity = capacity
+    this.maxAge = maxAge
     this.clear()
   }
 
@@ -45,6 +49,11 @@ export default class LRU<T> {
     const node = this.keys[key]
     // tslint:disable-next-line:triple-equals
     if (node == undefined) return null
+
+    if (Date.now() - node.timestamp > this.maxAge) {
+      this.__remove(node)
+      return null
+    }
 
     this.__remove(node)
     this.__add(node)

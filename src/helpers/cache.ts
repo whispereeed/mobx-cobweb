@@ -6,7 +6,7 @@ import { ResponseView } from '../ResponseView'
 import { ISingleOrMulti } from '../interfaces'
 import LRU from './lru'
 
-const cache = new LRU<ResponseView<ISingleOrMulti<PureModel>>>(16)
+const cache = new LRU<ResponseView<ISingleOrMulti<PureModel>>>(16, 60000)
 
 export function saveCache(url: string, modelType: IType, response: ResponseView<ISingleOrMulti<PureModel>>) {
   if (response && 'data' in response && (!('error' in response) || !response.error) && response.data) {

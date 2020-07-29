@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   testRegex: '/__tests__/.*.spec.[tj]sx?$',
   testPathIgnorePatterns: ['/node_modules/', '/fixtures/', '/models/', '/config/'],
   collectCoverageFrom: ['src/**/**.{ts,tsx}'],

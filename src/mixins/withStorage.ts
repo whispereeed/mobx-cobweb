@@ -20,7 +20,7 @@ export interface IStorageConfig {
   enableZip?: boolean
   storage?: {
     getItem<T>(key: string): string | Promise<T> | null
-    setItem<T>(key: string, value: T): void | Promise<T>
+    setItem<T>(key: string, value: T): Promise<T> | void
   }
 }
 
@@ -30,29 +30,27 @@ function withStorageCollection<T extends PureCollection>(Base: ICollectionConstr
   class WithLocalStorage extends BaseClass implements IStorageCollectionMixin<T> {
     static storageConfig: IStorageConfig = {
       storageKey: '__COBWEB_MODELS_',
-      enableZip: false,
-      storage: localStorage as any
+      enableZip: false
     }
 
-    load() {
+    async load() {
       const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
       const { enableZip, storageKey, storage } = {
         ...WithLocalStorage.storageConfig,
         ...StaticCollection.storageConfig
       }
 
-      Promise.resolve(storage.getItem<string>(storageKey))
-        .then((data) => {
-          if (data) {
-            if (enableZip) data = LZ.decompress(data)
-            this.insert(JSON.parse(data))
-          }
-        })
-        .catch((e) => {
-          console.warn(`load local cache data fail. ${e}`)
-        })
+      if (!storage) return
 
-      return this
+      try {
+        let data = await storage.getItem<string>(storageKey)
+        if (data) {
+          if (enableZip) data = LZ.decompress(data)
+          this.insert(JSON.parse(data))
+        }
+      } catch (e) {
+        console.warn(`load local cache data fail. ${e}`)
+      }
     }
 
     recording() {
@@ -61,6 +59,7 @@ function withStorageCollection<T extends PureCollection>(Base: ICollectionConstr
         ...WithLocalStorage.storageConfig,
         ...StaticCollection.storageConfig
       }
+      if (!storage) return () => {}
       const types = StaticCollection.types.filter((Q: any) => !!Q.enableStorage)
       return autorun(() => {
         const models = types.reduce((oo, type) => oo.concat(this.findAll(type).map(modelToJSON)), [])
