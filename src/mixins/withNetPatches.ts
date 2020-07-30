@@ -22,7 +22,6 @@ import { getModelIdField, removeModel } from '../helpers/model'
 import { INetworkAdapter, IRequestOptions } from '../interfaces'
 import { Model } from '../Model'
 import { query } from '../helpers/network'
-import { isBrowser } from '../helpers/utils'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
 
 export function withNetPatches<T extends PureCollection>(Base: ICollectionConstructor<T>) {
@@ -30,8 +29,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
 
   class WithNetPatches extends BaseClass implements INetPatchesMixin<T> {
     static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(Model) : [Model]
-    static cache: boolean = (BaseClass as any)[''] === undefined ? isBrowser : (BaseClass as any).cache
-    static defaultModel = BaseClass.defaultModel || Model
+    static defaultModel = Model
 
     adapter: INetworkAdapter
     setNetworkAdapter(adapter: INetworkAdapter) {

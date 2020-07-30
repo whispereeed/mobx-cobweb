@@ -39,12 +39,9 @@ async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
     method
   })
 
-  const staticCollection = collection && (collection.constructor as { cache?: boolean })
-  const collectionCache = staticCollection && staticCollection.cache
-  const isCacheSupported = method.toUpperCase() === 'GET'
   const skipCache = options?.skipCache
 
-  if (isBrowser && isCacheSupported && collectionCache && !skipCache && prepared.cacheKey) {
+  if (isBrowser && !skipCache && prepared.cacheKey) {
     const _response = getCache(prepared.cacheKey, modelType)
     if (_response) {
       // console.info(`cache captured at ${prepared.cacheKey}`)
@@ -61,7 +58,7 @@ async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
     views
   )
 
-  if (isBrowser && isCacheSupported) {
+  if (isBrowser && !skipCache && prepared.cacheKey) {
     saveCache(prepared.cacheKey, modelType, response)
   }
 

@@ -13,7 +13,7 @@ export class ListDataView<T extends PureModel> extends View<T> {
 
   private meta: { count: number }
   private limit: [number, number] = [0, 10]
-  private requestOptions?: IRequestOptions
+  private requestOptions?: IRequestOptions = {}
 
   @computed get data() {
     return this.list
