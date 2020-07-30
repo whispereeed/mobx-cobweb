@@ -10,21 +10,21 @@ import { IRequestOptions, IRawResponse, IResponseData, ISingleOrMulti, IRequestM
 import { ResponseView } from '../ResponseView'
 import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 
-function packResponse<T>(responseData: IResponseData, modelType: IType, collection: PureCollection): IRawResponse<T> {
+function __packResponse<T>(responseData: IResponseData, modelType: IType, collection: PureCollection): IRawResponse<T> {
   const { data = {} as any, ...others } = responseData
   // data : {data : * , meta : *}
   data.type = modelType
-
-  return {
-    ...others,
-    data,
-    collection
-  }
+  return { ...others, data, collection }
 }
 
-function getModelEndpointURL(type: IType, collection: PureCollection): string {
+function __getModelEndpointURL(type: IType, collection: PureCollection): string {
   const StaticCollection = collection.constructor as typeof PureCollection
-  const QueryModel: any = StaticCollection.types.filter((item) => item.type === type)[0]
+  const QueryModel: any = StaticCollection.types.find((item) => item.type === type)
+
+  if (!QueryModel) {
+    throw error(`No definition for endpoint was found at Collection<${type}>`)
+  }
+
   const endpoint = getValue<string>(QueryModel.endpoint)
 
   if (!endpoint) {
@@ -34,21 +34,19 @@ function getModelEndpointURL(type: IType, collection: PureCollection): string {
   return endpoint
 }
 
-interface IDoFetchOptions {
+async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
   collection: INetPatchesMixin<PureCollection> & PureCollection
   options: IRequestOptions
   modelType?: IType
   method: IRequestMethod
   ids?: ISingleOrMulti<IIdentifier>
   views?: View[]
-}
-
-async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoFetchOptions): Promise<ResponseView<M>> {
+}): Promise<ResponseView<M>> {
   const { options, method = 'GET', collection, views, modelType, ids } = doFetchOptions
 
   const prepared = collection.adapter.prepare({
     type: modelType,
-    endpoint: getModelEndpointURL(modelType, collection),
+    endpoint: __getModelEndpointURL(modelType, collection),
     ids,
     options,
     method
@@ -57,7 +55,7 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
   const staticCollection = collection && (collection.constructor as { cache?: boolean })
   const collectionCache = staticCollection && staticCollection.cache
   const isCacheSupported = method.toUpperCase() === 'GET'
-  const skipCache = doFetchOptions.options && doFetchOptions.options.skipCache
+  const skipCache = options?.skipCache
 
   if (isBrowser && isCacheSupported && collectionCache && !skipCache && prepared.cacheKey) {
     const _response = getCache(prepared.cacheKey, modelType)
@@ -69,7 +67,7 @@ async function doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: IDoF
 
   const fetchResponse = await collection.adapter.fetch(prepared.url, prepared.options)
   const response = new ResponseView<M>(
-    packResponse(fetchResponse, modelType, collection),
+    __packResponse(fetchResponse, modelType, collection),
     collection,
     options,
     undefined,
@@ -90,7 +88,7 @@ export function query<M extends ISingleOrMulti<PureModel>>(
   views?: View[],
   ids?: ISingleOrMulti<IIdentifier>
 ): Promise<ResponseView<M>> {
-  return doFetch<M>({
+  return __doFetch<M>({
     modelType,
     options,
     collection,
@@ -100,33 +98,18 @@ export function query<M extends ISingleOrMulti<PureModel>>(
   })
 }
 
-export function create<T extends PureModel>(
+export function upsert<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
   collection?: INetPatchesMixin<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
-  return doFetch<T>({
+  return __doFetch<T>({
     modelType,
     collection,
     options,
     views,
     method: 'POST'
-  })
-}
-
-export function update<T extends PureModel>(
-  modelType: IType,
-  options?: IRequestOptions,
-  collection?: INetPatchesMixin<PureCollection> & PureCollection,
-  views?: View[]
-): Promise<ResponseView<T>> {
-  return doFetch<T>({
-    modelType,
-    collection,
-    options,
-    views,
-    method: 'PATCH'
   })
 }
 
@@ -136,7 +119,7 @@ export function remove<T extends PureModel>(
   collection?: INetPatchesMixin<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
-  return doFetch<T>({
+  return __doFetch<T>({
     modelType,
     collection,
     options,

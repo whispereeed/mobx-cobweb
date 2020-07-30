@@ -2,7 +2,7 @@
  * Created by nanyuantingfeng on 2020/6/2 12:55. *
  ***************************************************/
 import { action } from 'mobx'
-import { getMeta, mapItems } from 'datx-utils'
+import { mapItems } from 'datx-utils'
 import {
   getModelId,
   getModelType,
@@ -18,7 +18,7 @@ import {
 import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
-import { removeModel } from '../helpers/model'
+import { getModelIdField, removeModel } from '../helpers/model'
 import { INetworkAdapter, IRequestOptions } from '../interfaces'
 import { Model } from '../Model'
 import { query } from '../helpers/network'
@@ -72,7 +72,6 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
         return res
       })
     }
-
     @action removeOne(
       obj: IType | typeof PureModel | PureModel,
       id?: IIdentifier | boolean | IRequestOptions,
@@ -110,7 +109,6 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       super.removeAll(type)
       clearCacheByType(getModelType(type))
     }
-
     @action reset() {
       super.reset()
       clearCache()
@@ -122,7 +120,8 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       let record: T
 
       if (ModelClass) {
-        const idField = getMeta<string>(ModelClass, 'idField', 'id', true)
+        const idField = getModelIdField(ModelClass)
+
         let id: IIdentifier
 
         if (idField === ORPHAN_MODEL_ID_KEY) {

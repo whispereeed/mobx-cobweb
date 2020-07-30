@@ -24,7 +24,7 @@ export interface IStorageConfig {
   }
 }
 
-function withStorageCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
+function withStorageOnCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
 
   class WithLocalStorage extends BaseClass implements IStorageMixin<T> {
@@ -75,7 +75,7 @@ function withStorageCollection<T extends PureCollection>(Base: ICollectionConstr
   }
 }
 
-function withStorageModel<T extends PureModel>(Base: IModelConstructor<T>) {
+function withStorageOnModel<T extends PureModel>(Base: IModelConstructor<T>) {
   const BaseClass = Base as typeof PureModel
 
   return BaseClass as IModelConstructor<T> & {
@@ -97,11 +97,11 @@ export function withStorage<T extends PureModel>(
 
 export function withStorage(Base: any) {
   if (isCollection(Base)) {
-    return withStorageCollection(Base as typeof PureCollection)
+    return withStorageOnCollection(Base as typeof PureCollection)
   }
 
   if (isModel(Base)) {
-    return withStorageModel(Base as typeof PureModel)
+    return withStorageOnModel(Base as typeof PureModel)
   }
 
   throw error(`withStorage is a mixin for Collection or Model.`)

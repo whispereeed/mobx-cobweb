@@ -48,11 +48,14 @@ export class NetworkAdapter implements INetworkAdapter {
     const url = prepareURL(props.endpoint, props.type, props.ids)
     const { headers: defaultHeaders, params: defaultParams, ...defaultOthers } = this.defaultFetchOptions
 
-    const fixedURL = appendParams(prefixURL(url, this.baseUrl, options.action), prepareQS(Object.assign({}, defaultParams, options.params)))
+    const fixedURL = appendParams(
+      prefixURL(url, this.baseUrl, options.action),
+      prepareQS(Object.assign({}, defaultParams, options.params))
+    )
 
     const requestHeaders: Record<string, string> = options.headers || {}
-    let uppercaseMethod = props.method.toUpperCase()
-    let body = options.data
+    let uppercaseMethod = options.method?.toUpperCase() || props.method?.toUpperCase()
+    let body = options.data as object
     let cacheKey
     let selectBody
 

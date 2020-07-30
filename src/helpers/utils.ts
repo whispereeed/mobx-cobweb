@@ -2,11 +2,10 @@ declare var window: { window: any }
 
 export const isBrowser: boolean = typeof window !== 'undefined' && window.window === window
 
-export function getValue<T>(target: T | (() => T)): T {
+export function getValue<T>(target: T | (() => T), ...params: any[]): T {
   if (typeof target === 'function') {
-    return (target as Function)()
+    return (target as Function)(...params)
   }
-
   return target
 }
 
@@ -20,4 +19,21 @@ export function isEmptyObject(obj: any) {
   }
 
   return Object.getOwnPropertyNames(obj).length === 0
+}
+
+export function peekNonNullish(...args: any[]): any {
+  if (args.length === 0) return null
+
+  let i = -1
+  while (++i < args.length) {
+    let arg = args[i]
+
+    if (typeof arg === 'function') {
+      arg = arg()
+    }
+    if (arg !== null && arg !== undefined) {
+      return arg
+    }
+  }
+  return null
 }

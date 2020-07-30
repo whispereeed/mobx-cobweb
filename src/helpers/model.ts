@@ -4,23 +4,23 @@ import {
   getRefId,
   IModelRef,
   IType,
-  modelToJSON,
   PureCollection,
-  PureModel
+  PureModel,
+  modelToJSON
 } from '../datx'
 import { getMeta, mapItems } from 'datx-utils'
 import { action, isArrayLike } from 'mobx'
 
-import { isModelPersisted, setModelPersisted } from './consts'
+import { isModelPersisted, ORPHAN_MODEL_ID_KEY, setModelPersisted } from './consts'
 import { clearCacheByType } from './cache'
 import { IRequestOptions } from '../interfaces'
 
-import { create, remove, update } from './network'
+import { remove, upsert } from './network'
 import { ResponseView } from '../ResponseView'
 import { error } from './utils'
 import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 
-function getModelRefType(
+export function getModelRefType(
   model: Function | any,
   data: any,
   parentModel: PureModel,
@@ -35,37 +35,42 @@ function getModelRefType(
   return model
 }
 
-function handleResponse<T extends PureModel>(record: T): (response: ResponseView<T>) => T {
-  return action(
+export function getModelIdField<T extends PureModel>(modal: T): string {
+  return getMeta<string>(modal, 'idField', 'id', true)
+}
+
+export async function upsertModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<T> {
+  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
+  const modelType = getModelType(model)
+  if (!options.data) {
+    const data = modelToJSON(model)
+    delete data.__META__
+    const idField = getModelIdField(model)
+
+    if (!isModelPersisted(model) || idField === ORPHAN_MODEL_ID_KEY) {
+      delete data[idField]
+    }
+
+    options.data = data
+  }
+  const result = await upsert<T>(modelType, options, collection)
+  const response: T = action(
     (response: ResponseView<T>): T => {
       if (response.error) {
         throw response.error
       }
-
       if (response.status === 204) {
-        setModelPersisted(record, true)
-        return record
+        setModelPersisted(model, true)
+        return model
       } else if (response.status === 202) {
         return response.data as T
       } else {
-        setModelPersisted(record, true)
-        return response.replace(record).data as T
+        setModelPersisted(model, true)
+        return response.replace(model).data as T
       }
     }
-  )
-}
+  )(result)
 
-export async function saveModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<T> {
-  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
-  const data = modelToJSON(model)
-  delete data.__META__
-
-  const request = isModelPersisted(model) ? update : create
-  options.data = data
-  const modelType = getModelType(model)
-
-  const result = await request<T>(modelType, options, collection)
-  const response: T = handleResponse<T>(model)(result)
   clearCacheByType(modelType)
   return response
 }
