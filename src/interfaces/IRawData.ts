@@ -9,7 +9,7 @@ export interface IRawData<D> {
   meta?: Record<string, any>
 }
 
-export interface IResponseData<D = any> {
+export interface IResponseData<D> {
   data?: D
   meta?: Record<string, any>
   error?: Error

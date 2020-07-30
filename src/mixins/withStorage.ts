@@ -19,8 +19,8 @@ export interface IStorageConfig {
   storageKey?: string
   enableZip?: boolean
   storage?: {
-    getItem<T>(key: string): string | Promise<T> | null
-    setItem<T>(key: string, value: T): Promise<T> | void
+    getItem(key: string): string | Promise<string> | null
+    setItem(key: string, value: string): Promise<string> | void
   }
 }
 
@@ -43,7 +43,7 @@ function withStorageOnCollection<T extends PureCollection>(Base: ICollectionCons
       if (!storage) return
 
       try {
-        let data = await storage.getItem<string>(storageKey)
+        let data = await storage.getItem(storageKey)
         if (data) {
           if (enableZip) data = LZ.decompress(data)
           this.insert(JSON.parse(data))
@@ -65,7 +65,7 @@ function withStorageOnCollection<T extends PureCollection>(Base: ICollectionCons
         const models = types.reduce((oo, type) => oo.concat(this.findAll(type).map(modelToJSON)), [])
         let data = JSON.stringify(models)
         if (enableZip) data = LZ.compress(data)
-        storage.setItem<string>(storageKey, data)
+        storage.setItem(storageKey, data)
       })
     }
   }

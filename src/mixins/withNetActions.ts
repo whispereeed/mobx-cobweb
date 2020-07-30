@@ -5,8 +5,8 @@ import { action } from 'mobx'
 import { IModelConstructor, PureCollection, PureModel, getModelCollection, getModelId, getModelType } from '../datx'
 import { IRawModel } from 'datx-utils'
 import { INetActionsMixin } from '../interfaces/INetActionsMixin'
-import { IRequestOptions } from '../interfaces'
-import { fetchModelRef, fetchModelRefs, removeModel, upsertModel } from '../helpers/model'
+import { IRequestOptions, IResponseData } from '../interfaces'
+import { fetchModelRef, fetchModelRefs, removeModel, upsertModel, requestOnModel } from '../helpers/model'
 import { error } from '../helpers/utils'
 import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 import { ResponseView } from '../ResponseView'
@@ -33,6 +33,9 @@ export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) 
     }
     @action public remove(options?: IRequestOptions): Promise<void> {
       return removeModel(this, options)
+    }
+    @action public request<D>(options: IRequestOptions): Promise<IResponseData<D>> {
+      return requestOnModel<this, D>(this, options)
     }
     @action public fetchRef(field: string, options?: IRequestOptions) {
       return fetchModelRef(this, field, options)

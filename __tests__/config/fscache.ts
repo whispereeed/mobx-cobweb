@@ -14,7 +14,7 @@ export class FSCache {
     return String(fs.readFileSync(file))
   }
 
-  setItem<V>(key: string, value: V): void {
+  setItem(key: string, value: string): void {
     fs.writeFileSync(path.join(osTempDir, key), value)
   }
 }

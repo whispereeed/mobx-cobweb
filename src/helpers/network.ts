@@ -10,28 +10,15 @@ import { IRequestOptions, IRawResponse, IResponseData, ISingleOrMulti, IRequestM
 import { ResponseView } from '../ResponseView'
 import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 
-function __packResponse<T>(responseData: IResponseData, modelType: IType, collection: PureCollection): IRawResponse<T> {
+function __packResponse<T>(
+  responseData: IResponseData<any>,
+  modelType: IType,
+  collection: PureCollection
+): IRawResponse<T> {
   const { data = {} as any, ...others } = responseData
   // data : {data : * , meta : *}
   data.type = modelType
   return { ...others, data, collection }
-}
-
-function __getModelEndpointURL(type: IType, collection: PureCollection): string {
-  const StaticCollection = collection.constructor as typeof PureCollection
-  const QueryModel: any = StaticCollection.types.find((item) => item.type === type)
-
-  if (!QueryModel) {
-    throw error(`No definition for endpoint was found at Collection<${type}>`)
-  }
-
-  const endpoint = getValue<string>(QueryModel.endpoint)
-
-  if (!endpoint) {
-    throw error(`No definition for endpoint was found at Model<${type}>`)
-  }
-
-  return endpoint
 }
 
 async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
@@ -46,7 +33,7 @@ async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
 
   const prepared = collection.adapter.prepare({
     type: modelType,
-    endpoint: __getModelEndpointURL(modelType, collection),
+    endpoint: getModelEndpointURL(modelType, collection),
     ids,
     options,
     method
@@ -79,6 +66,23 @@ async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
   }
 
   return response
+}
+
+export function getModelEndpointURL(type: IType, collection: PureCollection): string {
+  const StaticCollection = collection.constructor as typeof PureCollection
+  const QueryModel: any = StaticCollection.types.find((item) => item.type === type)
+
+  if (!QueryModel) {
+    throw error(`No definition for endpoint was found at Collection<${type}>`)
+  }
+
+  const endpoint = getValue<string>(QueryModel.endpoint)
+
+  if (!endpoint) {
+    throw error(`No definition for endpoint was found at Model<${type}>`)
+  }
+
+  return endpoint
 }
 
 export function query<M extends ISingleOrMulti<PureModel>>(

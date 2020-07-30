@@ -5,7 +5,6 @@ import { IIdentifier, IType } from '../datx'
 import { INetworkAdapter, IRequestMethod, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { error, isBrowser, isEmptyObject } from '../helpers/utils'
-import { isArrayLike } from 'mobx'
 
 export class NetworkAdapter implements INetworkAdapter {
   private readonly baseUrl: string
@@ -84,7 +83,7 @@ export class NetworkAdapter implements INetworkAdapter {
     return { url: fixedURL, options: optionsO, cacheKey }
   }
 
-  async fetch(url: string, options: any): Promise<IResponseData> {
+  async fetch(url: string, options: any): Promise<IResponseData<any>> {
     let status: number
     let headers: Headers
     const request: Promise<void> = Promise.resolve()
@@ -104,13 +103,13 @@ export class NetworkAdapter implements INetworkAdapter {
         throw error
       }
 
-      const result: IResponseData = {}
+      const result: IResponseData<any> = {}
 
       if (responseData.value) {
         result.data = responseData.value
       }
 
-      if (responseData.items && isArrayLike(responseData.items)) {
+      if (responseData.items && Array.isArray(responseData.items)) {
         result.data = responseData.items
         result.meta = { count: responseData.count }
       }
@@ -125,7 +124,7 @@ export class NetworkAdapter implements INetworkAdapter {
     }
   }
 
-  onError(error: IResponseData) {
+  onError(error: IResponseData<void>) {
     return error
   }
 }
