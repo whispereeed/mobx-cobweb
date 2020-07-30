@@ -1,28 +1,32 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 15:10. *
  ***************************************************/
-import { getModelType, IModelConstructor, IType, PureModel } from '../datx'
+import { getModelType, IModelConstructor, IType, PureModel, View } from '../datx'
+import { action, computed, observable, transaction } from 'mobx'
 import { Collection } from '../Collection'
-import { action, observable } from 'mobx'
 import { IRequestOptions } from '../interfaces'
+import { ResponseView } from '../ResponseView'
 
-export class ListDataView<T extends PureModel> {
-  protected collection: Collection
-  protected modelType: IType
+export class ListDataView<T extends PureModel> extends View<T> {
+  readonly collection: Collection
+  readonly modelType: IType
 
   private meta: { count: number }
   private limit: [number, number] = [0, 10]
   private requestOptions?: IRequestOptions
 
-  public data: T[]
+  @computed get data() {
+    return this.list
+  }
   @observable public isLoading: boolean = false
 
-  constructor(modelType: IType | IModelConstructor<T>, collection: Collection) {
+  constructor(modelType: IModelConstructor<T> | IType, collection: Collection) {
+    super(modelType, collection, undefined, undefined, true)
     this.modelType = getModelType(modelType)
     this.collection = collection
   }
 
-  @action public async infinite(start: number, count: number): Promise<this> {
+  @action public async infinite(start: number, count: number): Promise<ResponseView<T[]>> {
     this.limit = [start, count]
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, {
@@ -34,21 +38,26 @@ export class ListDataView<T extends PureModel> {
     })
     this.requestOptions = response.requestOptions
     this.isLoading = false
-    this.data.push(...response.data)
+    this.add(response.data)
     this.meta = response.meta as any
-    return undefined
+    return response
   }
-  @action public async search(options: IRequestOptions): Promise<this> {
+  @action public async search(options: IRequestOptions): Promise<ResponseView<T[]>> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
     this.requestOptions = response.requestOptions
     this.isLoading = false
-    this.data = response.data
+
+    transaction(() => {
+      this.removeAll()
+      this.add(response.data)
+    })
+
     this.meta = response.meta as any
-    return this
+    return response
   }
 
-  public first(): Promise<this> {
+  public first(): Promise<ResponseView<T[]>> {
     const start = 0
     const count = this.limit[1]
     this.limit = [start, count]
@@ -61,8 +70,7 @@ export class ListDataView<T extends PureModel> {
       }
     })
   }
-  public prev(): Promise<this> {
-    // tslint:disable-next-line:prefer-const
+  public prev(): Promise<ResponseView<T[]>> {
     let [start, count] = this.limit
     start -= count
     start = start <= 0 ? 0 : start
@@ -75,8 +83,7 @@ export class ListDataView<T extends PureModel> {
       }
     })
   }
-  public next(): Promise<this> {
-    // tslint:disable-next-line:prefer-const
+  public next(): Promise<ResponseView<T[]>> {
     let [start, count] = this.limit
     start += count
     this.limit = [start, count]
@@ -88,7 +95,7 @@ export class ListDataView<T extends PureModel> {
       }
     })
   }
-  public last(): Promise<this> {
+  public last(): Promise<ResponseView<T[]>> {
     const [, count] = this.limit
     const start = this.meta.count - count
     this.limit = [start, count]

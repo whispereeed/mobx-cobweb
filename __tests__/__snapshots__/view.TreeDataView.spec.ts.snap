@@ -48,7 +48,7 @@ Object {
 }
 `;
 
-exports[`TreeDataView should be fetched parent node 1`] = `
+exports[`TreeDataView should be fetched parent nodes on chain 1`] = `
 Object {
   "__META__": Object {
     "MODEL_PERSISTED_FIELD": true,

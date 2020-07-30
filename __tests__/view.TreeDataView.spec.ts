@@ -1,7 +1,13 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 16:42. *
  ***************************************************/
-import { collection, useFixtureGetById, useFixtureGetChildrenById, useFixtureGetParentsById, useFixturesByGET } from './config'
+import {
+  collection,
+  useFixtureGetById,
+  useFixtureGetChildrenById,
+  useFixtureGetParentsById,
+  useFixturesByGET
+} from './config'
 import Department from './models/Department'
 import { TreeDataView } from '../src'
 
@@ -29,7 +35,7 @@ describe('TreeDataView', () => {
     expect(listDataView.data.length).toBe(0)
   })
 
-  it('should be fetched parent node', async () => {
+  it('should be fetched parent nodes on chain', async () => {
     useFixtureGetById(Department.endpoint)
     const response = await collection.fetch<Department>(Department, '91526189bc96')
     const treeDataView = new TreeDataView<Department>(Department, collection)

@@ -1,19 +1,24 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 15:10. *
  ***************************************************/
-import { getModelId, getModelType, IModelConstructor, IType, PureModel } from '../datx'
+import { getModelId, getModelType, IModelConstructor, IType, PureModel, View } from '../datx'
+import { action, computed, observable } from 'mobx'
 import { Collection } from '../Collection'
 import { ListDataView } from './ListDataView'
 import { ResponseView } from '../ResponseView'
 import { IRequestOptions } from '../interfaces'
-import { action, observable } from 'mobx'
 
-export class TreeDataView<T extends PureModel> {
-  protected collection: Collection
-  protected modelType: IType
+export class TreeDataView<T extends PureModel> extends View<T> {
+  readonly collection: Collection
+  readonly modelType: IType
+
   @observable public isLoading: boolean = false
+  @computed get data() {
+    return this.list
+  }
 
   constructor(modelType: IType | IModelConstructor<T>, collection: Collection) {
+    super(modelType, collection, undefined, undefined, true)
     this.modelType = getModelType(modelType)
     this.collection = collection
   }
@@ -22,6 +27,7 @@ export class TreeDataView<T extends PureModel> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
     this.isLoading = false
+    this.add(response.data)
     return response
   }
   @action public async fetchChildren(model: PureModel): Promise<ListDataView<T>> {
