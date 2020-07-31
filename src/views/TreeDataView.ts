@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 15:10. *
  ***************************************************/
-import { getModelId, getModelType, IModelConstructor, IType, PureModel, View } from '../datx'
+import { getModelId, getModelType, IModelConstructor, IType, PureModel, View, IIdentifier } from '../datx'
 import { action, computed, observable } from 'mobx'
 import { Collection } from '../Collection'
 import { ListDataView } from './ListDataView'
@@ -17,8 +17,8 @@ export class TreeDataView<T extends PureModel> extends View<T> {
     return this.list
   }
 
-  constructor(modelType: IType | IModelConstructor<T>, collection: Collection) {
-    super(modelType, collection, undefined, undefined, true)
+  constructor(modelType: IType | IModelConstructor<T>, collection: Collection, models?: Array<IIdentifier | T>) {
+    super(modelType, collection, undefined, models, true)
     this.modelType = getModelType(modelType)
     this.collection = collection
   }
@@ -30,21 +30,34 @@ export class TreeDataView<T extends PureModel> extends View<T> {
     this.add(response.data)
     return response
   }
-  @action public async fetchChildren(model: PureModel): Promise<ListDataView<T>> {
+  @action public async searchRoot(options?: IRequestOptions): Promise<ResponseView<T[]>> {
+    this.isLoading = true
+    const response = await this.collection.fetch<T>(this.modelType, {
+      action: '/roots',
+      ...options
+    })
+    this.isLoading = false
+    return response
+  }
+  @action public async searchChildren(model: PureModel, options?: IRequestOptions): Promise<ListDataView<T>> {
     const id = getModelId(model)
     this.isLoading = true
     const listDataView = new ListDataView<T>(this.modelType, this.collection)
     await listDataView.search({
       action: `/${id}/children`,
-      selector: { limit: [0, 10] }
+      selector: { limit: [0, 10] },
+      ...options
     })
     this.isLoading = false
     return listDataView
   }
-  @action public async fetchParents(model: PureModel): Promise<ResponseView<T[]>> {
+  @action public async searchParents(model: PureModel, options?: IRequestOptions): Promise<ResponseView<T[]>> {
     const id = getModelId(model)
     this.isLoading = true
-    const response = await this.collection.fetch<T>(this.modelType, { action: `/${id}/parents` })
+    const response = await this.collection.fetch<T>(this.modelType, {
+      action: `/${id}/parents`,
+      ...options
+    })
     this.isLoading = false
     return response
   }
