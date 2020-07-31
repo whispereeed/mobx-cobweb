@@ -20,7 +20,7 @@ export class ListDataView<T extends PureModel> extends View<T> {
     return this.list
   }
   @computed get hasNext() {
-    if (this.meta?.count === undefined) return true
+    if (this.meta?.count === undefined) return false
     const [start, count] = this.limit
     return start + count < this.meta.count
   }
@@ -30,7 +30,7 @@ export class ListDataView<T extends PureModel> extends View<T> {
     return start - count >= 0
   }
   @computed get hasLast() {
-    return !!this.meta.count
+    return this.meta?.count > 0
   }
 
   constructor(modelType: IModelConstructor<T> | IType, collection: Collection, models?: Array<IIdentifier | T>) {

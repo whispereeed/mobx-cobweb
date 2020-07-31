@@ -58,11 +58,9 @@ function withStorageOnCollection<T extends PureCollection>(Base: ICollectionCons
       if (!storage) return () => {}
       const types = StaticCollection.types.filter((Q: any) => !!Q.enableStorage)
       return autorun(() => {
-        console.time('recording')
         const models = types.reduce((oo, type) => oo.concat(this.findAll(type).map(modelToJSON)), [])
         let data = JSON.stringify(models)
         storage.setItem(storageKey, data)
-        console.timeEnd('recording')
       })
     }
   }
