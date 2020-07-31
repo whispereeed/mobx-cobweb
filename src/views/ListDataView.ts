@@ -11,8 +11,8 @@ export class ListDataView<T extends PureModel> extends View<T> {
   readonly collection: Collection
   readonly modelType: IType
 
-  private meta: { count: number }
-  private limit: [number, number] = [0, 10]
+  @observable private meta: { count: number }
+  @observable private limit: [number, number] = [0, 10]
   private requestOptions?: IRequestOptions = {}
 
   @observable public isLoading: boolean = false
@@ -21,10 +21,12 @@ export class ListDataView<T extends PureModel> extends View<T> {
     return this.list
   }
   @computed get hasNext() {
+    if (this.meta?.count === undefined) return true
     const [start, count] = this.limit
-    return start + count <= this.meta.count
+    return start + count < this.meta.count
   }
   @computed get hasPrev() {
+    if (this.meta?.count === undefined) return false
     const [start, count] = this.limit
     return start - count >= 0
   }
@@ -79,6 +81,7 @@ export class ListDataView<T extends PureModel> extends View<T> {
     })
   }
   public prev(options?: IRequestOptions): Promise<ResponseView<T[]>> {
+    if (!this.hasPrev) return null
     let [start, count] = this.limit
     start -= count
     start = start <= 0 ? 0 : start
@@ -93,6 +96,8 @@ export class ListDataView<T extends PureModel> extends View<T> {
     })
   }
   public next(options?: IRequestOptions): Promise<ResponseView<T[]>> {
+    if (!this.hasNext) return null
+
     let [start, count] = this.limit
     start += count
     this.limit = [start, count]
