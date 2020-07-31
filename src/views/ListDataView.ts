@@ -16,8 +16,17 @@ export class ListDataView<T extends PureModel> extends View<T> {
   private requestOptions?: IRequestOptions = {}
 
   @observable public isLoading: boolean = false
+
   @computed get data() {
     return this.list
+  }
+  @computed get hasNext() {
+    const [start, count] = this.limit
+    return start + count <= this.meta.count
+  }
+  @computed get hasPrev() {
+    const [start, count] = this.limit
+    return start - count >= 0
   }
 
   constructor(modelType: IModelConstructor<T> | IType, collection: Collection, models?: Array<IIdentifier | T>) {
