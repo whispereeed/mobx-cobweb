@@ -10,12 +10,11 @@ import { ResponseView } from '../ResponseView'
 export class ListDataView<T extends PureModel> extends View<T> {
   readonly collection: Collection
   readonly modelType: IType
-
-  @observable private meta: { count: number }
-  @observable private limit: [number, number] = [0, 10]
   private requestOptions?: IRequestOptions = {}
 
   @observable public isLoading: boolean = false
+  @observable private meta: { count: number }
+  @observable private limit: [number, number] = [0, 10]
 
   @computed get data() {
     return this.list
@@ -29,6 +28,9 @@ export class ListDataView<T extends PureModel> extends View<T> {
     if (this.meta?.count === undefined) return false
     const [start, count] = this.limit
     return start - count >= 0
+  }
+  @computed get hasLast() {
+    return !!this.meta.count
   }
 
   constructor(modelType: IModelConstructor<T> | IType, collection: Collection, models?: Array<IIdentifier | T>) {
