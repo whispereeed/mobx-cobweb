@@ -4,11 +4,11 @@
 import { getModelId, getModelType, IModelConstructor, IType, PureModel, View, IIdentifier } from '../datx'
 import { action, computed, observable } from 'mobx'
 import { Collection } from '../Collection'
-import { ListDataView } from './ListDataView'
+import { ListDataSource } from './ListDataSource'
 import { ResponseView } from '../ResponseView'
 import { IRequestOptions } from '../interfaces'
 
-export class TreeDataView<T extends PureModel> extends View<T> {
+export class TreeDataSource<T extends PureModel> extends View<T> {
   readonly collection: Collection
   readonly modelType: IType
 
@@ -30,7 +30,7 @@ export class TreeDataView<T extends PureModel> extends View<T> {
     this.add(response.data)
     return response
   }
-  @action public async searchRoot(options?: IRequestOptions): Promise<ResponseView<T[]>> {
+  @action public async searchRoots(options?: IRequestOptions): Promise<ResponseView<T[]>> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, {
       action: '/roots',
@@ -39,10 +39,10 @@ export class TreeDataView<T extends PureModel> extends View<T> {
     this.isLoading = false
     return response
   }
-  @action public async searchChildren(model: PureModel, options?: IRequestOptions): Promise<ListDataView<T>> {
+  @action public async searchChildren(model: T | IIdentifier, options?: IRequestOptions): Promise<ListDataSource<T>> {
     const id = getModelId(model)
     this.isLoading = true
-    const listDataView = new ListDataView<T>(this.modelType, this.collection)
+    const listDataView = new ListDataSource<T>(this.modelType, this.collection)
     await listDataView.search({
       action: `/${id}/children`,
       selector: { limit: [0, 10] },
@@ -51,7 +51,7 @@ export class TreeDataView<T extends PureModel> extends View<T> {
     this.isLoading = false
     return listDataView
   }
-  @action public async searchParents(model: PureModel, options?: IRequestOptions): Promise<ResponseView<T[]>> {
+  @action public async searchParents(model: T | IIdentifier, options?: IRequestOptions): Promise<ResponseView<T[]>> {
     const id = getModelId(model)
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, {

@@ -9,9 +9,9 @@ import {
   useFixturesByGET
 } from './config'
 import Department from './models/Department'
-import { TreeDataView } from '../src'
+import { TreeDataSource } from '../src'
 
-describe('TreeDataView', () => {
+describe('TreeDataSource', () => {
   let scope: any = null
 
   beforeEach(() => {
@@ -22,9 +22,9 @@ describe('TreeDataView', () => {
   it('should be fetched children nodes', async () => {
     useFixtureGetById(Department.endpoint)
     const response = await collection.fetch<Department>(Department, '005ddc160e41')
-    const treeDataView = new TreeDataView<Department>(Department, collection)
+    const treeDataView = new TreeDataSource<Department>(Department, collection)
     useFixtureGetChildrenById(Department.endpoint)
-    const listDataView = await treeDataView.fetchChildren(response.data)
+    const listDataView = await treeDataView.searchChildren(response.data)
     expect(listDataView.data).toBeInstanceOf(Array)
     expect(listDataView.data.length).toBe(5)
     const dept = listDataView.data[0]
@@ -38,10 +38,10 @@ describe('TreeDataView', () => {
   it('should be fetched parent nodes on chain', async () => {
     useFixtureGetById(Department.endpoint)
     const response = await collection.fetch<Department>(Department, '91526189bc96')
-    const treeDataView = new TreeDataView<Department>(Department, collection)
+    const treeDataView = new TreeDataSource<Department>(Department, collection)
     useFixtureGetParentsById(Department.endpoint)
     const current = response.data
-    const responseView = await treeDataView.fetchParents(current)
+    const responseView = await treeDataView.searchChildren(current)
     expect(responseView.data).toBeInstanceOf(Array)
     expect(responseView.data.length).toBe(4)
     const root = collection.findOne<Department>(Department, '66f58b59c384')

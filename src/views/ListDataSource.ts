@@ -7,7 +7,7 @@ import { Collection } from '../Collection'
 import { IRequestOptions } from '../interfaces'
 import { ResponseView } from '../ResponseView'
 
-export class ListDataView<T extends PureModel> extends View<T> {
+export class ListDataSource<T extends PureModel> extends View<T> {
   readonly collection: Collection
   readonly modelType: IType
   private requestOptions?: IRequestOptions = {}

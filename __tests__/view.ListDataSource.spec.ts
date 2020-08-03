@@ -1,10 +1,10 @@
 import { collection, useFixtureLimitByPOST, useFixturesByGET } from './config'
-import { ListDataView } from '../src'
+import { ListDataSource } from '../src'
 import { autorun } from 'mobx'
 
 import PropertySet from './models/PropertySet'
 
-describe('ListDataView', () => {
+describe('ListDataSource', () => {
   let scope: any = null
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('ListDataView', () => {
 
   test('should be fetched data by `page`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
-    const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
+    const listDataView = new ListDataSource<PropertySet>(PropertySet, collection)
     const jestFn = jest.fn(() => listDataView.isLoading)
     autorun(jestFn)
 
@@ -68,7 +68,7 @@ describe('ListDataView', () => {
   test('should be fetched data by `infinite`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
 
-    const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
+    const listDataView = new ListDataSource<PropertySet>(PropertySet, collection)
     const jestFn = jest.fn(() => listDataView.isLoading)
     autorun(jestFn)
     await listDataView.search({
