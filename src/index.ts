@@ -50,6 +50,6 @@ export { Model } from './Model'
 export { OrphanModel } from './OrphanModel'
 export { Collection } from './Collection'
 
-export { ListDataSource } from './views/ListDataSource'
-export { TreeDataSource } from './views/TreeDataSource'
+export { ListDataSource } from './datasources/ListDataSource'
+export { TreeDataSource } from './datasources/TreeDataSource'
 export { NetworkAdapter } from './adapter/NetworkAdapter'
