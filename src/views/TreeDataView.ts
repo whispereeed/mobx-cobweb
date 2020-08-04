@@ -4,16 +4,16 @@
 import { getModelId, getModelType, IModelConstructor, IType, PureModel, View, IIdentifier } from '../datx'
 import { action, computed, observable } from 'mobx'
 import { Collection } from '../Collection'
-import { ListDataSource } from './ListDataSource'
+import { ListDataView } from './ListDataView'
 import { ResponseView } from '../ResponseView'
 import { IRequestOptions } from '../interfaces'
 
-export class TreeDataSource<T extends PureModel> extends View<T> {
+export class TreeDataView<T extends PureModel> extends View<T> {
   readonly collection: Collection
   readonly modelType: IType
 
   @observable public isLoading: boolean = false
-  @computed get data() {
+  @computed get data(): T[] {
     return this.list
   }
 
@@ -39,10 +39,10 @@ export class TreeDataSource<T extends PureModel> extends View<T> {
     this.isLoading = false
     return response
   }
-  @action public async searchChildren(model: T | IIdentifier, options?: IRequestOptions): Promise<ListDataSource<T>> {
+  @action public async searchChildren(model: T | IIdentifier, options?: IRequestOptions): Promise<ListDataView<T>> {
     const id = getModelId(model)
     this.isLoading = true
-    const listDataView = new ListDataSource<T>(this.modelType, this.collection)
+    const listDataView = new ListDataView<T>(this.modelType, this.collection)
     await listDataView.search({
       action: `/${id}/children`,
       selector: { limit: [0, 10] },

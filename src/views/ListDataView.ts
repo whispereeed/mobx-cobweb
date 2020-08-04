@@ -7,14 +7,14 @@ import { Collection } from '../Collection'
 import { IRequestOptions } from '../interfaces'
 import { ResponseView } from '../ResponseView'
 
-export class ListDataSource<T extends PureModel> extends View<T> {
+export class ListDataView<T extends PureModel> extends View<T> {
   readonly collection: Collection
   readonly modelType: IType
   private requestOptions?: IRequestOptions = {}
 
-  @observable public isLoading: boolean = false
-  @observable private meta: { count: number }
-  @observable private limit: [number, number] = [0, 10]
+  @observable isLoading: boolean = false
+  @observable meta: { count: number }
+  @observable limit: [number, number] = [0, 10]
 
   @computed get data() {
     return this.list
@@ -75,11 +75,11 @@ export class ListDataSource<T extends PureModel> extends View<T> {
     this.limit = [start, count]
     return this.search({
       ...this.requestOptions,
-      ...options,
       selector: {
         ...this.requestOptions.selector,
         limit: [start, count]
-      }
+      },
+      ...options
     })
   }
   public prev(options?: IRequestOptions): Promise<ResponseView<T[]>> {
@@ -90,11 +90,11 @@ export class ListDataSource<T extends PureModel> extends View<T> {
     this.limit = [start, count]
     return this.search({
       ...this.requestOptions,
-      ...options,
       selector: {
         ...this.requestOptions.selector,
         limit: [start, count]
-      }
+      },
+      ...options
     })
   }
   public next(options?: IRequestOptions): Promise<ResponseView<T[]>> {
@@ -105,11 +105,11 @@ export class ListDataSource<T extends PureModel> extends View<T> {
     this.limit = [start, count]
     return this.search({
       ...this.requestOptions,
-      ...options,
       selector: {
         ...this.requestOptions.selector,
         limit: [start, count]
-      }
+      },
+      ...options
     })
   }
   public last(options?: IRequestOptions): Promise<ResponseView<T[]>> {
@@ -119,11 +119,11 @@ export class ListDataSource<T extends PureModel> extends View<T> {
 
     return this.search({
       ...this.requestOptions,
-      ...options,
       selector: {
         ...this.requestOptions.selector,
         limit: [start, count]
-      }
+      },
+      ...options
     })
   }
 }

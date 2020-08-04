@@ -1,10 +1,10 @@
 import { collection, useFixtureLimitByPOST, useFixturesByGET } from './config'
-import { ListDataSource } from '../src'
+import { ListDataView } from '../src'
 import { autorun } from 'mobx'
 
 import PropertySet from './models/PropertySet'
 
-describe('ListDataSource', () => {
+describe('ListDataView', () => {
   let scope: any = null
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('ListDataSource', () => {
 
   test('should be fetched data by `page`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
-    const listDataView = new ListDataSource<PropertySet>(PropertySet, collection)
+    const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
     const jestFn = jest.fn(() => listDataView.isLoading)
     autorun(jestFn)
 
@@ -36,8 +36,8 @@ describe('ListDataSource', () => {
     await listDataView.next()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
-    expect(listDataView.data[1].name).toBe('Auto Loan Account')
-    expect(jestFn).toBeCalledTimes(5)
+    expect(listDataView.data[1].name).toBe('Solutions')
+    expect(jestFn).toBeCalledTimes(3)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.last()
@@ -45,7 +45,7 @@ describe('ListDataSource', () => {
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[1].name).toBe('Solutions')
     expect(listDataView.data[8].name).toBe('engage')
-    expect(jestFn).toBeCalledTimes(7)
+    expect(jestFn).toBeCalledTimes(5)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.prev()
@@ -54,7 +54,7 @@ describe('ListDataSource', () => {
     expect(listDataView.data[1].name).toBe('Solutions')
     expect(listDataView.data[8].name).toBe('engage')
     expect(listDataView.data[9].name).toBe('Dynamic')
-    expect(jestFn).toBeCalledTimes(9)
+    expect(jestFn).toBeCalledTimes(5)
 
     useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.first()
@@ -62,13 +62,13 @@ describe('ListDataSource', () => {
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[0].name).toBe('Accounts')
     expect(listDataView.data[1].name).toBe('Solutions')
-    expect(jestFn).toBeCalledTimes(11)
+    expect(jestFn).toBeCalledTimes(7)
   })
 
   test('should be fetched data by `infinite`', async () => {
     useFixtureLimitByPOST(PropertySet.endpoint)
 
-    const listDataView = new ListDataSource<PropertySet>(PropertySet, collection)
+    const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
     const jestFn = jest.fn(() => listDataView.isLoading)
     autorun(jestFn)
     await listDataView.search({

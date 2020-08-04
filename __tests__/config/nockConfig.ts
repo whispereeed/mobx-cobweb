@@ -28,7 +28,7 @@ export function useFixturesByGET() {
 }
 
 export function useFixtureLimitByPOST(key: string) {
-  CURRENT_SCOPE.post(key).reply(200, (uri: string, body: any) => {
+  CURRENT_SCOPE.persist().post(key).reply(200, (uri: string, body: any) => {
     const { limit } = body
     const { start, count } = limit
     const json = MAPPER[key]
@@ -38,7 +38,7 @@ export function useFixtureLimitByPOST(key: string) {
 }
 
 export function useFixtureGetById(key: string) {
-  CURRENT_SCOPE.get(new RegExp(key + '/\\$.+')).reply(200, (uri: string) => {
+  CURRENT_SCOPE.persist().get(new RegExp(key + '/\\$.+')).reply(200, (uri: string) => {
     const id = uri.slice(uri.lastIndexOf('/$') + 2)
     const json = MAPPER[key]
     const object = json.items.find((k: any) => k.id === id)
@@ -47,7 +47,7 @@ export function useFixtureGetById(key: string) {
 }
 
 export function useFixtureGetByIds(key: string) {
-  CURRENT_SCOPE.get(new RegExp(key + '/\\[.+\\]')).reply(200, (uri: string) => {
+  CURRENT_SCOPE.persist().get(new RegExp(key + '/\\[.+\\]')).reply(200, (uri: string) => {
     const ids = uri.slice(uri.lastIndexOf('/') + 2, -1).split(',')
     const json = MAPPER[key]
     const object = json.items.filter((k: any) => ids.includes(k.id))
@@ -70,7 +70,7 @@ export function useFixtureGetChildrenById(key: string) {
 }
 
 export function useFixtureGetParentsById(key: string) {
-  CURRENT_SCOPE.get(new RegExp(key + '/.+/parents')).reply(200, (uri: string) => {
+  CURRENT_SCOPE.persist().get(new RegExp(key + '/.+/parents')).reply(200, (uri: string) => {
     const id = uri.replace(key, '').replace('/api/v1/', '').replace('/parents', '')
     const json = MAPPER[key]
     const findOne = (_id: string) => json.items.find((k: any) => k.id === _id)

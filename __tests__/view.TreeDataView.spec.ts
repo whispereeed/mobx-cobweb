@@ -9,7 +9,7 @@ import {
   useFixturesByGET
 } from './config'
 import Department from './models/Department'
-import { TreeDataSource } from '../src'
+import { TreeDataView } from '../src'
 
 describe('TreeDataSource', () => {
   let scope: any = null
@@ -22,7 +22,7 @@ describe('TreeDataSource', () => {
   it('should be fetched children nodes', async () => {
     useFixtureGetById(Department.endpoint)
     const response = await collection.fetch<Department>(Department, '005ddc160e41')
-    const treeDataView = new TreeDataSource<Department>(Department, collection)
+    const treeDataView = new TreeDataView<Department>(Department, collection)
     useFixtureGetChildrenById(Department.endpoint)
     const listDataView = await treeDataView.searchChildren(response.data)
     expect(listDataView.data).toBeInstanceOf(Array)
@@ -32,20 +32,18 @@ describe('TreeDataSource', () => {
     expect(collection.findAll(Department).length).toBe(6)
 
     await listDataView.next()
-    expect(listDataView.data.length).toBe(0)
+    expect(listDataView.data.length).toBe(5)
   })
 
   it('should be fetched parent nodes on chain', async () => {
     useFixtureGetById(Department.endpoint)
-    const response = await collection.fetch<Department>(Department, '91526189bc96')
-    const treeDataView = new TreeDataSource<Department>(Department, collection)
+    const response = await collection.fetch<Department>(Department, '90bba1c0c670')
+    const treeDataView = new TreeDataView<Department>(Department, collection)
     useFixtureGetParentsById(Department.endpoint)
     const current = response.data
-    const responseView = await treeDataView.searchChildren(current)
+    const responseView = await treeDataView.searchParents(current)
     expect(responseView.data).toBeInstanceOf(Array)
-    expect(responseView.data.length).toBe(4)
-    const root = collection.findOne<Department>(Department, '66f58b59c384')
-    expect(root).toBeInstanceOf(Department)
+    expect(responseView.data.length).toBe(7)
     const a = collection.findOne<Department>(Department, current.parentId)
     const b = collection.findOne<Department>(Department, a.parentId)
     const c = collection.findOne<Department>(Department, b.parentId)
@@ -55,6 +53,5 @@ describe('TreeDataSource', () => {
     expect(b).toMatchSnapshot()
     expect(c).toBeInstanceOf(Department)
     expect(d).toBeInstanceOf(Department)
-    expect(d).toBe(root)
   })
 })
