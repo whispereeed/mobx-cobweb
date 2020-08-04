@@ -1,45 +1,9 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-export {
-  View,
-  PureCollection,
-  PureModel,
-  updateModelId,
-  getRef,
-  getRefId,
-  initModelRef,
-  assignModel,
-  cloneModel,
-  getModelCollection,
-  getModelId,
-  getModelType,
-  getOriginalModel,
-  modelToJSON,
-  updateModel,
-  modelMapParse,
-  modelMapSerialize,
-  commitModel,
-  revertModel,
-  isAttributeDirty,
-  modelToDirtyJSON,
-  isCollection,
-  isModel,
-  isView,
-  IModelRef,
-  ICollectionConstructor,
-  IIdentifier,
-  IModelConstructor,
-  IType,
-  IViewConstructor,
-  PatchType,
-  ReferenceType,
-  Attribute,
-  Attribute as attribute,
-  ViewAttribute,
-  view
-} from './datx'
-
+export * from './datx'
+export { Attribute as attribute } from './datx'
+export * from 'datx-utils'
 export * from './interfaces'
 export * from './helpers/model'
 
