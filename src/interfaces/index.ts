@@ -4,5 +4,4 @@
 export * from './types'
 export * from './IRawResponse'
 export * from './IRequestOptions'
-export * from './IRawData'
 export * from './INetworkAdapter'

@@ -2,7 +2,7 @@
  * Created by nanyuantingfeng on 2020/6/2 12:55. *
  ***************************************************/
 import { action } from 'mobx'
-import { mapItems } from 'datx-utils'
+import { IRawModel, mapItems } from 'datx-utils'
 import {
   getModelId,
   getModelType,
@@ -19,7 +19,7 @@ import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { getModelIdField, removeModel } from '../helpers/model'
-import { INetworkAdapter, IRequestOptions, IResponseData } from '../interfaces'
+import { INetworkAdapter, IRequestOptions, IRawResponse, IOneOrMany } from '../interfaces'
 import { Model } from '../Model'
 import { query, request } from '../helpers/network'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
@@ -32,25 +32,45 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
     static defaultModel = Model
 
     adapter: INetworkAdapter
+
     setNetworkAdapter(adapter: INetworkAdapter) {
       this.adapter = adapter
     }
 
-    @action sync<P extends PureModel>(raw: any, data?: any): P | P[] {
-      if (!raw) return null
-      let type: IType
+    @action sync<P extends PureModel>(raw: IOneOrMany<IRawModel>, type: any): P | P[] {
+      const modelType = getModelType(type)
+      const StaticCollection = this.constructor as typeof PureCollection
+      const ModelClass = StaticCollection.types.find((Q) => Q.type === modelType)
+      return mapItems(raw, (item: IRawModel) => {
+        let record: P
 
-      if (arguments.length === 1 && Object.prototype.toString.call(raw) === '[object Object]') {
-        type = getModelType(raw.type)
-        data = raw.data
-      } else {
-        type = getModelType(raw)
-      }
+        if (ModelClass) {
+          const idField = getModelIdField(ModelClass)
 
-      if (!data) return null
+          let id: IIdentifier
 
-      return mapItems(data, (item: any) => this.__addRecord<P>(item, type)) as any
+          if (idField === ORPHAN_MODEL_ID_KEY) {
+            record = this.findOne<P>(modelType, ORPHAN_MODEL_ID_VAL)
+          } else {
+            id = item[idField]
+            record = id === undefined ? null : this.findOne<P>(modelType, id)
+          }
+
+          if (record) {
+            record = updateModel(record, item)
+          } else {
+            record = this.add<P>(item, modelType)
+          }
+
+          setModelPersisted(record, Boolean(id))
+        } else {
+          record = (this.add(new Model(item, this)) as any) as P
+        }
+
+        return record
+      })
     }
+
     @action fetch<T extends PureModel>(
       type: IType | T | IModelConstructor<T>,
       ids?: any,
@@ -70,6 +90,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
         return res
       })
     }
+
     @action removeOne(
       obj: IType | typeof PureModel | PureModel,
       id?: IIdentifier | boolean | IRequestOptions,
@@ -103,46 +124,18 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       clearCacheByType(type)
       return Promise.resolve()
     }
+
     @action removeAll(type: string | number | typeof PureModel) {
       super.removeAll(type)
       clearCacheByType(getModelType(type))
     }
+
     @action reset() {
       super.reset()
       clearCache()
     }
 
-    private __addRecord<T extends PureModel>(item: Record<string, any>, type: IType): T {
-      const StaticCollection = this.constructor as typeof PureCollection
-      const ModelClass = StaticCollection.types.find((Q) => Q.type === type)
-      let record: T
-
-      if (ModelClass) {
-        const idField = getModelIdField(ModelClass)
-
-        let id: IIdentifier
-
-        if (idField === ORPHAN_MODEL_ID_KEY) {
-          record = this.findOne<T>(type, ORPHAN_MODEL_ID_VAL)
-        } else {
-          id = item[idField]
-          record = id === undefined ? null : this.findOne<T>(type, id)
-        }
-
-        if (record) {
-          record = updateModel(record, item)
-        } else {
-          record = this.add<T>(item, type)
-        }
-        setModelPersisted(record, Boolean(id))
-      } else {
-        record = this.add(new Model(item, this)) as any
-      }
-
-      return record
-    }
-
-    request<D>(url: string, options: IRequestOptions): Promise<IResponseData<D>> {
+    @action request<D>(url: string, options: IRequestOptions): Promise<IRawResponse<D>> {
       return request<D>(this as any, url, options)
     }
   }

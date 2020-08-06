@@ -6,27 +6,16 @@ import { IIdentifier, IType, PureCollection, PureModel, View } from '../datx'
 import { getCache, saveCache } from './cache'
 import { error, getValue, isBrowser } from './utils'
 
-import { IRequestOptions, IRawResponse, IResponseData, ISingleOrMulti, IRequestMethod } from '../interfaces'
+import { IRequestOptions, IRawResponse, IOneOrMany, IRequestMethod } from '../interfaces'
 import { ResponseView } from '../ResponseView'
 import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 
-function __packResponse<T>(
-  responseData: IResponseData<any>,
-  modelType: IType,
-  collection: PureCollection
-): IRawResponse<T> {
-  const { data = {} as any, ...others } = responseData
-  // data : {data : * , meta : *}
-  data.type = modelType
-  return { ...others, data, collection }
-}
-
-async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
+async function __doFetch<M extends IOneOrMany<PureModel>>(doFetchOptions: {
   collection: INetPatchesMixin<PureCollection> & PureCollection
   options: IRequestOptions
   modelType?: IType
   method: IRequestMethod
-  ids?: ISingleOrMulti<IIdentifier>
+  ids?: IOneOrMany<IIdentifier>
   views?: View[]
 }): Promise<ResponseView<M>> {
   const { options, method = 'GET', collection, views, modelType, ids } = doFetchOptions
@@ -48,14 +37,12 @@ async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
     }
   }
 
-  const fetchResponse = await collection.adapter.fetch(prepared.url, prepared.options)
-  const response = new ResponseView<M>(
-    __packResponse(fetchResponse, modelType, collection),
-    collection,
-    options,
-    undefined,
-    views
-  )
+  const rawResponse = await collection.adapter.fetch(prepared.url, prepared.options)
+
+  rawResponse.modelType = modelType
+  rawResponse.collection = collection
+
+  const response = new ResponseView<M>(rawResponse, collection, options, undefined, views)
 
   if (isBrowser && !skipCache && prepared.cacheKey) {
     saveCache(prepared.cacheKey, modelType, response)
@@ -81,12 +68,12 @@ export function getModelEndpointURL(type: IType, collection: PureCollection): st
   return endpoint
 }
 
-export function query<M extends ISingleOrMulti<PureModel>>(
+export function query<M extends IOneOrMany<PureModel>>(
   modelType: IType,
   options?: IRequestOptions,
   collection?: INetPatchesMixin<PureCollection> & PureCollection,
   views?: View[],
-  ids?: ISingleOrMulti<IIdentifier>
+  ids?: IOneOrMany<IIdentifier>
 ): Promise<ResponseView<M>> {
   return __doFetch<M>({
     modelType,
@@ -132,7 +119,7 @@ export async function request<D>(
   collection: INetPatchesMixin<PureCollection> & PureCollection,
   endpoint: string,
   options: IRequestOptions
-): Promise<IResponseData<D>> {
+): Promise<IRawResponse<D>> {
   const prepared = await collection.adapter.prepare({
     endpoint: endpoint,
     options,

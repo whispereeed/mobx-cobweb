@@ -1,11 +1,13 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
-import { IRawData } from './IRawData'
-import { PureCollection } from '../datx'
+import { IRawModel, IType, PureCollection } from '../datx'
+import { IOneOrMany } from './types'
 
 export interface IRawResponse<D> {
-  data?: IRawData<D>
+  data?: IOneOrMany<IRawModel>
+  modelType?: IType
+  meta?: Record<string, any>
   collection?: PureCollection
   error?: Error
   headers?: Headers

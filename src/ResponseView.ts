@@ -13,10 +13,11 @@ import {
   View
 } from './datx'
 import { action } from 'mobx'
-import { IError, IRequestOptions, IRawResponse, $PickOf, ISingleOrMulti } from './interfaces'
+import { IError, IRequestOptions, IRawResponse, $PickOf, IOneOrMany } from './interfaces'
 import { INetPatchesMixin } from './interfaces/INetPatchesMixin'
+import { IRawModel } from 'datx-utils'
 
-export class ResponseView<T extends ISingleOrMulti<PureModel>> {
+export class ResponseView<T extends IOneOrMany<PureModel>> {
   public data: T | null = null
   public meta: object
   public headers?: Headers
@@ -27,11 +28,11 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
 
   public readonly collection?: PureCollection
   public readonly requestOptions?: IRequestOptions
-  public readonly rawResponse: IRawResponse<$PickOf<T, object[], object>>
+  public readonly rawResponse: IRawResponse<$PickOf<T, IRawModel[], IRawModel>>
   public readonly modelType: IType
 
   constructor(
-    rawResponse: IRawResponse<$PickOf<T, object[], object>>,
+    rawResponse: IRawResponse<$PickOf<T, IRawModel[], IRawModel>>,
     collection: PureCollection,
     requestOptions?: IRequestOptions,
     overrideData?: T,
@@ -40,7 +41,7 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
     this.collection = collection
     this.requestOptions = requestOptions
     this.rawResponse = rawResponse
-    this.modelType = getModelType(rawResponse.data!.type)
+    this.modelType = getModelType(rawResponse.modelType)
     this.status = rawResponse.status
 
     if (views) {
@@ -49,15 +50,13 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
 
     this.data = overrideData
       ? collection.add<T>(overrideData)
-      : ((collection as unknown) as INetPatchesMixin<PureCollection>).sync<T>(rawResponse.data)
+      : ((collection as unknown) as INetPatchesMixin<PureCollection>).sync<T>(rawResponse.data, this.modelType)
 
-    this.views.forEach((view) => {
-      if (this.data) {
-        view.add(this.data)
-      }
-    })
+    if (this.data) {
+      this.views.forEach((view) => view.add(this.data))
+    }
 
-    this.meta = rawResponse.data?.meta || {}
+    this.meta = rawResponse.meta || {}
     this.headers = rawResponse.headers
     this.requestHeaders = rawResponse.requestHeaders
     this.error = rawResponse.error
@@ -70,10 +69,10 @@ export class ResponseView<T extends ISingleOrMulti<PureModel>> {
       return this
     }
 
-    const newId = getModelId(record!)
-    const type = getModelType(record!)
+    const newId = getModelId(record)
+    const type = getModelType(record)
 
-    const viewIndexes = this.views.map((view) => view.list.indexOf(record!))
+    const viewIndexes = this.views.map((view) => view.list.indexOf(record))
 
     if (this.collection) {
       this.collection.removeOne(type, newId)

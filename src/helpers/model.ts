@@ -13,7 +13,7 @@ import { action, isArrayLike } from 'mobx'
 
 import { isModelPersisted, ORPHAN_MODEL_ID_KEY, setModelPersisted } from './consts'
 import { clearCacheByType } from './cache'
-import { IRequestOptions, IResponseData } from '../interfaces'
+import { IRequestOptions, IRawResponse } from '../interfaces'
 
 import { remove, upsert, getModelEndpointURL, request } from './network'
 import { ResponseView } from '../ResponseView'
@@ -95,7 +95,7 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
 export async function requestOnModel<T extends PureModel, D>(
   model: T,
   options: IRequestOptions
-): Promise<IResponseData<D>> {
+): Promise<IRawResponse<D>> {
   const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
   const modelType = getModelType(model)
   const endpoint = getModelEndpointURL(modelType, collection)

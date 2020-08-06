@@ -2,7 +2,7 @@
  * Created by nanyuantingfeng on 2019/11/28 17:24. *
  ***************************************************/
 import { IIdentifier } from '../datx'
-import { INetworkAdapter, IRequestMethod, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
+import { INetworkAdapter, IRequestMethod, IRequestOptions, IRawResponse, IOneOrMany } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { error, isBrowser, isEmptyObject } from '../helpers/utils'
 
@@ -37,7 +37,7 @@ export class NetworkAdapter implements INetworkAdapter {
 
   prepare(props: {
     endpoint: string
-    ids?: ISingleOrMulti<IIdentifier>
+    ids?: IOneOrMany<IIdentifier>
     options?: IRequestOptions
     method?: IRequestMethod
   }): { url: string; options?: any; cacheKey?: string } {
@@ -82,7 +82,7 @@ export class NetworkAdapter implements INetworkAdapter {
     return { url: fixedURL, options: optionsO, cacheKey }
   }
 
-  async fetch(url: string, options: any): Promise<IResponseData<any>> {
+  async fetch(url: string, options: any): Promise<IRawResponse<any>> {
     let status: number
     let headers: Headers
     const request: Promise<void> = Promise.resolve()
@@ -102,7 +102,11 @@ export class NetworkAdapter implements INetworkAdapter {
         throw error
       }
 
-      const result: IResponseData<any> = {}
+      const result: IRawResponse<any> = {}
+
+      result.status = status
+      result.headers = headers
+      result.requestHeaders = requestHeaders
 
       if (responseData.value) {
         result.data = responseData.value
@@ -117,13 +121,13 @@ export class NetworkAdapter implements INetworkAdapter {
         throw { message: `Invalid HTTP status: ${status}`, status }
       }
 
-      return { data: result, headers, requestHeaders, status }
+      return result
     } catch (error) {
       return this.onError({ error, headers, requestHeaders, status })
     }
   }
 
-  onError(error: IResponseData<void>) {
+  onError(error: IRawResponse<void>) {
     return error
   }
 }

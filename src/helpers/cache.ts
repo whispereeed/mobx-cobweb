@@ -3,14 +3,14 @@
  ***************************************************/
 import { getModelType, IType, PureModel } from '../datx'
 import { ResponseView } from '../ResponseView'
-import { ISingleOrMulti } from '../interfaces'
-import LRU from './lru'
+import { IOneOrMany } from '../interfaces'
+import { LRU } from './lru'
 import { isArrayLike } from 'mobx'
 import { peekNonNullish } from './utils'
 
-const cache = new LRU<ResponseView<ISingleOrMulti<PureModel>>>(16, 60000)
+const cache = new LRU<ResponseView<IOneOrMany<PureModel>>>(16, 60000)
 
-export function saveCache(url: string, modelType: IType, response: ResponseView<ISingleOrMulti<PureModel>>) {
+export function saveCache(url: string, modelType: IType, response: ResponseView<IOneOrMany<PureModel>>) {
   if (response && 'data' in response && (!('error' in response) || !response.error) && response.data) {
     // The type might need to be 100% correct - used only to clear the cache
     const type = peekNonNullish(

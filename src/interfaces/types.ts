@@ -14,4 +14,4 @@ export interface IError {
   detail?: string
 }
 
-export type ISingleOrMulti<T> = T | T[]
+export type IOneOrMany<T> = T | T[]

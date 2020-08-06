@@ -11,7 +11,7 @@ describe('collection.sync by tree-data', () => {
   const data: object[] = require(path.join(__dirname, './fixtures/organization.departments.tree.json')).items
 
   test('should sync data & type', () => {
-    const sf = collection.sync<Department>(Department, data)
+    const sf = collection.sync<Department>(data, Department)
     expect(sf[0].children[0].parent === sf[0]).toBeTruthy()
     expect(collection.findAll(Department).length).toBe(2035)
 
@@ -30,7 +30,7 @@ describe('collection.sync by list-data', () => {
   const data: object[] = require(path.join(__dirname, './fixtures/organization.departments.json')).items
 
   test('should sync IRawData', () => {
-    const sf = collection.sync<Department>({ type: 'organization.Department', data })
+    const sf = collection.sync<Department>(data, 'organization.Department')
     expect(sf[0].children[0].parent === sf[0]).toBeTruthy()
     expect(collection.findAll(Department).length).toBe(2035)
 

@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/28 17:44. *
  ***************************************************/
-import { $ElementType, IRequestOptions, ISingleOrMulti } from '../interfaces'
+import { $ElementType, IRequestOptions, IOneOrMany } from '../interfaces'
 import { IIdentifier } from '../datx'
 
 interface IQueryParamOrder {
@@ -64,7 +64,7 @@ function prepareLimit(limit: $ElementType<ISelector, 'limit'>): IQueryParamLimit
   return { start: limit[0], count: limit[1] }
 }
 
-export function prepareURL(endpoint: string, ids?: ISingleOrMulti<IIdentifier>) {
+export function prepareURL(endpoint: string, ids?: IOneOrMany<IIdentifier>) {
   if (ids != undefined) endpoint += Array.isArray(ids) ? `/[${ids.join(',')}]` : `/\$${ids}`
   return endpoint
 }
