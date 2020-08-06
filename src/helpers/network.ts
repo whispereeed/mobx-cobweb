@@ -32,7 +32,6 @@ async function __doFetch<M extends ISingleOrMulti<PureModel>>(doFetchOptions: {
   const { options, method = 'GET', collection, views, modelType, ids } = doFetchOptions
 
   const prepared = collection.adapter.prepare({
-    type: modelType,
     endpoint: getModelEndpointURL(modelType, collection),
     ids,
     options,
@@ -127,4 +126,17 @@ export function remove<T extends PureModel>(
     views,
     method: 'DELETE'
   })
+}
+
+export async function request<D>(
+  collection: INetPatchesMixin<PureCollection> & PureCollection,
+  endpoint: string,
+  options: IRequestOptions
+): Promise<IResponseData<D>> {
+  const prepared = await collection.adapter.prepare({
+    endpoint: endpoint,
+    options,
+    method: options.method
+  })
+  return collection.adapter.fetch(prepared.url, prepared.options)
 }

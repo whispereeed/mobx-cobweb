@@ -3,12 +3,11 @@
  ***************************************************/
 import { IResponseData } from './IRawData'
 import { IRequestMethod, IRequestOptions } from './IRequestOptions'
-import { IIdentifier, IType } from '../datx'
+import { IIdentifier } from '../datx'
 import { ISingleOrMulti } from './types'
 
 export interface INetworkAdapter {
   prepare(props: {
-    type: IType
     endpoint: string
     ids?: ISingleOrMulti<IIdentifier>
     options?: IRequestOptions

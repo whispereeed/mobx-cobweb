@@ -1,8 +1,8 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/28 17:44. *
  ***************************************************/
-import { INestedArray, ISingleOrMulti } from '../interfaces'
-import { IIdentifier, IType } from '../datx'
+import { $ElementType, IRequestOptions, ISingleOrMulti } from '../interfaces'
+import { IIdentifier } from '../datx'
 
 interface IQueryParamOrder {
   value: string
@@ -21,15 +21,17 @@ interface IQueryParams {
   select?: string
 }
 
+type ISelector = $ElementType<IRequestOptions, 'selector'>
+
 const URL_REGEX = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=]+$/
 
-function prepareFilters(filters: string | string[]): string {
+function prepareFilters(filters: $ElementType<$ElementType<IRequestOptions, 'selector'>, 'filters'>): string {
   if (!filters) return undefined
   const filters2 = Array.isArray(filters) ? filters : [filters]
   return filters2.join('&&')
 }
 
-function prepareOrders(orders?: string[]): IQueryParamOrder[] {
+function prepareOrders(orders?: $ElementType<ISelector, 'orders'>): IQueryParamOrder[] {
   if (!orders) return undefined
   return orders.map((key) => {
     let oo = { value: key, order: 'ASC' }
@@ -40,7 +42,7 @@ function prepareOrders(orders?: string[]): IQueryParamOrder[] {
   }) as IQueryParamOrder[]
 }
 
-function prepareSelect(select: string | INestedArray<string>): string {
+function prepareSelect(select: $ElementType<ISelector, 'select'>): string {
   if (!select) return undefined
   if (typeof select === 'string') return select
 
@@ -57,17 +59,17 @@ function prepareSelect(select: string | INestedArray<string>): string {
     .join(',')
 }
 
-function prepareLimit(limit: [number, number]): IQueryParamLimit {
+function prepareLimit(limit: $ElementType<ISelector, 'limit'>): IQueryParamLimit {
   if (!limit) return undefined
   return { start: limit[0], count: limit[1] }
 }
 
-export function prepareURL(endpoint: string, type: IType, ids?: ISingleOrMulti<IIdentifier>) {
+export function prepareURL(endpoint: string, ids?: ISingleOrMulti<IIdentifier>) {
   if (ids != undefined) endpoint += Array.isArray(ids) ? `/[${ids.join(',')}]` : `/\$${ids}`
   return endpoint
 }
 
-export function prepareQS(params: Record<string, string>): string {
+export function prepareQS(params: $ElementType<IRequestOptions, 'params'>): string {
   if (!params) return undefined
   return Object.keys(params)
     .map((k) => `${k}=${params[k]}`)
@@ -98,7 +100,7 @@ export function appendParams(url: string, qs: string): string {
   return newUrl
 }
 
-export function prepareSelector(selector: any): IQueryParams {
+export function prepareSelector(selector: ISelector): IQueryParams {
   return {
     filterBy: prepareFilters(selector.filters),
     orderBy: prepareOrders(selector.orders),

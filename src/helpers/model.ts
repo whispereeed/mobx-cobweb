@@ -15,7 +15,7 @@ import { isModelPersisted, ORPHAN_MODEL_ID_KEY, setModelPersisted } from './cons
 import { clearCacheByType } from './cache'
 import { IRequestOptions, IResponseData } from '../interfaces'
 
-import { remove, upsert, getModelEndpointURL } from './network'
+import { remove, upsert, getModelEndpointURL, request } from './network'
 import { ResponseView } from '../ResponseView'
 import { error } from './utils'
 import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
@@ -99,14 +99,7 @@ export async function requestOnModel<T extends PureModel, D>(
   const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
   const modelType = getModelType(model)
   const endpoint = getModelEndpointURL(modelType, collection)
-  const prepared = await collection.adapter.prepare({
-    type: modelType,
-    endpoint,
-    options,
-    method: options.method
-  })
-
-  return collection.adapter.fetch(prepared.url, prepared.options)
+  return request<D>(collection, endpoint, options)
 }
 
 export function fetchModelRef<T extends PureModel>(

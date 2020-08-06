@@ -19,9 +19,9 @@ import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { getModelIdField, removeModel } from '../helpers/model'
-import { INetworkAdapter, IRequestOptions } from '../interfaces'
+import { INetworkAdapter, IRequestOptions, IResponseData } from '../interfaces'
 import { Model } from '../Model'
-import { query } from '../helpers/network'
+import { query, request } from '../helpers/network'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
 
 export function withNetPatches<T extends PureCollection>(Base: ICollectionConstructor<T>) {
@@ -140,6 +140,10 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
       }
 
       return record
+    }
+
+    request<D>(url: string, options: IRequestOptions): Promise<IResponseData<D>> {
+      return request<D>(this as any, url, options)
     }
   }
 

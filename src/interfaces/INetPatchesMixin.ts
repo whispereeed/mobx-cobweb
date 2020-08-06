@@ -2,7 +2,7 @@
  * Created by nanyuantingfeng on 2020/6/2 12:56. *
  ***************************************************/
 import { IIdentifier, IModelConstructor, IType, PureCollection, PureModel } from '../datx'
-import { IRawData } from './IRawData'
+import { IRawData, IResponseData } from './IRawData'
 import { IRequestOptions } from './IRequestOptions'
 import { ResponseView } from '../ResponseView'
 import { INetworkAdapter } from './INetworkAdapter'
@@ -38,4 +38,6 @@ export interface INetPatchesMixin<T extends PureCollection> {
 
   removeOne(type: IType | typeof PureModel, id: IIdentifier, remote?: boolean | IRequestOptions): Promise<void>
   removeOne(model: PureModel, remote?: boolean | IRequestOptions): Promise<void>
+
+  request<D>(url: string, options: IRequestOptions): Promise<IResponseData<D>>
 }

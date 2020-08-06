@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/28 17:24. *
  ***************************************************/
-import { IIdentifier, IType } from '../datx'
+import { IIdentifier } from '../datx'
 import { INetworkAdapter, IRequestMethod, IRequestOptions, IResponseData, ISingleOrMulti } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { error, isBrowser, isEmptyObject } from '../helpers/utils'
@@ -36,7 +36,6 @@ export class NetworkAdapter implements INetworkAdapter {
   }
 
   prepare(props: {
-    type: IType
     endpoint: string
     ids?: ISingleOrMulti<IIdentifier>
     options?: IRequestOptions
@@ -44,7 +43,7 @@ export class NetworkAdapter implements INetworkAdapter {
   }): { url: string; options?: any; cacheKey?: string } {
     const options = props.options || {}
 
-    const url = prepareURL(props.endpoint, props.type, props.ids)
+    const url = prepareURL(props.endpoint, props.ids)
     const { headers: defaultHeaders, params: defaultParams, ...defaultOthers } = this.defaultFetchOptions
 
     const fixedURL = appendParams(
