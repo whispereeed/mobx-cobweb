@@ -8,7 +8,7 @@ import { IStorageMixin, IStorageConfig } from '../interfaces/IStorageMixin'
 export function withStorageForCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
 
-  class WithLocalStorage extends BaseClass implements IStorageMixin<T> {
+  class WithStorageForCollection extends BaseClass implements IStorageMixin<T> {
     static storageConfig: IStorageConfig = {
       storageKey: '__COBWEB_MODELS_'
     }
@@ -16,7 +16,7 @@ export function withStorageForCollection<T extends PureCollection>(Base: ICollec
     async load() {
       const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
       const { storageKey, storage } = {
-        ...WithLocalStorage.storageConfig,
+        ...WithStorageForCollection.storageConfig,
         ...StaticCollection.storageConfig
       }
 
@@ -35,7 +35,7 @@ export function withStorageForCollection<T extends PureCollection>(Base: ICollec
     recording() {
       const StaticCollection = this.constructor as typeof PureCollection & { storageConfig: IStorageConfig }
       const { storageKey, storage } = {
-        ...WithLocalStorage.storageConfig,
+        ...WithStorageForCollection.storageConfig,
         ...StaticCollection.storageConfig
       }
       if (!storage) return () => {}
@@ -48,7 +48,7 @@ export function withStorageForCollection<T extends PureCollection>(Base: ICollec
     }
   }
 
-  return (WithLocalStorage as unknown) as ICollectionConstructor<IStorageMixin<T> & T> & {
+  return (WithStorageForCollection as unknown) as ICollectionConstructor<IStorageMixin<T> & T> & {
     storageConfig: IStorageConfig
   }
 }

@@ -13,7 +13,7 @@ import { ResponseView } from '../ResponseView'
 export function withNetActionsForModel<T extends PureModel>(Base: IModelConstructor<T>) {
   const BaseClass = Base as typeof PureModel
 
-  class WithNetActions extends BaseClass implements INetActionsMixinForModel<T> {
+  class WithNetActionsForModel extends BaseClass implements INetActionsMixinForModel<T> {
     static endpoint: string | (() => string)
 
     constructor(rawData: IRawModel, collection?: PureCollection) {
@@ -44,7 +44,7 @@ export function withNetActionsForModel<T extends PureModel>(Base: IModelConstruc
     }
   }
 
-  return (WithNetActions as unknown) as IModelConstructor<INetActionsMixinForModel<T> & T> & {
+  return (WithNetActionsForModel as unknown) as IModelConstructor<INetActionsMixinForModel<T> & T> & {
     endpoint: string | (() => string)
   }
 }
