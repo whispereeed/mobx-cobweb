@@ -82,7 +82,7 @@ export class NetworkAdapter implements INetworkAdapter {
     return { url: fixedURL, options: optionsO, cacheKey }
   }
 
-  async fetch(url: string, options: any): Promise<IRawResponse<any>> {
+  async fetch(url: string, options: any): Promise<IRawResponse<any | void>> {
     let status: number
     let headers: Headers
     const request: Promise<void> = Promise.resolve()
@@ -91,7 +91,7 @@ export class NetworkAdapter implements INetworkAdapter {
       let responseData: any
       try {
         await request
-        const response: Response = await this.fetchInstance(url, options)
+        const response = await this.fetchInstance(url, options)
         status = response.status
         headers = response.headers
         responseData = await response.json()
@@ -102,7 +102,7 @@ export class NetworkAdapter implements INetworkAdapter {
         throw error
       }
 
-      const result: IRawResponse<any> = {}
+      const result: IRawResponse = {}
 
       result.status = status
       result.headers = headers

@@ -125,5 +125,7 @@ export async function request<D>(
     options,
     method: options.method
   })
-  return collection.adapter.fetch(prepared.url, prepared.options)
+  const rawResponse = await collection.adapter.fetch(prepared.url, prepared.options)
+  rawResponse.collection = collection
+  return rawResponse
 }

@@ -99,7 +99,10 @@ export async function requestOnModel<T extends PureModel, D>(
   const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
   const modelType = getModelType(model)
   const endpoint = getModelEndpointURL(modelType, collection)
-  return request<D>(collection, endpoint, options)
+  const rawResponse = await request<D>(collection, endpoint, options)
+  rawResponse.modelType = modelType
+  rawResponse.collection = collection
+  return rawResponse
 }
 
 export function fetchModelRef<T extends PureModel>(
