@@ -5,7 +5,6 @@ export {
   Bucket,
   Attribute,
   ViewAttribute,
-  prop,
   view,
   IFieldDefinition,
   IReferenceDefinition,
