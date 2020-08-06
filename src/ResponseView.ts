@@ -14,7 +14,7 @@ import {
 } from './datx'
 import { action } from 'mobx'
 import { IError, IRequestOptions, IRawResponse, $PickOf, IOneOrMany } from './interfaces'
-import { INetPatchesMixin } from './interfaces/INetPatchesMixin'
+import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 import { IRawModel } from 'datx-utils'
 
 export class ResponseView<T extends IOneOrMany<PureModel>> {
@@ -50,7 +50,10 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
 
     this.data = overrideData
       ? collection.add<T>(overrideData)
-      : ((collection as unknown) as INetPatchesMixin<PureCollection>).sync<T>(rawResponse.data, this.modelType)
+      : ((collection as unknown) as INetActionsMixinForCollection<PureCollection>).sync<T>(
+          rawResponse.data,
+          this.modelType
+        )
 
     if (this.data) {
       this.views.forEach((view) => view.add(this.data))

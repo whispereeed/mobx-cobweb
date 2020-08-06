@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/7/15 19:59. *
  ***************************************************/
-import LRU from '../src/helpers/lru'
+import { LRU } from '../src/helpers/lru'
 
 describe('LRU', () => {
   it('basic test', () => {

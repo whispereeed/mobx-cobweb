@@ -3,6 +3,7 @@
  ***************************************************/
 import { $ElementType, IRequestOptions, IOneOrMany } from '../interfaces'
 import { IIdentifier } from '../datx'
+import { isArrayLike } from 'mobx'
 
 interface IQueryParamOrder {
   value: string
@@ -27,7 +28,7 @@ const URL_REGEX = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()
 
 function prepareFilters(filters: $ElementType<$ElementType<IRequestOptions, 'selector'>, 'filters'>): string {
   if (!filters) return undefined
-  const filters2 = Array.isArray(filters) ? filters : [filters]
+  const filters2 = isArrayLike(filters) ? filters : [filters]
   return filters2.join('&&')
 }
 
@@ -51,7 +52,7 @@ function prepareSelect(select: $ElementType<ISelector, 'select'>): string {
       if (k === '...') {
         return '`...`'
       }
-      if (Array.isArray(k)) {
+      if (isArrayLike(k)) {
         return `${k.shift()}(${prepareSelect(k)})`
       }
       return k
@@ -65,7 +66,7 @@ function prepareLimit(limit: $ElementType<ISelector, 'limit'>): IQueryParamLimit
 }
 
 export function prepareURL(endpoint: string, ids?: IOneOrMany<IIdentifier>) {
-  if (ids != undefined) endpoint += Array.isArray(ids) ? `/[${ids.join(',')}]` : `/\$${ids}`
+  if (ids != undefined) endpoint += isArrayLike(ids) ? `/[${ids.join(',')}]` : `/\$${ids}`
   return endpoint
 }
 

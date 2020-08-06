@@ -1,51 +1,32 @@
 /***************************************************
- * Created by nanyuantingfeng on 2020/6/2 12:36. *
+ * Created by nanyuantingfeng on 2020/8/6 19:14. *
  ***************************************************/
-import { action } from 'mobx'
-import { IModelConstructor, PureCollection, PureModel, getModelCollection, getModelId, getModelType } from '../datx'
-import { IRawModel } from 'datx-utils'
-import { INetActionsMixin } from '../interfaces/INetActionsMixin'
-import { IRequestOptions, IRawResponse } from '../interfaces'
-import { fetchModelRef, fetchModelRefs, removeModel, upsertModel, requestOnModel } from '../helpers/model'
+import { ICollectionConstructor, IModelConstructor, isCollection, isModel, PureCollection, PureModel } from '../datx'
+import { INetActionsMixinForCollection, INetActionsMixinForModel } from '../interfaces/INetActionsMixin'
 import { error } from '../helpers/utils'
-import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
-import { ResponseView } from '../ResponseView'
+import { withNetActionsForCollection } from './withNetActionsForCollection'
+import { withNetActionsForModel } from './withNetActionsForModel'
 
-export function withNetActions<T extends PureModel>(Base: IModelConstructor<T>) {
-  const BaseClass = Base as typeof PureModel
+export function withNetActions<T extends PureCollection>(
+  Base: ICollectionConstructor<T>
+): ICollectionConstructor<INetActionsMixinForCollection<T> & T> & {
+  cache: boolean
+}
 
-  class WithNetActions extends BaseClass implements INetActionsMixin<T> {
-    static endpoint: string | (() => string)
+export function withNetActions<T extends PureModel>(
+  Base: IModelConstructor<T>
+): IModelConstructor<INetActionsMixinForModel<T> & T> & {
+  endpoint: string | (() => string)
+}
 
-    constructor(rawData: IRawModel, collection?: PureCollection) {
-      super(rawData, collection)
-    }
-
-    @action public refresh(): Promise<ResponseView<T>> {
-      const collection: INetPatchesMixin<PureCollection> = getModelCollection(this) as any
-      if (!collection) {
-        throw error(`before calling model.refresh API, add the model to the collection first.`)
-      }
-      return collection.fetch<T>(getModelType(this), getModelId(this))
-    }
-    @action public upsert(options?: IRequestOptions): Promise<this> {
-      return upsertModel(this, options)
-    }
-    @action public remove(options?: IRequestOptions): Promise<void> {
-      return removeModel(this, options)
-    }
-    @action public request<D>(options: IRequestOptions): Promise<IRawResponse<D>> {
-      return requestOnModel<this, D>(this, options)
-    }
-    @action public fetchRef(field: string, options?: IRequestOptions) {
-      return fetchModelRef(this, field, options)
-    }
-    @action public fetchRefs(options?: IRequestOptions) {
-      return fetchModelRefs(this, options)
-    }
+export function withNetActions(Base: any) {
+  if (isCollection(Base)) {
+    return withNetActionsForCollection(Base as typeof PureCollection)
   }
 
-  return (WithNetActions as unknown) as IModelConstructor<INetActionsMixin<T> & T> & {
-    endpoint: string | (() => string)
+  if (isModel(Base)) {
+    return withNetActionsForModel(Base as typeof PureModel)
   }
+
+  throw error(`withNetActions is a mixin for Collection or Model.`)
 }

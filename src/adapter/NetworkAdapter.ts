@@ -5,6 +5,7 @@ import { IIdentifier } from '../datx'
 import { INetworkAdapter, IRequestMethod, IRequestOptions, IRawResponse, IOneOrMany } from '../interfaces'
 import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
 import { error, isBrowser, isEmptyObject } from '../helpers/utils'
+import { isArrayLike } from 'mobx'
 
 export class NetworkAdapter implements INetworkAdapter {
   private readonly baseUrl: string
@@ -26,7 +27,7 @@ export class NetworkAdapter implements INetworkAdapter {
     this.fetchInstance = fetchInstance
     this.defaultFetchOptions = Object.assign({}, this.defaultFetchOptions, options)
 
-    if (!fetchInstance && !isBrowser) {
+    if (!isBrowser && !fetchInstance) {
       throw error('Fetch reference needs to be defined before using the network')
     }
 
@@ -112,7 +113,7 @@ export class NetworkAdapter implements INetworkAdapter {
         result.data = responseData.value
       }
 
-      if (responseData.items && Array.isArray(responseData.items)) {
+      if (responseData.items && isArrayLike(responseData.items)) {
         result.data = responseData.items
         result.meta = { count: responseData.count }
       }

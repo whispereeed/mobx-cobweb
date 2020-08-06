@@ -18,7 +18,7 @@ import { IRequestOptions, IRawResponse } from '../interfaces'
 import { remove, upsert, getModelEndpointURL, request } from './network'
 import { ResponseView } from '../ResponseView'
 import { error } from './utils'
-import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
+import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
 
 export function getModelRefType(
   model: Function | any,
@@ -40,7 +40,7 @@ export function getModelIdField<T extends PureModel>(modal: T): string {
 }
 
 export async function upsertModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<T> {
-  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
+  const collection = getModelCollection(model) as INetActionsMixinForCollection<PureCollection> & PureCollection
   const modelType = getModelType(model)
   if (!options.data) {
     const data = modelToJSON(model)
@@ -76,7 +76,7 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
 }
 
 export async function removeModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<void> {
-  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
+  const collection = getModelCollection(model) as INetActionsMixinForCollection<PureCollection> & PureCollection
 
   if (isModelPersisted(model)) {
     const modelType = getModelType(model)
@@ -96,7 +96,7 @@ export async function requestOnModel<T extends PureModel, D>(
   model: T,
   options: IRequestOptions
 ): Promise<IRawResponse<D>> {
-  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
+  const collection = getModelCollection(model) as INetActionsMixinForCollection<PureCollection> & PureCollection
   const modelType = getModelType(model)
   const endpoint = getModelEndpointURL(modelType, collection)
   const rawResponse = await request<D>(collection, endpoint, options)
@@ -110,7 +110,7 @@ export function fetchModelRef<T extends PureModel>(
   key: string,
   options: IRequestOptions = {}
 ): Promise<ResponseView<any>> {
-  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
+  const collection = getModelCollection(model) as INetActionsMixinForCollection<PureCollection> & PureCollection
   const fieldsDef: any = getMeta(model, 'fields', {})
   if (!fieldsDef) {
     throw error(`fetchModelRef.key (${key}) must be a ref definition`)
@@ -125,7 +125,7 @@ export function fetchModelRefs<T extends PureModel>(
   model: T,
   options: IRequestOptions = {}
 ): Promise<Array<ResponseView<any>>> {
-  const collection = getModelCollection(model) as INetPatchesMixin<PureCollection> & PureCollection
+  const collection = getModelCollection(model) as INetActionsMixinForCollection<PureCollection> & PureCollection
   const { refs } = (model as any).meta!
   const promises = Object.keys(refs).map((key) => {
     const refDef = refs[key]

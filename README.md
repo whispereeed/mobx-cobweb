@@ -77,7 +77,7 @@ collection.recording() // Listening requires for Persisting
 
 ### Collection
 
-The `Collection` is a combination of the [`datx Collection`](https://datx.dev/docs/next/api-reference/collection) and the `withNetPatches` and `withStorage` mixins:
+The `Collection` is a combination of the [`datx Collection`](https://datx.dev/docs/next/api-reference/collection) and the `withNetActions` and `withStorage` mixins:
 
 To learn more visit [datx Collection](https://datx.dev/docs/next/api-reference/collection) 
 
@@ -120,7 +120,7 @@ Local storage configuration
   * getItem(key) 
   * setItem(key,value)
 
-#### withNetPatches
+#### withNetActions
 
 Network API implementation
 

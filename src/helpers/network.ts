@@ -8,10 +8,10 @@ import { error, getValue, isBrowser } from './utils'
 
 import { IRequestOptions, IRawResponse, IOneOrMany, IRequestMethod } from '../interfaces'
 import { ResponseView } from '../ResponseView'
-import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
+import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
 
 async function __doFetch<M extends IOneOrMany<PureModel>>(doFetchOptions: {
-  collection: INetPatchesMixin<PureCollection> & PureCollection
+  collection: INetActionsMixinForCollection<PureCollection> & PureCollection
   options: IRequestOptions
   modelType?: IType
   method: IRequestMethod
@@ -71,7 +71,7 @@ export function getModelEndpointURL(type: IType, collection: PureCollection): st
 export function query<M extends IOneOrMany<PureModel>>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: INetPatchesMixin<PureCollection> & PureCollection,
+  collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
   views?: View[],
   ids?: IOneOrMany<IIdentifier>
 ): Promise<ResponseView<M>> {
@@ -88,7 +88,7 @@ export function query<M extends IOneOrMany<PureModel>>(
 export function upsert<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: INetPatchesMixin<PureCollection> & PureCollection,
+  collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return __doFetch<T>({
@@ -103,7 +103,7 @@ export function upsert<T extends PureModel>(
 export function remove<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
-  collection?: INetPatchesMixin<PureCollection> & PureCollection,
+  collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return __doFetch<T>({
@@ -116,7 +116,7 @@ export function remove<T extends PureModel>(
 }
 
 export async function request<D>(
-  collection: INetPatchesMixin<PureCollection> & PureCollection,
+  collection: INetActionsMixinForCollection<PureCollection> & PureCollection,
   endpoint: string,
   options: IRequestOptions
 ): Promise<IRawResponse<D>> {

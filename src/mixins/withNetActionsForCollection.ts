@@ -15,7 +15,7 @@ import {
   updateModel
 } from '../datx'
 
-import { INetPatchesMixin } from '../interfaces/INetPatchesMixin'
+import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { getModelIdField, removeModel } from '../helpers/model'
@@ -24,10 +24,10 @@ import { Model } from '../Model'
 import { query, request } from '../helpers/network'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
 
-export function withNetPatches<T extends PureCollection>(Base: ICollectionConstructor<T>) {
+export function withNetActionsForCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
 
-  class WithNetPatches extends BaseClass implements INetPatchesMixin<T> {
+  class WithNetActionsForCollection extends BaseClass implements INetActionsMixinForCollection<T> {
     static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(Model) : [Model]
     static defaultModel = Model
 
@@ -140,7 +140,7 @@ export function withNetPatches<T extends PureCollection>(Base: ICollectionConstr
     }
   }
 
-  return (WithNetPatches as unknown) as ICollectionConstructor<INetPatchesMixin<T> & T> & {
+  return (WithNetActionsForCollection as unknown) as ICollectionConstructor<INetActionsMixinForCollection<T> & T> & {
     cache: boolean
   }
 }
