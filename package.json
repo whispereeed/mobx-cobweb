@@ -1,7 +1,7 @@
 {
   "name": "mobx-cobweb",
-  "version": "0.0.30",
-  "description": "DatX for REST",
+  "version": "0.0.31",
+  "description": "ORM for MobX (DatX for REST)",
   "main": "dist/index.lib.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",

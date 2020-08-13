@@ -2,23 +2,15 @@
  * Created by nanyuantingfeng on 2020/7/27 16:40. *
  ***************************************************/
 import { ICollectionConstructor, PureCollection, PureModel, IModelConstructor, isCollection, isModel } from '../datx'
-import { IStorageMixin } from '../interfaces/IStorageMixin'
+import { IStorageMixin, IStorageType } from '../interfaces/IStorageMixin'
 import { error } from '../helpers/utils'
 import { withStorageForCollection } from './withStorageForCollection'
 import { withStorageForModel } from './withStorageForModel'
 
-export interface IStorageConfig {
-  storageKey?: string
-  storage?: {
-    getItem(key: string): string | Promise<string> | null
-    setItem(key: string, value: string): Promise<string> | void
-  }
-}
-
 export function withStorage<T extends PureCollection>(
   Base: ICollectionConstructor<T>
 ): ICollectionConstructor<IStorageMixin<T> & T> & {
-  storageConfig: IStorageConfig
+  storage: IStorageType
 }
 
 export function withStorage<T extends PureModel>(

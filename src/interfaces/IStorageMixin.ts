@@ -8,9 +8,9 @@ export interface IStorageMixin<T = PureCollection> {
   recording(): () => void
 }
 
-export interface IStorageConfig {
-  storageKey?: string
-  storage?: {
+export interface IStorageType {
+  key?: string
+  engine?: {
     getItem(key: string): string | Promise<string> | null
     setItem(key: string, value: string): Promise<string> | void
   }

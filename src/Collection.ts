@@ -7,7 +7,7 @@ import { ORPHAN_MODEL_ID_VAL } from './helpers/consts'
 import { withNetActions } from './mixins/withNetActions'
 
 import { ICollectionConstructor } from './datx'
-import { IStorageMixin, IStorageConfig } from './interfaces/IStorageMixin'
+import { IStorageMixin, IStorageType } from './interfaces/IStorageMixin'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 
 export class Collection extends withStorage(withNetActions(_Collection)) {

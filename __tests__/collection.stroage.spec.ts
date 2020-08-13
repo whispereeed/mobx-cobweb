@@ -16,9 +16,7 @@ describe('collection.storage', () => {
 
     class Store extends Collection {
       static types = [Foo]
-      static storageConfig = {
-        storage: new FSCache()
-      }
+      static storage = { engine: new FSCache() }
     }
 
     const store = new Store()
