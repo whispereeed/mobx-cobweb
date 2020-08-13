@@ -68,7 +68,7 @@ describe('collection.register', () => {
       }
     }
 
-    collection.register(StaffVM)
+    collection.register([StaffVM])
 
     const staffVM = collection.add(new StaffVM({ ccc: 'xxxxx', staff: 'cdb28c900c75' }, collection))
 
