@@ -2,10 +2,39 @@
  * Created by nanyuantingfeng on 2019/11/28 17:24. *
  ***************************************************/
 import { IIdentifier } from '../datx'
-import { INetworkAdapter, IRequestMethod, IRequestOptions, IRawResponse, IOneOrMany } from '../interfaces'
-import { appendParams, prefixURL, prepareQS, prepareSelector, prepareURL } from './helpers'
+import { INetworkAdapter, IRequestMethod, IRequestOptions, IRawResponse, IOneOrMany, $ElementType } from '../interfaces'
 import { error, isBrowser, isEmptyObject } from '../helpers/utils'
 import { isArrayLike } from 'mobx'
+
+function appendParams(url: string, qs: string): string {
+  let newUrl = url
+  if (qs && qs.length) {
+    const separator = newUrl.indexOf('?') === -1 ? '?' : '&'
+    newUrl += separator + qs
+  }
+  return newUrl
+}
+
+interface IQueryParamOrder {
+  value: string
+  order: 'ASC' | 'DESC'
+}
+
+interface IQueryParamLimit {
+  start: number
+  count: number
+}
+
+interface IQueryParams {
+  orderBy?: IQueryParamOrder[]
+  limit?: IQueryParamLimit
+  filterBy?: string
+  select?: string
+}
+
+type ISelector = $ElementType<IRequestOptions, 'selector'>
+
+const URL_REGEX = /^(?:http(s)?:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=]+$/
 
 export class NetworkAdapter implements INetworkAdapter {
   private readonly baseUrl: string
@@ -36,7 +65,7 @@ export class NetworkAdapter implements INetworkAdapter {
     }
   }
 
-  prepare(props: {
+  public prepare(props: {
     endpoint: string
     ids?: IOneOrMany<IIdentifier>
     options?: IRequestOptions
@@ -44,13 +73,10 @@ export class NetworkAdapter implements INetworkAdapter {
   }): { url: string; options?: any; cacheKey?: string } {
     const options = props.options || {}
 
-    const url = prepareURL(props.endpoint, props.ids)
+    const url = this.prepareURL(props.endpoint, props.ids)
     const { headers: defaultHeaders, params: defaultParams, ...defaultOthers } = this.defaultFetchOptions
 
-    const fixedURL = appendParams(
-      prefixURL(url, this.baseUrl, options.action),
-      prepareQS(Object.assign({}, defaultParams, options.params))
-    )
+    const fixedURL = appendParams(url, this.prepareQS(Object.assign({}, defaultParams, options.params)))
 
     const requestHeaders: Record<string, string> = options.headers || {}
     let uppercaseMethod = options.method?.toUpperCase() || props.method?.toUpperCase()
@@ -59,7 +85,7 @@ export class NetworkAdapter implements INetworkAdapter {
     let selectBody
 
     if (options.selector) {
-      selectBody = prepareSelector(options.selector)
+      selectBody = this.prepareSelector(options.selector)
       body = { ...body, ...selectBody }
     }
 
@@ -82,8 +108,7 @@ export class NetworkAdapter implements INetworkAdapter {
 
     return { url: fixedURL, options: optionsO, cacheKey }
   }
-
-  async fetch(url: string, options: any): Promise<IRawResponse<any | void>> {
+  public async fetch(url: string, options: any): Promise<IRawResponse<any | void>> {
     let status: number
     let headers: Headers
     const request: Promise<void> = Promise.resolve()
@@ -130,5 +155,73 @@ export class NetworkAdapter implements INetworkAdapter {
 
   onError(error: IRawResponse<void>) {
     return error
+  }
+
+  protected prepareFilters(filters: $ElementType<$ElementType<IRequestOptions, 'selector'>, 'filters'>): string {
+    if (!filters) return undefined
+    const filters2 = isArrayLike(filters) ? filters : [filters]
+    return filters2.join('&&')
+  }
+  protected prepareOrders(orders?: $ElementType<ISelector, 'orders'>): IQueryParamOrder[] {
+    if (!orders) return undefined
+    return orders.map((key) => {
+      let oo = { value: key, order: 'ASC' }
+      if (key.endsWith('!')) {
+        oo = { value: key.slice(0, -1), order: 'DESC' }
+      }
+      return oo
+    }) as IQueryParamOrder[]
+  }
+  protected prepareSelect(select: $ElementType<ISelector, 'select'>): string {
+    if (!select) return undefined
+    if (typeof select === 'string') return select
+
+    return select
+      .map((k) => {
+        if (k === '...') {
+          return '`...`'
+        }
+        if (isArrayLike(k)) {
+          return `${k.shift()}(${this.prepareSelect(k)})`
+        }
+        return k
+      })
+      .join(',')
+  }
+  protected prepareLimit(limit: $ElementType<ISelector, 'limit'>): IQueryParamLimit {
+    if (!limit) return undefined
+    return { start: limit[0], count: limit[1] }
+  }
+  protected prepareURL(endpoint: string, ids?: IOneOrMany<IIdentifier>, action?: string | ((url: string) => string)) {
+    let url = endpoint
+    if (ids != undefined) url += isArrayLike(ids) ? `/[${ids.join(',')}]` : `/\$${ids}`
+    const baseURL = this.baseUrl
+    if (!action) action = ''
+
+    let oo: string
+    if (typeof action === 'string') {
+      oo = URL_REGEX.test(url) ? `${url}///${action}` : `${baseURL}///${url}///${action}`
+      oo = oo.replace(/[/]{3,}/g, '/')
+      if (oo.endsWith('/')) oo = oo.slice(0, -1)
+    } else if (typeof action === 'function') {
+      oo = URL_REGEX.test(url) ? `${url}` : `${baseURL}///${url}`
+      oo = oo.replace(/[/]{3,}/g, '/')
+      oo = action(oo)
+    }
+    return oo
+  }
+  protected prepareQS(params: $ElementType<IRequestOptions, 'params'>): string {
+    if (!params) return undefined
+    return Object.keys(params)
+      .map((k) => `${k}=${params[k]}`)
+      .join('&')
+  }
+  protected prepareSelector(selector: ISelector): IQueryParams {
+    return {
+      filterBy: this.prepareFilters(selector.filters),
+      orderBy: this.prepareOrders(selector.orders),
+      select: this.prepareSelect(selector.select),
+      limit: this.prepareLimit(selector.limit)
+    }
   }
 }
