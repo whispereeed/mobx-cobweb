@@ -8,6 +8,8 @@ describe('collection.fetch', () => {
 
   beforeEach(() => {
     scope = useFixturesByGET()
+    useFixtureGetById(Staff.endpoint)
+
     collection.removeAll(Me)
     collection.removeAll(Staff)
   })
@@ -18,7 +20,6 @@ describe('collection.fetch', () => {
     expect(me.staff).toBeNull()
     expect((getRefId(me, 'staff') as any).id).toBe('cdb28c900c75')
 
-    useFixtureGetById(Staff.endpoint)
     await collection.fetch(Staff, (getRefId(me, 'staff') as any).id)
     expect(me.staff.id).toEqual('cdb28c900c75')
     expect(modelToJSON(me)).toMatchSnapshot()
@@ -33,7 +34,6 @@ describe('collection.fetch', () => {
     expect(me.staff).toBeNull()
     expect((getRefId(me, 'staff') as any).id).toBe('cdb28c900c75')
 
-    useFixtureGetById(Staff.endpoint)
     await fetchModelRefs(me)
     expect(me.staff.id).toEqual('cdb28c900c75')
     expect(modelToJSON(me)).toMatchSnapshot()

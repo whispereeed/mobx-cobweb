@@ -43,6 +43,11 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
       const modelType = getModelType(type)
       const StaticCollection = this.constructor as typeof PureCollection
       const ModelClass = StaticCollection.types.find((Q) => Q.type === modelType)
+
+      if (!raw) {
+        return null
+      }
+
       return mapItems(raw, (item: IRawModel) => {
         let record: P
 

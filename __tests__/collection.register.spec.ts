@@ -11,11 +11,12 @@ describe('collection.register', () => {
 
   beforeEach(() => {
     scope = useFixturesByGET()
+    useFixtureGetById(Staff.endpoint)
     collection.removeAll(Staff)
   })
 
   test('should be used static function collection.register(Model)', async () => {
-    useFixtureGetById(Staff.endpoint)
+
     const response = await collection.fetch<Staff>(Staff, 'cdb28c900c75')
     const staff = response.data
 
@@ -50,7 +51,6 @@ describe('collection.register', () => {
   })
 
   test('should be used instance function collection.register(Model)', async () => {
-    useFixtureGetById(Staff.endpoint)
     const response = await collection.fetch<Staff>(Staff, 'cdb28c900c75')
     const staff = response.data
 

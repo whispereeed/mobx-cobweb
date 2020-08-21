@@ -21,9 +21,11 @@ describe('TreeDataSource', () => {
 
   it('should be fetched children nodes', async () => {
     useFixtureGetById(Department.endpoint)
+    useFixtureGetChildrenById(Department.endpoint)
+
     const response = await collection.fetch<Department>(Department, '005ddc160e41')
     const treeDataView = new TreeDataView<Department>(Department, collection)
-    useFixtureGetChildrenById(Department.endpoint)
+
     const listDataView = await treeDataView.searchChildren(response.data)
     expect(listDataView.data).toBeInstanceOf(Array)
     expect(listDataView.data.length).toBe(5)
@@ -37,9 +39,10 @@ describe('TreeDataSource', () => {
 
   it('should be fetched parent nodes on chain', async () => {
     useFixtureGetById(Department.endpoint)
+    useFixtureGetParentsById(Department.endpoint)
+
     const response = await collection.fetch<Department>(Department, '90bba1c0c670')
     const treeDataView = new TreeDataView<Department>(Department, collection)
-    useFixtureGetParentsById(Department.endpoint)
     const current = response.data
     const responseView = await treeDataView.searchParents(current)
     expect(responseView.data).toBeInstanceOf(Array)

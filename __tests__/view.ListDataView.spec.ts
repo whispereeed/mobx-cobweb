@@ -1,7 +1,6 @@
 import { collection, useFixtureLimitByPOST, useFixturesByGET } from './config'
 import { ListDataView } from '../src'
 import { autorun } from 'mobx'
-
 import PropertySet from './models/PropertySet'
 
 describe('ListDataView', () => {
@@ -9,6 +8,7 @@ describe('ListDataView', () => {
 
   beforeEach(() => {
     scope = useFixturesByGET()
+    useFixtureLimitByPOST(PropertySet.endpoint)
     collection.removeAll(PropertySet)
   })
 
@@ -32,14 +32,12 @@ describe('ListDataView', () => {
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[1].name).toBe('Solutions')
 
-    useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.next()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[1].name).toBe('Solutions')
     expect(jestFn).toBeCalledTimes(3)
 
-    useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.last()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
@@ -47,7 +45,6 @@ describe('ListDataView', () => {
     expect(listDataView.data[8].name).toBe('engage')
     expect(jestFn).toBeCalledTimes(5)
 
-    useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.prev()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
@@ -56,7 +53,6 @@ describe('ListDataView', () => {
     expect(listDataView.data[9].name).toBe('Dynamic')
     expect(jestFn).toBeCalledTimes(5)
 
-    useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.first()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
@@ -66,8 +62,6 @@ describe('ListDataView', () => {
   })
 
   test('should be fetched data by `infinite`', async () => {
-    useFixtureLimitByPOST(PropertySet.endpoint)
-
     const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
     const jestFn = jest.fn(() => listDataView.isLoading)
     autorun(jestFn)
@@ -77,14 +71,12 @@ describe('ListDataView', () => {
       }
     })
 
-    useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.infinite(10, 20)
     expect(listDataView.data.length).toBe(30)
     expect(listDataView.data[1]).toMatchSnapshot()
     expect(listDataView.data[1].label).toBe('withdrawal')
     expect(jestFn).toBeCalledTimes(5)
 
-    useFixtureLimitByPOST(PropertySet.endpoint)
     await listDataView.infinite(20, 60)
     expect(listDataView.data.length).toBe(90)
     expect(listDataView.data[44].label).toBe('primary')

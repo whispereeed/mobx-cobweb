@@ -8,6 +8,7 @@ describe('collection.ffetch', () => {
 
   beforeEach(() => {
     scope = useFixturesByGET()
+    useFixtureGetById(Staff.endpoint)
     collection.removeAll(Me)
     collection.removeAll(Staff)
   })
@@ -19,7 +20,7 @@ describe('collection.ffetch', () => {
     expect(data.current).toBeInstanceOf(Me)
     expect(data.current.staff).toBeNull()
     expect((getRefId(data.current, 'staff') as any).id).toBe('cdb28c900c75')
-    useFixtureGetById(Staff.endpoint)
+
     await data.current.fetchRefs()
     expect(data.current.staff).toBeInstanceOf(Staff)
     data.refresh()

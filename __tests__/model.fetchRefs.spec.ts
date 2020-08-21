@@ -10,6 +10,9 @@ describe('Modal fetchRefs/fetchRef', () => {
 
   beforeEach(() => {
     scope = useFixturesByGET()
+    useFixtureGetById(Staff.endpoint)
+    useFixtureGetById(Department.endpoint)
+    useFixtureGetByIds(Department.endpoint)
     collection.removeAll(Me)
     collection.removeAll(Staff)
   })
@@ -20,10 +23,8 @@ describe('Modal fetchRefs/fetchRef', () => {
     expect(me.staff).toBeNull()
     expect((getRefId(me, 'staff') as any).id).toBe('cdb28c900c75')
 
-    useFixtureGetById(Staff.endpoint)
     const response = await collection.fetch<Staff>(Staff, (getRefId(me, 'staff') as any).id as IIdentifier)
-    useFixtureGetById(Department.endpoint)
-    useFixtureGetByIds(Department.endpoint)
+
     const response2 = await response.data.fetchRefs()
     expect(response2).toBeInstanceOf(Array)
     expect(me.staff.defaultDepartment).toBeInstanceOf(Department)
@@ -33,10 +34,9 @@ describe('Modal fetchRefs/fetchRef', () => {
   test('should be fetched Model by key at Model instance', async () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]
-    useFixtureGetById(Staff.endpoint)
+
     const response = await collection.fetch<Staff>(Staff, (getRefId(me, 'staff') as any).id as IIdentifier)
-    useFixtureGetById(Department.endpoint)
-    useFixtureGetByIds(Department.endpoint)
+
     const response2 = await response.data.fetchRef('defaultDepartment')
     expect(me.staff.defaultDepartment).toBeInstanceOf(Department)
     expect(response2.data).toBe(me.staff.defaultDepartment)
