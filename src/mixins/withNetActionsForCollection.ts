@@ -18,11 +18,13 @@ import {
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
-import { getModelIdField, removeModel } from '../helpers/model'
+import { getModelIdField, isOrphanModel, removeModel } from '../helpers/model'
 import { INetworkAdapter, IRequestOptions, IRawResponse, IOneOrMany } from '../interfaces'
 import { Model } from '../Model'
 import { query, request } from '../helpers/network'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
+import { ILazyBox, lazyBox } from '../helpers/lazyBox'
+import { isPlainObject } from '../helpers/utils'
 
 export function withNetActionsForCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
@@ -78,17 +80,12 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
     ): Promise<ResponseView<T | T[]>> {
       const modelType = getModelType(type)
 
-      if (arguments.length === 2 && Object.prototype.toString.call(ids) === '[object Object]') {
+      if (arguments.length === 2 && isPlainObject(ids)) {
         options = ids as IRequestOptions
         ids = undefined
       }
 
-      return query<T>(modelType, options, this, undefined, ids).then((res) => {
-        if (res.error) {
-          throw res.error
-        }
-        return res
-      })
+      return query<T>(modelType, options, this, undefined, ids)
     }
 
     @action removeOne(
@@ -137,6 +134,31 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
 
     @action request<D>(url: string, options: IRequestOptions): Promise<IRawResponse<D>> {
       return request<D>(this as any, url, options)
+    }
+
+    @action ffetch<T extends PureModel>(
+      type: IType | T | IModelConstructor<T>,
+      ids?: any,
+      options?: any
+    ): ILazyBox<T | T[], ResponseView<any>> {
+      const modelType = getModelType(type)
+      let initData: T | T[] | null
+
+      if (arguments.length === 1 || (arguments.length === 2 && isPlainObject(ids))) {
+        if (isOrphanModel(type)) {
+          initData = this.findOne<T>(modelType, ORPHAN_MODEL_ID_VAL)
+        } else {
+          initData = this.findAll(modelType)
+        }
+      } else {
+        initData = mapItems<IIdentifier, T>(ids, (id) => this.findOne<T>(modelType, id))
+      }
+
+      return lazyBox<T | T[]>((update, error) => {
+        this.fetch(type, ids, options).then((response) => {
+          response.error ? error(response) : update(response.data)
+        })
+      }, initData)
     }
   }
 

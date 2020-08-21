@@ -6,18 +6,19 @@ import {
   IType,
   PureCollection,
   PureModel,
-  modelToJSON
+  modelToJSON,
+  IModelConstructor
 } from '../datx'
 import { getMeta, mapItems } from 'datx-utils'
 import { action, isArrayLike } from 'mobx'
 
-import { isModelPersisted, ORPHAN_MODEL_ID_KEY, setModelPersisted } from './consts'
+import { isModelPersisted, ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from './consts'
 import { clearCacheByType } from './cache'
 import { IRequestOptions, IRawResponse } from '../interfaces'
 
 import { remove, upsert, getModelEndpointURL, request } from './network'
 import { ResponseView } from '../ResponseView'
-import { error } from './utils'
+import { error, isIdentifier } from './utils'
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
 
 export function getModelRefType(
@@ -33,6 +34,27 @@ export function getModelRefType(
   }
 
   return model
+}
+
+export function getModelConstructor<T extends PureModel>(
+  model: T | IModelConstructor<T> | IType,
+  collection: PureCollection
+) {
+  const modelType = getModelType(model)
+  return (collection.constructor as typeof PureCollection).types.find((Q) => Q.type === modelType)
+}
+
+export function isOrphanModel<T extends PureModel>(
+  model: IType | T | IModelConstructor<T>,
+  collection?: PureCollection
+) {
+  if (isIdentifier(model)) {
+    if (!collection) {
+      throw new Error(`isOrphanModel(T,collection) if T is IType , collection is required!`)
+    }
+    model = getModelConstructor(model, collection) as IModelConstructor<T>
+  }
+  return getMeta(model as T, ORPHAN_MODEL_ID_KEY, null, true) === ORPHAN_MODEL_ID_VAL
 }
 
 export function getModelIdField<T extends PureModel>(modal: T): string {

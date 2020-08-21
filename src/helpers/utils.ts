@@ -37,3 +37,11 @@ export function peekNonNullish(...args: any[]): any {
   }
   return null
 }
+
+export function isPlainObject(obj: any) {
+  return !!obj && Object.prototype.toString.call(obj) === '[object Object]'
+}
+
+export function isIdentifier(obj: any) {
+  return typeof obj === 'string' || typeof obj === 'number'
+}

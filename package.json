@@ -1,6 +1,6 @@
 {
   "name": "mobx-cobweb",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "ORM for MobX (DatX for REST)",
   "main": "dist/index.lib.js",
   "module": "dist/index.esm.js",
@@ -49,7 +49,7 @@
     "rollup-plugin-uglify": "^6.0.4",
     "ts-jest": "^26.1.0",
     "tslib": "^2.0.0",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "@issues-beta/datx": "^2.0.0-beta.10",
