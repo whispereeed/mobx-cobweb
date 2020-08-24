@@ -72,8 +72,8 @@ export function query<M extends IOneOrMany<PureModel>>(
   modelType: IType,
   options?: IRequestOptions,
   collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
-  views?: View[],
-  ids?: IOneOrMany<IIdentifier>
+  ids?: IOneOrMany<IIdentifier>,
+  views?: View[]
 ): Promise<ResponseView<M>> {
   return __doFetch<M>({
     modelType,
@@ -89,6 +89,7 @@ export function upsert<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
   collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
+  ids?: IOneOrMany<IIdentifier>,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return __doFetch<T>({
@@ -96,7 +97,8 @@ export function upsert<T extends PureModel>(
     collection,
     options,
     views,
-    method: 'POST'
+    ids,
+    method: 'PUT'
   })
 }
 
@@ -104,6 +106,7 @@ export function remove<T extends PureModel>(
   modelType: IType,
   options?: IRequestOptions,
   collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
+  ids?: IOneOrMany<IIdentifier>,
   views?: View[]
 ): Promise<ResponseView<T>> {
   return __doFetch<T>({
@@ -111,6 +114,7 @@ export function remove<T extends PureModel>(
     collection,
     options,
     views,
+    ids,
     method: 'DELETE'
   })
 }

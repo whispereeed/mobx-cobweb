@@ -16,6 +16,8 @@ import { action } from 'mobx'
 import { IError, IRequestOptions, IRawResponse, $PickOf, IOneOrMany } from './interfaces'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 import { IRawModel } from 'datx-utils'
+import { commitModel } from '@issues-beta/datx'
+import { isPlainObject } from './helpers/utils'
 
 export class ResponseView<T extends IOneOrMany<PureModel>> {
   public data: T | null = null
@@ -48,12 +50,16 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
       this.views = views
     }
 
-    this.data = overrideData
-      ? collection.add<T>(overrideData)
-      : ((collection as unknown) as INetActionsMixinForCollection<PureCollection>).sync<T>(
-          rawResponse.data,
-          this.modelType
-        )
+    if (overrideData) {
+      this.data = collection.add<T>(overrideData)
+    } else if (isPlainObject(rawResponse.data)) {
+      this.data = ((collection as unknown) as INetActionsMixinForCollection<PureCollection>).sync<T>(
+        rawResponse.data,
+        this.modelType
+      )
+    } else if (typeof rawResponse.data === 'boolean') {
+      this.data = rawResponse.data
+    }
 
     if (this.data) {
       this.views.forEach((view) => view.add(this.data))
@@ -75,8 +81,6 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
     const newId = getModelId(record)
     const type = getModelType(record)
 
-    const viewIndexes = this.views.map((view) => view.list.indexOf(record))
-
     if (this.collection) {
       this.collection.removeOne(type, newId)
       this.collection.add(data)
@@ -84,7 +88,9 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
 
     updateModel(data, modelToJSON(record!))
     updateModelId(data, newId)
+    commitModel(data)
 
+    const viewIndexes = this.views.map((view) => view.list.indexOf(record))
     this.views.forEach((view, index) => {
       if (viewIndexes[index] !== -1) {
         view.list[viewIndexes[index]] = data

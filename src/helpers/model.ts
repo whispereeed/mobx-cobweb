@@ -20,6 +20,7 @@ import { remove, upsert, getModelEndpointURL, request } from './network'
 import { ResponseView } from '../ResponseView'
 import { error, isIdentifier } from './utils'
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
+import { commitModel, getModelId, revertModel } from '@issues-beta/datx'
 
 export function getModelRefType(
   model: Function | any,
@@ -50,7 +51,7 @@ export function isOrphanModel<T extends PureModel>(
 ) {
   if (isIdentifier(model)) {
     if (!collection) {
-      throw new Error(`isOrphanModel(T,collection) if T is IType , collection is required!`)
+      throw error(`isOrphanModel(T,collection) if T is IType , collection is required!`)
     }
     model = getModelConstructor(model, collection) as IModelConstructor<T>
   }
@@ -75,21 +76,28 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
 
     options.data = data
   }
-  const result = await upsert<T>(modelType, options, collection)
+  const result = await upsert<T>(modelType, options, collection, getModelId(model))
   const response: T = action(
     (response: ResponseView<T>): T => {
       if (response.error) {
-        throw response.error
+        revertModel(model)
+        throw response
       }
+
       if (response.status === 204) {
+        commitModel(model)
         setModelPersisted(model, true)
         return model
-      } else if (response.status === 202) {
-        return response.data as T
-      } else {
-        setModelPersisted(model, true)
-        return response.replace(model).data as T
       }
+
+      if (typeof response.data === 'boolean') {
+        response.data ? commitModel(model) : revertModel(model)
+        setModelPersisted(model, true)
+        return model
+      }
+
+      commitModel(model)
+      return model
     }
   )(result)
 
@@ -104,8 +112,15 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
     const modelType = getModelType(model)
     const response = await remove(modelType, options, collection)
     if (response.error) {
-      throw response.error
+      throw response
     }
+
+    if (typeof response.data === 'boolean') {
+      if (response.data === false) {
+        return
+      }
+    }
+
     setModelPersisted(model, false)
   }
 

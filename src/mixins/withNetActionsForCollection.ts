@@ -25,6 +25,7 @@ import { query, request } from '../helpers/network'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
 import { ILazyBox, lazyBox } from '../helpers/lazyBox'
 import { isPlainObject } from '../helpers/utils'
+import { commitModel } from '@issues-beta/datx'
 
 export function withNetActionsForCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
@@ -40,13 +41,11 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
     }
 
     @action sync<P extends PureModel>(raw: IOneOrMany<IRawModel>, type: any): P | P[] {
+      if (!raw) return null
+
       const modelType = getModelType(type)
       const StaticCollection = this.constructor as typeof PureCollection
       const ModelClass = StaticCollection.types.find((Q) => Q.type === modelType)
-
-      if (!raw) {
-        return null
-      }
 
       return mapItems(raw, (item: IRawModel) => {
         let record: P
@@ -74,6 +73,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
           record = (this.add(new Model(item, this)) as any) as P
         }
 
+        commitModel(record)
         return record
       })
     }
@@ -90,7 +90,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
         ids = undefined
       }
 
-      return query<T>(modelType, options, this, undefined, ids)
+      return query<T>(modelType, options, this, ids)
     }
 
     @action removeOne(
