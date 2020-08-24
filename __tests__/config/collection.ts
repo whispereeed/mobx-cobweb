@@ -4,9 +4,10 @@ import Me from '../models/Me'
 import Staff from '../models/Staff'
 import Department from '../models/Department'
 import PropertySet from '../models/PropertySet'
+import { User } from '../models/User'
 
 export class MyCollection extends Collection {
-  static types = [Me, Staff, Department, PropertySet]
+  static types = [Me, Staff, Department, PropertySet, User]
 }
 
 export const collection = new MyCollection()

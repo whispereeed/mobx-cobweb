@@ -111,12 +111,10 @@ export class NetworkAdapter implements INetworkAdapter {
   public async fetch(url: string, options: any): Promise<IRawResponse<any | void>> {
     let status: number
     let headers: Headers
-    const request: Promise<void> = Promise.resolve()
     const requestHeaders = options.headers
     try {
       let responseData: any
       try {
-        await request
         const response = await this.fetchInstance(url, options)
         status = response.status
         headers = response.headers

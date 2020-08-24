@@ -28,31 +28,37 @@ export function useFixturesByGET() {
 }
 
 export function useFixtureLimitByPOST(key: string) {
-  CURRENT_SCOPE.persist().post(key).reply(200, (uri: string, body: any) => {
-    const { limit } = body
-    const { start, count } = limit
-    const json = MAPPER[key]
-    const items = json.items.slice(start, start + count)
-    return JSON.stringify({ items, count: json.count })
-  })
+  CURRENT_SCOPE.persist()
+    .post(key)
+    .reply(200, (uri: string, body: any) => {
+      const { limit } = body
+      const { start, count } = limit
+      const json = MAPPER[key]
+      const items = json.items.slice(start, start + count)
+      return JSON.stringify({ items, count: json.count })
+    })
 }
 
 export function useFixtureGetById(key: string) {
-  CURRENT_SCOPE.persist().get(new RegExp(key + '/\\$.+')).reply(200, (uri: string) => {
-    const id = uri.slice(uri.lastIndexOf('/$') + 2)
-    const json = MAPPER[key]
-    const object = json.items.find((k: any) => k.id === id)
-    return JSON.stringify({ value: object })
-  })
+  CURRENT_SCOPE.persist()
+    .get(new RegExp(key + '/\\$.+'))
+    .reply(200, (uri: string) => {
+      const id = uri.slice(uri.lastIndexOf('/$') + 2)
+      const json = MAPPER[key]
+      const object = json.items.find((k: any) => k.id === id)
+      return JSON.stringify({ value: object })
+    })
 }
 
 export function useFixtureGetByIds(key: string) {
-  CURRENT_SCOPE.persist().get(new RegExp(key + '/\\[.+\\]')).reply(200, (uri: string) => {
-    const ids = uri.slice(uri.lastIndexOf('/') + 2, -1).split(',')
-    const json = MAPPER[key]
-    const object = json.items.filter((k: any) => ids.includes(k.id))
-    return JSON.stringify({ items: object, count: ids.length })
-  })
+  CURRENT_SCOPE.persist()
+    .get(new RegExp(key + '/\\[.+\\]'))
+    .reply(200, (uri: string) => {
+      const ids = uri.slice(uri.lastIndexOf('/') + 2, -1).split(',')
+      const json = MAPPER[key]
+      const object = json.items.filter((k: any) => ids.includes(k.id))
+      return JSON.stringify({ items: object, count: ids.length })
+    })
 }
 
 export function useFixtureGetChildrenById(key: string) {
@@ -70,17 +76,27 @@ export function useFixtureGetChildrenById(key: string) {
 }
 
 export function useFixtureGetParentsById(key: string) {
-  CURRENT_SCOPE.persist().get(new RegExp(key + '/.+/parents')).reply(200, (uri: string) => {
-    const id = uri.replace(key, '').replace('/api/v1/', '').replace('/parents', '')
-    const json = MAPPER[key]
-    const findOne = (_id: string) => json.items.find((k: any) => k.id === _id)
-    let current = findOne(id)
-    const object = []
-    while (current) {
-      current = findOne(current.parentId)
-      if (current) object.push(current)
-    }
+  CURRENT_SCOPE.persist()
+    .get(new RegExp(key + '/.+/parents'))
+    .reply(200, (uri: string) => {
+      const id = uri.replace(key, '').replace('/api/v1/', '').replace('/parents', '')
+      const json = MAPPER[key]
+      const findOne = (_id: string) => json.items.find((k: any) => k.id === _id)
+      let current = findOne(id)
+      const object = []
+      while (current) {
+        current = findOne(current.parentId)
+        if (current) object.push(current)
+      }
 
-    return JSON.stringify({ items: object, count: object.length })
-  })
+      return JSON.stringify({ items: object, count: object.length })
+    })
+}
+
+export function useFixtureGet404(key: string) {
+  CURRENT_SCOPE.persist()
+    .get(new RegExp(key))
+    .reply(404, (uri: string) => {
+      return JSON.stringify({})
+    })
 }
