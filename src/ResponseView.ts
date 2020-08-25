@@ -12,7 +12,7 @@ import {
   updateModelId,
   View
 } from './datx'
-import { action } from 'mobx'
+import { action, isArrayLike } from 'mobx'
 import { IError, IRequestOptions, IRawResponse, $PickOf, IOneOrMany } from './interfaces'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 import { IRawModel } from 'datx-utils'
@@ -51,7 +51,7 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
 
     if (overrideData) {
       this.data = collection.add<T>(overrideData)
-    } else if (isPlainObject(rawResponse.data)) {
+    } else if (isPlainObject(rawResponse.data) || isArrayLike(rawResponse.data)) {
       this.data = ((collection as unknown) as INetActionsMixinForCollection<PureCollection>).sync<T>(
         rawResponse.data,
         this.modelType
