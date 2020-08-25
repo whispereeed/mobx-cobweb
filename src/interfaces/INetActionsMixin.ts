@@ -11,7 +11,7 @@ import { IDataRef } from '../helpers/dataref'
 
 export interface INetActionsMixinForModel<T extends PureModel> {
   upsert(options?: IRequestOptions): Promise<this>
-  remove(options?: IRequestOptions): Promise<void>
+  remove(options?: IRequestOptions): Promise<boolean>
   refresh(): Promise<ResponseView<T>>
   request<D>(options: IRequestOptions): Promise<IRawResponse<D>>
 
@@ -46,8 +46,8 @@ export interface INetActionsMixinForCollection<T extends PureCollection> {
     options?: IRequestOptions
   ): Promise<ResponseView<R>>
 
-  removeOne(type: IType | typeof PureModel, id: IIdentifier, remote?: boolean | IRequestOptions): Promise<void>
-  removeOne(model: PureModel, remote?: boolean | IRequestOptions): Promise<void>
+  removeOne(type: IType | typeof PureModel, id: IIdentifier, remote?: boolean | IRequestOptions): Promise<boolean>
+  removeOne(model: PureModel, remote?: boolean | IRequestOptions): Promise<boolean>
 
   request<D>(url: string, options: IRequestOptions): Promise<IRawResponse<D>>
 

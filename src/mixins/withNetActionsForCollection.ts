@@ -97,7 +97,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
       obj: IType | typeof PureModel | PureModel,
       id?: IIdentifier | boolean | IRequestOptions,
       remote?: boolean | IRequestOptions
-    ): Promise<void> {
+    ): Promise<boolean> {
       const remove = typeof id === 'boolean' || typeof id === 'object' ? id : remote
       let modelId: number | string | undefined
 
@@ -112,7 +112,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
 
       if (model && modelId !== undefined && getModelId(model) !== modelId) {
         // The model is not in the collection, we shouldn't remove it
-        return Promise.resolve()
+        return Promise.resolve(false)
       }
 
       if (model && remove) {
@@ -124,7 +124,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
       }
 
       clearCacheByType(type)
-      return Promise.resolve()
+      return Promise.resolve(true)
     }
 
     @action removeAll(type: string | number | typeof PureModel) {

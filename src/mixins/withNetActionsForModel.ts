@@ -30,7 +30,7 @@ export function withNetActionsForModel<T extends PureModel>(Base: IModelConstruc
     @action public upsert(options?: IRequestOptions): Promise<this> {
       return upsertModel(this, options)
     }
-    @action public remove(options?: IRequestOptions): Promise<void> {
+    @action public remove(options?: IRequestOptions): Promise<boolean> {
       return removeModel(this, options)
     }
     @action public request<D>(options: IRequestOptions): Promise<IRawResponse<D>> {
