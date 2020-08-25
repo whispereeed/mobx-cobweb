@@ -12,7 +12,8 @@ import {
   IType,
   PureCollection,
   PureModel,
-  updateModel
+  updateModel,
+  commitModel
 } from '../datx'
 
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
@@ -23,9 +24,8 @@ import { INetworkAdapter, IRequestOptions, IRawResponse, IOneOrMany } from '../i
 import { Model } from '../Model'
 import { query, request } from '../helpers/network'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
-import { ILazyBox, lazyBox } from '../helpers/lazyBox'
+import { IDataRef, createDataRef } from '../helpers/dataref'
 import { isPlainObject } from '../helpers/utils'
-import { commitModel } from '@issues-beta/datx'
 
 export function withNetActionsForCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
@@ -145,7 +145,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
       type: IType | T | IModelConstructor<T>,
       ids?: any,
       options?: any
-    ): ILazyBox<T | T[], ResponseView<any>> {
+    ): IDataRef<T | T[], ResponseView<any>> {
       const modelType = getModelType(type)
       let initData: T | T[] | null
 
@@ -159,7 +159,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
         initData = mapItems<IIdentifier, T>(ids, (id) => this.findOne<T>(modelType, id))
       }
 
-      return lazyBox<T | T[]>((update, error) => {
+      return createDataRef<T | T[]>((update, error) => {
         this.fetch(type, ids, options).then((response) => {
           response.error ? error(response) : update(response.data)
         })

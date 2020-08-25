@@ -16,7 +16,6 @@ import { action } from 'mobx'
 import { IError, IRequestOptions, IRawResponse, $PickOf, IOneOrMany } from './interfaces'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 import { IRawModel } from 'datx-utils'
-import { commitModel } from '@issues-beta/datx'
 import { isPlainObject } from './helpers/utils'
 
 export class ResponseView<T extends IOneOrMany<PureModel>> {
@@ -61,7 +60,7 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
       this.data = rawResponse.data
     }
 
-    if (this.data) {
+    if (this.data && typeof this.data !== 'boolean') {
       this.views.forEach((view) => view.add(this.data))
     }
 
@@ -88,7 +87,6 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
 
     updateModel(data, modelToJSON(record!))
     updateModelId(data, newId)
-    commitModel(data)
 
     const viewIndexes = this.views.map((view) => view.list.indexOf(record))
     this.views.forEach((view, index) => {

@@ -102,19 +102,29 @@ export function useFixtureGet404(key: string) {
 }
 
 export function useFixturePUTById(key: string, code: number = 200, value?: any) {
-  CURRENT_SCOPE.put(new RegExp(key + '/\\$.+')).reply(code, (uri: string, body) => {
-    if (value !== null && value !== undefined) {
-      return JSON.stringify(value)
-    }
-
-    const id = uri.slice(uri.lastIndexOf('/$') + 2)
-    const json = MAPPER[key]
-    const object = json.items.find((k: any) => k.id === id)
-    return JSON.stringify({
-      value: {
-        ...object,
-        ...(body as {})
+  CURRENT_SCOPE.persist(false)
+    .put(new RegExp(key + '/\\$.+'))
+    .reply(code, (uri: string, body) => {
+      if (value !== null && value !== undefined) {
+        return JSON.stringify(value)
       }
+
+      const id = uri.slice(uri.lastIndexOf('/$') + 2)
+      const json = MAPPER[key]
+      const object = json.items.find((k: any) => k.id === id)
+      return JSON.stringify({
+        value: {
+          ...object,
+          ...(body as {})
+        }
+      })
     })
-  })
+}
+
+export function useFixtureDELETEById(key: string, code: number = 200, value: any = { value: true }) {
+  CURRENT_SCOPE.persist(false)
+    .delete(new RegExp(key + '/\\$.+'))
+    .reply(code, (uri: string, body) => {
+      return JSON.stringify(value)
+    })
 }

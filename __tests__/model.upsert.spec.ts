@@ -1,5 +1,6 @@
 import { collection, useFixtureGetById, useFixturePUTById, useFixturesByGET } from './config'
 import Staff from './models/Staff'
+import { ResponseView } from '../src'
 
 describe('model.upsert', () => {
   let scope: any = null
@@ -18,7 +19,7 @@ describe('model.upsert', () => {
     try {
       await staff.upsert()
     } catch (e) {
-      console.log(e)
+      expect(e).toBeInstanceOf(ResponseView)
     }
     expect(staff.name).toBe('Principal')
   })
@@ -49,6 +50,11 @@ describe('model.upsert', () => {
     expect(staff.name).toBe('Principal')
     staff.name = '99999'
     useFixturePUTById(Staff.endpoint, 230, { value: true })
+    await staff.upsert()
+    expect(staff.name).toBe('99999')
+
+    staff.name = '888888'
+    useFixturePUTById(Staff.endpoint, 200, { value: false })
     await staff.upsert()
     expect(staff.name).toBe('99999')
   })

@@ -3,7 +3,7 @@
  ***************************************************/
 import { observable, action, _allowStateChanges } from 'mobx'
 
-export interface ILazyBox<T, E = any> {
+export interface IDataRef<T, E = any> {
   current: T
   refresh(): T
   reset(): T
@@ -11,10 +11,10 @@ export interface ILazyBox<T, E = any> {
   onerror: (e: E) => void
 }
 
-export function lazyBox<T, E = any>(
+export function createDataRef<T, E = any>(
   fetch: (update: (newValue: T) => void, error?: (e: E) => void) => void,
   initialValue?: T
-): ILazyBox<T, E> {
+): IDataRef<T, E> {
   let started = false
   const value = observable.box<T>(initialValue, { deep: false })
   const pending = observable.box(false)
@@ -39,7 +39,7 @@ export function lazyBox<T, E = any>(
     }
     return value.get()
   }
-  const resetFn = action('lazyBox:reset', () => {
+  const resetFn = action('createDataRef:reset', () => {
     started = false
     value.set(initialValue)
     return value.get()

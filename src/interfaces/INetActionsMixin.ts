@@ -7,7 +7,7 @@ import { IRawResponse } from './IRawResponse'
 import { IRequestOptions } from './IRequestOptions'
 import { ResponseView } from '../ResponseView'
 import { INetworkAdapter } from './INetworkAdapter'
-import { ILazyBox } from '../helpers/lazyBox'
+import { IDataRef } from '../helpers/dataref'
 
 export interface INetActionsMixinForModel<T extends PureModel> {
   upsert(options?: IRequestOptions): Promise<this>
@@ -54,20 +54,20 @@ export interface INetActionsMixinForCollection<T extends PureCollection> {
   ffetch<T extends PureModel, R = T[]>(
     type: IType | T | IModelConstructor<T>,
     options?: IRequestOptions
-  ): ILazyBox<R, ResponseView<any>>
+  ): IDataRef<R, ResponseView<any>>
   ffetch<T extends PureModel, R = T[]>(
     type: IType | T | IModelConstructor<T>,
     ids: undefined | null,
     options?: IRequestOptions
-  ): ILazyBox<R, ResponseView<any>>
+  ): IDataRef<R, ResponseView<any>>
   ffetch<T extends PureModel, R = T>(
     type: IType | T | IModelConstructor<T>,
     id?: IIdentifier,
     options?: IRequestOptions
-  ): ILazyBox<R, ResponseView<any>>
+  ): IDataRef<R, ResponseView<any>>
   ffetch<T extends PureModel, R = T[]>(
     type: IType | T | IModelConstructor<T>,
     ids?: IIdentifier[],
     options?: IRequestOptions
-  ): ILazyBox<R, ResponseView<any>>
+  ): IDataRef<R, ResponseView<any>>
 }

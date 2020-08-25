@@ -7,7 +7,10 @@ import {
   PureCollection,
   PureModel,
   modelToJSON,
-  IModelConstructor
+  IModelConstructor,
+  commitModel,
+  getModelId,
+  revertModel
 } from '../datx'
 import { getMeta, mapItems } from 'datx-utils'
 import { action, isArrayLike } from 'mobx'
@@ -20,7 +23,6 @@ import { remove, upsert, getModelEndpointURL, request } from './network'
 import { ResponseView } from '../ResponseView'
 import { error, isIdentifier } from './utils'
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
-import { commitModel, getModelId, revertModel } from '@issues-beta/datx'
 
 export function getModelRefType(
   model: Function | any,
@@ -90,14 +92,19 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
         return model
       }
 
+      if (response.status === 202) {
+        commitModel(response.replace(model).data)
+        return response.replace(model).data
+      }
+
       if (typeof response.data === 'boolean') {
         response.data ? commitModel(model) : revertModel(model)
         setModelPersisted(model, true)
         return model
       }
 
-      commitModel(model)
-      return model
+      commitModel(response.data)
+      return response.data
     }
   )(result)
 
@@ -110,15 +117,13 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
 
   if (isModelPersisted(model)) {
     const modelType = getModelType(model)
-    const response = await remove(modelType, options, collection)
+    const response = await remove(modelType, options, collection, getModelId(model))
     if (response.error) {
       throw response
     }
 
-    if (typeof response.data === 'boolean') {
-      if (response.data === false) {
-        return
-      }
+    if (response.data === false) {
+      return // DELETE Fail
     }
 
     setModelPersisted(model, false)
