@@ -47,7 +47,7 @@ export class ListDataView<T extends PureModel> extends View<T> {
       ...options,
       selector: {
         ...this.requestOptions.selector,
-        limit: [start, count]
+        limit: this.limit
       }
     })
     this.requestOptions = response.requestOptions

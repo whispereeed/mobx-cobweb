@@ -73,7 +73,7 @@ export class NetworkAdapter implements INetworkAdapter {
   }): { url: string; options?: any; cacheKey?: string } {
     const options = props.options || {}
 
-    const url = this.prepareURL(props.endpoint, props.ids)
+    const url = this.prepareURL(props.endpoint, props.ids, options.action)
     const { headers: defaultHeaders, params: defaultParams, ...defaultOthers } = this.defaultFetchOptions
 
     const fixedURL = appendParams(url, this.prepareQS(Object.assign({}, defaultParams, options.params)))

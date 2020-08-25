@@ -62,7 +62,7 @@ export function useFixtureGetByIds(key: string) {
 }
 
 export function useFixtureGetChildrenById(key: string) {
-  CURRENT_SCOPE.persist()
+  CURRENT_SCOPE.persist(true)
     .post(new RegExp(key + '/.+/children'))
     .reply(200, (uri: string, body: any) => {
       const id = uri.replace(key, '').replace('/api/v1/', '').replace('/children', '')

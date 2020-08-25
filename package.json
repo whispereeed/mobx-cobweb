@@ -1,6 +1,6 @@
 {
   "name": "mobx-cobweb",
-  "version": "0.0.37",
+  "version": "0.0.39",
   "description": "ORM for MobX (DatX for REST)",
   "main": "dist/index.lib.js",
   "module": "dist/index.esm.js",

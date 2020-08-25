@@ -43,21 +43,14 @@ export class TreeDataView<T extends PureModel> extends View<T> {
     const id = getModelId(model)
     this.isLoading = true
     const listDataView = new ListDataView<T>(this.modelType, this.collection)
-    await listDataView.search({
-      action: `/${id}/children`,
-      selector: { limit: [0, 10] },
-      ...options
-    })
+    await listDataView.infinite(0, 20, { action: `/${id}/children`, ...options })
     this.isLoading = false
     return listDataView
   }
   @action public async searchParents(model: T | IIdentifier, options?: IRequestOptions): Promise<ResponseView<T[]>> {
     const id = getModelId(model)
     this.isLoading = true
-    const response = await this.collection.fetch<T>(this.modelType, {
-      action: `/${id}/parents`,
-      ...options
-    })
+    const response = await this.collection.fetch<T>(this.modelType, { action: `/${id}/parents`, ...options })
     this.isLoading = false
     return response
   }
