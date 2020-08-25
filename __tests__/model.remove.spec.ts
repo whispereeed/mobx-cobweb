@@ -16,7 +16,9 @@ describe('model.remove', () => {
     expect(staff.name).toBe('Principal')
 
     useFixtureDELETEById(Staff.endpoint, 200, { value: false })
-    await staff.remove()
+    const b = await staff.remove()
+    expect(b).toBeFalsy()
+
     const data0 = collection.findOne(Staff, 'cdb28c900c75')
     expect(data0).toBe(staff)
 
@@ -24,5 +26,20 @@ describe('model.remove', () => {
     await staff.remove()
     const data1 = collection.findOne(Staff, 'cdb28c900c75')
     expect(data1).toBeNull()
+  })
+
+  test('should be keep local collection model', async () => {
+    const response = await collection.fetch(Staff, 'cdb28c900c75')
+    const staff = response.data
+    const fn = jest.fn()
+    useFixtureDELETEById(Staff.endpoint, 200, { errorCode: 403, errorMessage: 'xxx' })
+    await staff.remove().catch((e) => {
+      fn()
+      expect(e.error).toEqual({ errorCode: 403, errorMessage: 'xxx' })
+    })
+    expect(fn).toBeCalledTimes(1)
+    const data2 = collection.findOne(Staff, 'cdb28c900c75')
+    expect(data2).not.toBeNull()
+    expect(data2).toBe(staff)
   })
 })

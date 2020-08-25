@@ -112,7 +112,7 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
   return response
 }
 
-export async function removeModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<void> {
+export async function removeModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<boolean> {
   const collection = getModelCollection(model) as INetActionsMixinForCollection<PureCollection> & PureCollection
 
   if (isModelPersisted(model)) {
@@ -123,7 +123,7 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
     }
 
     if (response.data === false) {
-      return // DELETE Fail
+      return false
     }
 
     setModelPersisted(model, false)
@@ -132,6 +132,8 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
   if (collection) {
     await collection.removeOne(model)
   }
+
+  return true
 }
 
 export async function requestOnModel<T extends PureModel, D>(

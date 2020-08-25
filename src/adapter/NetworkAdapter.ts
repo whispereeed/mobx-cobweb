@@ -134,11 +134,11 @@ export class NetworkAdapter implements INetworkAdapter {
 
       if ('value' in responseData) {
         result.data = responseData.value
-      }
-
-      if ('items' in responseData && isArrayLike(responseData.items)) {
+      } else if ('items' in responseData && isArrayLike(responseData.items)) {
         result.data = responseData.items
         result.meta = { count: responseData.count }
+      } else {
+        throw responseData
       }
 
       if (status >= 400) {
