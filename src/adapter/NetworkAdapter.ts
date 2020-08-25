@@ -133,10 +133,13 @@ export class NetworkAdapter implements INetworkAdapter {
       result.requestHeaders = requestHeaders
 
       if ('value' in responseData) {
-        result.data = responseData.value
+        const { value, ...meta } = responseData
+        result.data = value
+        result.meta = meta
       } else if ('items' in responseData && isArrayLike(responseData.items)) {
-        result.data = responseData.items
-        result.meta = { count: responseData.count }
+        const { items, ...meta } = responseData
+        result.data = items
+        result.meta = meta
       } else {
         throw responseData
       }
