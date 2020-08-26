@@ -7,7 +7,7 @@ import { withStorage } from './mixins/withStorage'
 import { ORPHAN_MODEL_ID_VAL } from './helpers/consts'
 import { withNetActions } from './mixins/withNetActions'
 
-/**** For DTS File (Don`t remove it) ****/
+//// For DTS File (Don`t remove it)
 import { ICollectionConstructor } from './datx'
 import { IStorageMixin, IStorageType } from './interfaces/IStorageMixin'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'

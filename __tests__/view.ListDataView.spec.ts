@@ -1,7 +1,8 @@
-import { collection, useFixtureLimitByPOST, useFixturesByGET } from './config'
+import { collection, useFixtureLimitByPOST, useFixturePUTById, useFixturesByGET } from './config'
 import { ListDataView } from '../src'
 import { autorun } from 'mobx'
 import PropertySet from './models/PropertySet'
+import Staff from './models/Staff'
 
 describe('ListDataView', () => {
   let scope: any = null
@@ -9,11 +10,11 @@ describe('ListDataView', () => {
   beforeEach(() => {
     scope = useFixturesByGET()
     useFixtureLimitByPOST(PropertySet.endpoint)
+    useFixtureLimitByPOST(Staff.endpoint)
     collection.removeAll(PropertySet)
   })
 
   test('should be fetched data by `page`', async () => {
-    useFixtureLimitByPOST(PropertySet.endpoint)
     const listDataView = new ListDataView<PropertySet>(PropertySet, collection)
     const jestFn = jest.fn(() => listDataView.isLoading)
     autorun(jestFn)
@@ -81,5 +82,30 @@ describe('ListDataView', () => {
     expect(listDataView.data.length).toBe(90)
     expect(listDataView.data[44].label).toBe('primary')
     expect(jestFn).toBeCalledTimes(7)
+  })
+
+  test('should be revert model', async () => {
+    const listDataView = new ListDataView<Staff>(Staff, collection)
+    await listDataView.search({
+      selector: {
+        limit: [0, 10]
+      }
+    })
+
+    const fn = jest.fn()
+    const oo: string[] = []
+    autorun(() => {
+      fn()
+      oo.push(listDataView.data[1].name)
+    })
+    const staff = collection.findOne(Staff, '6ae31b1e6dda')
+    staff.name = '9999'
+    useFixturePUTById(Staff.endpoint, 200, { errorMessage: 'x' })
+    await staff.upsert().catch((e) => {
+      expect(e.error).toEqual({ errorMessage: 'x' })
+    })
+    expect(listDataView.data[1].name).toBe('AGP')
+    expect(oo).toEqual(['AGP', '9999', 'AGP'])
+    expect(fn).toBeCalledTimes(3)
   })
 })

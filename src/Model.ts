@@ -5,7 +5,7 @@ import { Model as _Model } from './datx'
 import { withStorage } from './mixins/withStorage'
 import { withNetActions } from './mixins/withNetActions'
 
-/**** For DTS File (Don`t remove it) ****/
+//// For DTS File (Don`t remove it)
 import { INetActionsMixinForModel } from './interfaces/INetActionsMixin'
 import { IModelConstructor } from './datx'
 

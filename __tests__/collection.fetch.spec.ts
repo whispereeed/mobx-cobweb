@@ -28,6 +28,13 @@ describe('collection.fetch', () => {
     expect(meV.list[0] === me).toBeTruthy()
   })
 
+  test('should be find orphan model', async () => {
+    await collection.fetch(Me)
+    const me = collection.findAll<Me>(Me)[0]
+    const me2 = collection.findOrphan(Me)
+    expect(me).toBe(me2)
+  })
+
   test('should be fetched all Refs Models fetchModelRefs', async () => {
     await collection.fetch(Me)
     const me = collection.findAll<Me>(Me)[0]

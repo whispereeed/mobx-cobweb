@@ -6,12 +6,4 @@ export type $PickOf<T, X, Y> = T extends any[] ? X : Y
 
 export interface INestedArray<T> extends Array<T | INestedArray<T>> {}
 
-export interface IError {
-  id?: string | number
-  status?: number
-  code?: string
-  title?: string
-  detail?: string
-}
-
 export type IOneOrMany<T> = T | T[]

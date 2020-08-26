@@ -114,17 +114,10 @@ export class NetworkAdapter implements INetworkAdapter {
     const requestHeaders = options.headers
     try {
       let responseData: any
-      try {
-        const response = await this.fetchInstance(url, options)
-        status = response.status
-        headers = response.headers
-        responseData = await response.json()
-      } catch (error) {
-        if (status === 204) {
-          responseData = null
-        }
-        throw error
-      }
+      const response = await this.fetchInstance(url, options)
+      status = response.status
+      headers = response.headers
+      responseData = await response.json()
 
       const result: IRawResponse = {}
 
@@ -132,16 +125,21 @@ export class NetworkAdapter implements INetworkAdapter {
       result.headers = headers
       result.requestHeaders = requestHeaders
 
-      if ('value' in responseData) {
-        const { value, ...meta } = responseData
-        result.data = value
-        result.meta = meta
-      } else if ('items' in responseData && isArrayLike(responseData.items)) {
-        const { items, ...meta } = responseData
-        result.data = items
-        result.meta = meta
-      } else {
-        throw responseData
+      if (responseData) {
+        if ('value' in responseData) {
+          const { value, ...meta } = responseData
+          result.data = value
+          result.meta = meta
+        } else if ('items' in responseData && isArrayLike(responseData.items)) {
+          const { items, ...meta } = responseData
+          result.data = items
+          result.meta = meta
+        } else {
+          if (status === 204) {
+            responseData = null
+          }
+          throw responseData
+        }
       }
 
       if (status >= 400) {

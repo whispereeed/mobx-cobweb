@@ -13,17 +13,18 @@ import {
   View
 } from './datx'
 import { action, isArrayLike } from 'mobx'
-import { IError, IRequestOptions, IRawResponse, $PickOf, IOneOrMany } from './interfaces'
+import { IRequestOptions, IRawResponse, $PickOf, IOneOrMany } from './interfaces'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 import { IRawModel } from 'datx-utils'
 import { isPlainObject } from './helpers/utils'
 
 export class ResponseView<T extends IOneOrMany<PureModel>> {
-  public data: T | null = null
-  public meta: object
+  public data: T = null
+  public meta: Record<string, any>
   public headers?: Headers
+  public responseHeader?: Headers
   public requestHeaders?: Record<string, string>
-  public error?: IError[] | Error
+  public error?: IOneOrMany<Error>
   public status?: number
   public views: View[] = []
 
@@ -61,11 +62,11 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
     }
 
     if (this.data && typeof this.data !== 'boolean') {
-      this.views.forEach((view) => view.add(this.data))
+      this.views?.forEach((view) => view.add(this.data))
     }
 
     this.meta = rawResponse.meta || {}
-    this.headers = rawResponse.headers
+    this.responseHeader = this.headers = rawResponse.headers
     this.requestHeaders = rawResponse.requestHeaders
     this.error = rawResponse.error
   }
@@ -88,8 +89,8 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
     updateModel(data, modelToJSON(record!))
     updateModelId(data, newId)
 
-    const viewIndexes = this.views.map((view) => view.list.indexOf(record))
-    this.views.forEach((view, index) => {
+    const viewIndexes = this.views?.map((view) => view.list.indexOf(record))
+    this.views?.forEach((view, index) => {
       if (viewIndexes[index] !== -1) {
         view.list[viewIndexes[index]] = data
       }

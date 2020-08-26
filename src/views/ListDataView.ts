@@ -6,6 +6,7 @@ import { action, computed, observable, transaction } from 'mobx'
 import { Collection } from '../Collection'
 import { IRequestOptions } from '../interfaces'
 import { ResponseView } from '../ResponseView'
+import { error } from '../helpers/utils'
 
 export class ListDataView<T extends PureModel> extends View<T> {
   readonly collection: Collection
@@ -13,7 +14,7 @@ export class ListDataView<T extends PureModel> extends View<T> {
   private requestOptions?: IRequestOptions = {}
 
   @observable isLoading: boolean = false
-  @observable meta: { count: number }
+  @observable meta: { count: number } = { count: 0 }
   @observable limit: [number, number] = [0, 10]
 
   @computed get data() {
@@ -39,30 +40,39 @@ export class ListDataView<T extends PureModel> extends View<T> {
     this.collection = collection
   }
 
-  @action public async infinite(start: number, count: number, options?: IRequestOptions): Promise<ResponseView<T[]>> {
-    this.limit = [start, count]
-    this.isLoading = true
-    const response = await this.collection.fetch<T>(this.modelType, {
-      ...this.requestOptions,
-      ...options,
-      selector: {
-        ...this.requestOptions.selector,
-        limit: this.limit
-      }
-    })
-    this.requestOptions = response.requestOptions
-    this.isLoading = false
-    this.add(response.data)
-    this.meta = response.meta as any
-    return response
+  async infinite(start: number, count: number, options?: IRequestOptions): Promise<ResponseView<T[]>>
+  async infinite(options: IRequestOptions): Promise<ResponseView<T[]>>
+  @action public async infinite(...args: any[]): Promise<ResponseView<T[]>> {
+    if (args.length === 1 && typeof args === 'object') {
+      return this.search(args[0], true)
+    }
+
+    if (args.length === 2) {
+      return this.search({ selector: { limit: args as [number, number] } }, true)
+    }
+
+    if (args.length === 3) {
+      return this.search(
+        {
+          ...args[2],
+          selector: {
+            ...args[2].selector,
+            limit: [args[0], args[1]]
+          }
+        },
+        true
+      )
+    }
+
+    throw error(`infinite() parameter type error`)
   }
-  @action public async search(options: IRequestOptions): Promise<ResponseView<T[]>> {
+  @action public async search(options: IRequestOptions, isInfinite: boolean = false): Promise<ResponseView<T[]>> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
     this.requestOptions = response.requestOptions
     this.isLoading = false
     transaction(() => {
-      this.removeAll()
+      if (!isInfinite) this.removeAll()
       this.add(response.data)
     })
     this.meta = response.meta as any

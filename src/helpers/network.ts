@@ -2,7 +2,6 @@
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
 import { IIdentifier, IType, PureCollection, PureModel, View } from '../datx'
-
 import { getCache, saveCache } from './cache'
 import { error, getValue, isBrowser } from './utils'
 
