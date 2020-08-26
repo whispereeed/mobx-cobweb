@@ -1,10 +1,32 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/28 17:24. *
  ***************************************************/
-import { IIdentifier } from '../datx'
-import { INetworkAdapter, IRequestMethod, IRequestOptions, IRawResponse, IOneOrMany, $ElementType } from '../interfaces'
-import { error, isBrowser, isEmptyObject } from '../helpers/utils'
 import { isArrayLike } from 'mobx'
+import { IIdentifier } from '../datx'
+import {
+  $ElementType,
+  INetworkAdapter,
+  IOneOrMany,
+  IRawResponse,
+  IRequestMethod,
+  IRequestOptions,
+  ISingleResponseData,
+  RESPONSE_DATATYPE
+} from '../interfaces'
+import {
+  error,
+  isBrowser,
+  isEmptyObject,
+  isPlainObject,
+  isCountResponseData,
+  isCreationResponseData,
+  isErrorResponseData,
+  isListResponseData,
+  isPageResponseData,
+  isSingleResponseData
+} from '../helpers/utils'
+
+import { IResponseData } from '../interfaces/IRawResponse'
 
 function appendParams(url: string, qs: string): string {
   let newUrl = url
@@ -108,42 +130,48 @@ export class NetworkAdapter implements INetworkAdapter {
 
     return { url: fixedURL, options: optionsO, cacheKey }
   }
-  public async fetch(url: string, options: any): Promise<IRawResponse<any | void>> {
+  public async fetch(url: string, options: any): Promise<IRawResponse> {
     let status: number
     let headers: Headers
     const requestHeaders = options.headers
     try {
-      let responseData: any
+      let responseData: IResponseData
       const response = await this.fetchInstance(url, options)
       status = response.status
       headers = response.headers
-      responseData = await response.json()
-
-      const result: IRawResponse = {}
-
-      result.status = status
-      result.headers = headers
-      result.requestHeaders = requestHeaders
-
-      if (responseData) {
-        if ('value' in responseData) {
-          const { value, ...meta } = responseData
-          result.data = value
-          result.meta = meta
-        } else if ('items' in responseData && isArrayLike(responseData.items)) {
-          const { items, ...meta } = responseData
-          result.data = items
-          result.meta = meta
-        } else {
-          if (status === 204) {
-            responseData = null
-          }
-          throw responseData
-        }
-      }
 
       if (status >= 400) {
         throw { message: `Invalid HTTP status: ${status}`, status }
+      }
+
+      responseData = await response.json()
+      const result: IRawResponse = {}
+
+      result.data = responseData
+      result.status = status
+      result.responseHeaders = result.headers = headers
+      result.requestHeaders = requestHeaders
+
+      if (isSingleResponseData(responseData)) {
+        result.dataType = RESPONSE_DATATYPE.SINGLE
+        const res = responseData as ISingleResponseData
+        if (isPlainObject(res.value)) {
+          result.dataType = RESPONSE_DATATYPE.SINGLE_DATA
+        } else if (typeof res.value === 'boolean') {
+          result.dataType = RESPONSE_DATATYPE.SINGLE_STATUS
+        }
+      } else if (isPageResponseData(responseData)) {
+        result.dataType = RESPONSE_DATATYPE.PAGE
+      } else if (isListResponseData(responseData)) {
+        result.dataType = RESPONSE_DATATYPE.LIST
+      } else if (isCountResponseData(responseData)) {
+        result.dataType = RESPONSE_DATATYPE.COUNT
+      } else if (isCreationResponseData(responseData)) {
+        result.dataType = RESPONSE_DATATYPE.CREATION
+      } else if (isErrorResponseData(responseData)) {
+        result.dataType = RESPONSE_DATATYPE.ERROR
+      } else {
+        result.dataType = RESPONSE_DATATYPE.NONE
       }
 
       return result
@@ -152,7 +180,7 @@ export class NetworkAdapter implements INetworkAdapter {
     }
   }
 
-  onError(error: IRawResponse<void>) {
+  onError(error: IRawResponse) {
     return error
   }
 

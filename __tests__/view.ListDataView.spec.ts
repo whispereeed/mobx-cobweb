@@ -100,9 +100,9 @@ describe('ListDataView', () => {
     })
     const staff = collection.findOne(Staff, '6ae31b1e6dda')
     staff.name = '9999'
-    useFixturePUTById(Staff.endpoint, 200, { errorMessage: 'x' })
+    useFixturePUTById(Staff.endpoint, 200, { errorCode: 404, errorMessage: 'x' })
     await staff.upsert().catch((e) => {
-      expect(e.error).toEqual({ errorMessage: 'x' })
+      expect(e.error).toEqual({ errorMessage: 'x', errorCode: 404 })
     })
     expect(listDataView.data[1].name).toBe('AGP')
     expect(oo).toEqual(['AGP', '9999', 'AGP'])

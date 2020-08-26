@@ -1,5 +1,5 @@
 import { collection, useFixtureGet404, useFixturesByGET } from './config'
-import { User } from './models/User'
+import User from './models/User'
 
 describe('collection.error', () => {
   let scope: any = null

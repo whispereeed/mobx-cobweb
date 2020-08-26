@@ -1,6 +1,7 @@
 import { collection, useFixtureGetById, useFixturePUTById, useFixturesByGET } from './config'
 import Staff from './models/Staff'
 import { ResponseView } from '../src'
+import { isAttributeDirty } from '@issues-beta/datx'
 
 describe('model.upsert', () => {
   let scope: any = null
@@ -57,5 +58,16 @@ describe('model.upsert', () => {
     useFixturePUTById(Staff.endpoint, 200, { value: false })
     await staff.upsert()
     expect(staff.name).toBe('99999')
+  })
+
+  test('should be not revert local collection model use (skipRevert)', async () => {
+    const response = await collection.fetch(Staff, 'cdb28c900c75')
+    const staff = response.data
+    expect(staff.name).toBe('Principal')
+    staff.name = '888888'
+    useFixturePUTById(Staff.endpoint, 200, { value: false })
+    await staff.upsert({ skipRevert: true })
+    expect(staff.name).toBe('888888')
+    expect(isAttributeDirty(staff, 'name')).toBeTruthy()
   })
 })

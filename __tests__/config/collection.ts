@@ -1,10 +1,10 @@
 import fetch from 'isomorphic-fetch'
-import { Collection, Model, NetworkAdapter } from '../../src'
+import { Collection, NetworkAdapter } from '../../src'
 import Me from '../models/Me'
 import Staff from '../models/Staff'
 import Department from '../models/Department'
 import PropertySet from '../models/PropertySet'
-import { User } from '../models/User'
+import User from '../models/User'
 
 export class MyCollection extends Collection {
   static types = [Me, Staff, Department, PropertySet, User]

@@ -3,7 +3,7 @@
  ***************************************************/
 import { attribute, Model } from '../../src'
 
-export class User extends Model {
+export default class User extends Model {
   static type = 'organization.User'
   static endpoint = '/organization/users'
 

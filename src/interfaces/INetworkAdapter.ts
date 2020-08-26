@@ -16,5 +16,5 @@ export interface INetworkAdapter {
 
   fetch(url: string, options: any): Promise<IRawResponse<any>>
 
-  onError(error: IRawResponse<void>): void
+  onError(error: IRawResponse): void
 }

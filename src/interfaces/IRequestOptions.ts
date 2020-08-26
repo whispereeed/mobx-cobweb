@@ -26,4 +26,6 @@ export interface IRequestOptions {
   method?: IRequestMethod
 
   skipCache?: boolean
+
+  skipRevert?: boolean
 }

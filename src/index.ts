@@ -49,6 +49,7 @@ export * from 'datx-utils'
 
 export * from './interfaces'
 export * from './helpers/model'
+export { isBrowser } from './helpers/utils'
 
 export { ResponseView } from './ResponseView'
 export { clearCache, clearCacheByType } from './helpers/cache'

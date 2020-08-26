@@ -1,15 +1,15 @@
 import {
+  commitModel,
   getModelCollection,
+  getModelId,
   getModelType,
   getRefId,
+  IModelConstructor,
   IModelRef,
   IType,
+  modelToJSON,
   PureCollection,
   PureModel,
-  modelToJSON,
-  IModelConstructor,
-  commitModel,
-  getModelId,
   revertModel
 } from '../datx'
 import { getMeta, mapItems } from 'datx-utils'
@@ -17,12 +17,13 @@ import { action, isArrayLike } from 'mobx'
 
 import { isModelPersisted, ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from './consts'
 import { clearCacheByType } from './cache'
-import { IRequestOptions, IRawResponse } from '../interfaces'
+import { IRawResponse, IRequestOptions, RESPONSE_DATATYPE } from '../interfaces'
 
-import { remove, upsert, getModelEndpointURL, request } from './network'
+import { getModelEndpointURL, remove, request, upsert } from './network'
 import { ResponseView } from '../ResponseView'
 import { error, isIdentifier } from './utils'
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
+import { updateModelId } from '@issues-beta/datx'
 
 export function getModelRefType(
   model: Function | any,
@@ -82,7 +83,9 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
   const response: T = action(
     (response: ResponseView<T>): T => {
       if (response.error) {
-        revertModel(model)
+        if (!options.skipRevert) {
+          revertModel(model)
+        }
         throw response
       }
 
@@ -93,18 +96,38 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
       }
 
       if (response.status === 202) {
-        commitModel(response.replace(model).data)
-        return response.replace(model).data
+        const modelO = response.replace(model).data as T
+        commitModel(modelO)
+        return modelO
       }
 
-      if (typeof response.data === 'boolean') {
-        response.data ? commitModel(model) : revertModel(model)
+      if (response.rawResponse.dataType === RESPONSE_DATATYPE.SINGLE_STATUS) {
+        if (response.meta.value === true) {
+          commitModel(model)
+        } else {
+          if (!options.skipRevert) {
+            revertModel(model)
+          }
+        }
+
         setModelPersisted(model, true)
         return model
       }
 
-      commitModel(response.data)
-      return response.data
+      if (response.rawResponse.dataType === RESPONSE_DATATYPE.CREATION) {
+        updateModelId(model, response.meta.id)
+        commitModel(model)
+        setModelPersisted(model, true)
+        return model
+      }
+
+      if (response.rawResponse.dataType === RESPONSE_DATATYPE.SINGLE_DATA) {
+        const modelO = response.data as T
+        commitModel(modelO)
+        return modelO
+      }
+
+      throw response
     }
   )(result)
 
@@ -122,8 +145,10 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
       throw response
     }
 
-    if (response.data === false) {
-      return false
+    if (response.rawResponse.dataType === RESPONSE_DATATYPE.SINGLE_STATUS) {
+      if (response.meta.value === false) {
+        return false
+      }
     }
 
     setModelPersisted(model, false)
