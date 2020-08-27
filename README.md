@@ -50,9 +50,9 @@ import Person from './models/Person'
 
 class AppStore extends Collection {
   static types = [Person] 
-  static storageConfig = { 
-  	storageKey : "__LOCAL_MODELS__",
-    storage: localStorage
+  static storage = { 
+  	key : "__LOCAL_MODELS__",
+    engine: localStorage
   }
 }
 
@@ -111,12 +111,12 @@ Start the listening process and save all marked models.
 
 return a despose function
 
-##### static storageConfig 
+##### static storage 
 
 Local storage configuration
 
-* `storageConfig.storageKey`   Key for stored locally
-* `storageConfig.storage`  Local storage engine
+* `storage.key`   Key for stored locally
+* `storage.engine`  Local storage engine
   * getItem(key) 
   * setItem(key,value)
 
@@ -127,6 +127,10 @@ Network API implementation
 ##### fetch
 
 Use REST API to request data in the backend and add the return value to the local collection.
+
+##### ffetch
+
+Call `find` before calling `fetch` , return a DataRef value.
 
 ##### removeOne
 
@@ -156,7 +160,7 @@ Use the `REST GET(ID) API` to force a refresh of the current model(skipping the 
 
 ##### upsert
 
-Use the `REST POST API` to create or update a model to the backend.
+Use the `REST PUT API` to create or update a model to the backend.
 
 ##### remove
 
@@ -165,8 +169,6 @@ Use the `REST DELETE API` to DELETE a model.
 ##### request
 
 Other REST apis are called, and the return value needs to be handled manually.
-
-
 
 ##### fetchRef
 
