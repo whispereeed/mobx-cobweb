@@ -5,11 +5,11 @@ import { action } from 'mobx'
 import { Model } from './Model'
 import { Attribute, PureCollection, getModelCollection, getModelType } from './datx'
 import { ResponseView } from './ResponseView'
-import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setOrphanModelMeta } from './helpers/consts'
+import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL } from './helpers/consts'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 import { error } from './helpers/utils'
+import { setMeta } from 'datx-utils'
 
-@setOrphanModelMeta
 export class OrphanModel extends Model {
   static enableAutoId = false
 
@@ -29,3 +29,5 @@ export class OrphanModel extends Model {
     return collection.fetch<this, this>(getModelType(this))
   }
 }
+
+setMeta(OrphanModel, ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL)

@@ -33,8 +33,8 @@ export function withNetActionsForModel<T extends PureModel>(Base: IModelConstruc
     @action public remove(options?: IRequestOptions): Promise<boolean> {
       return removeModel(this, options)
     }
-    @action public request<D>(options: IRequestOptions): Promise<IRawResponse<D>> {
-      return requestOnModel<this, D>(this, options)
+    @action public request(options: IRequestOptions): Promise<IRawResponse> {
+      return requestOnModel<this>(this, options)
     }
     @action public fetchRef(field: string, options?: IRequestOptions) {
       return fetchModelRef(this, field, options)

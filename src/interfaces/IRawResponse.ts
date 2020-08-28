@@ -2,17 +2,18 @@
  * Created by nanyuantingfeng on 2019/11/26 12:22. *
  ***************************************************/
 import { IType, PureCollection } from '../datx'
+import { IRawModel } from 'datx-utils'
 
 export const enum RESPONSE_DATATYPE {
-  CREATION,
-  COUNT,
-  LIST,
-  SINGLE,
-  PAGE,
-  ERROR,
-  NONE,
-  SINGLE_STATUS,
-  SINGLE_DATA
+  CREATION = 'CREATION',
+  COUNT = 'COUNT',
+  LIST = 'LIST',
+  SINGLE = 'SINGLE',
+  PAGE = 'PAGE',
+  ERROR = 'ERROR',
+  NONE = 'NONE',
+  SINGLE_STATUS = 'SINGLE_STATUS',
+  SINGLE_DATA = 'SINGLE_DATA'
 }
 
 export interface ICreationResponseData {
@@ -47,13 +48,13 @@ export type IResponseData =
   | IErrorResponseData
   | null
 
-export interface IRawResponse<D = IResponseData> {
+export interface IRawResponse {
   dataType?: RESPONSE_DATATYPE
-  data?: D
-  meta?: Record<string, string>
+  data?: IRawModel | IRawModel[] | null
+  meta?: Record<string, any>
   modelType?: IType
   collection?: PureCollection
-  error?: Error
+  error?: any
   headers?: Headers
   responseHeaders?: Headers
   requestHeaders?: Record<string, string>

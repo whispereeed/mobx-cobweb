@@ -1,10 +1,10 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 15:10. *
  ***************************************************/
-import { getModelType, IModelConstructor, IType, PureModel, View, IIdentifier } from '../datx'
+import { getModelType, IIdentifier, IModelConstructor, IType, PureModel, View } from '../datx'
 import { action, computed, observable, transaction } from 'mobx'
 import { Collection } from '../Collection'
-import { IRequestOptions } from '../interfaces'
+import { IRequestOptions, RESPONSE_DATATYPE } from '../interfaces'
 import { ResponseView } from '../ResponseView'
 import { error } from '../helpers/utils'
 
@@ -69,6 +69,10 @@ export class ListDataView<T extends PureModel> extends View<T> {
   @action public async search(options: IRequestOptions, isInfinite: boolean = false): Promise<ResponseView<T[]>> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
+    if (response.dataType !== RESPONSE_DATATYPE.PAGE) {
+      throw error(`ListDataView.search must be return "PAGE" response value`)
+    }
+
     this.requestOptions = response.requestOptions
     this.isLoading = false
     transaction(() => {

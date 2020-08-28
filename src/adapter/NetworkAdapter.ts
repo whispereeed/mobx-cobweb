@@ -5,8 +5,10 @@ import { isArrayLike } from 'mobx'
 import { IIdentifier } from '../datx'
 import {
   $ElementType,
+  IListResponseData,
   INetworkAdapter,
   IOneOrMany,
+  IPageResponseData,
   IRawResponse,
   IRequestMethod,
   IRequestOptions,
@@ -147,31 +149,45 @@ export class NetworkAdapter implements INetworkAdapter {
       responseData = await response.json()
       const result: IRawResponse = {}
 
-      result.data = responseData
       result.status = status
       result.responseHeaders = result.headers = headers
       result.requestHeaders = requestHeaders
 
       if (isSingleResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.SINGLE
-        const res = responseData as ISingleResponseData
-        if (isPlainObject(res.value)) {
+        if (isPlainObject((responseData as ISingleResponseData).value)) {
           result.dataType = RESPONSE_DATATYPE.SINGLE_DATA
-        } else if (typeof res.value === 'boolean') {
+          result.data = (responseData as ISingleResponseData).value
+        } else if (typeof (responseData as ISingleResponseData).value === 'boolean') {
           result.dataType = RESPONSE_DATATYPE.SINGLE_STATUS
+          result.data = null
+          result.meta = responseData
         }
       } else if (isPageResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.PAGE
+        const { items, count } = responseData as IPageResponseData
+        result.data = items
+        result.meta = { count }
       } else if (isListResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.LIST
+        result.data = (responseData as IListResponseData).items
       } else if (isCountResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.COUNT
+        result.data = null
+        result.meta = responseData
       } else if (isCreationResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.CREATION
+        result.data = null
+        result.meta = responseData
       } else if (isErrorResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.ERROR
+        result.data = null
+        result.meta = null
+        result.error = responseData
       } else {
         result.dataType = RESPONSE_DATATYPE.NONE
+        result.data = null
+        result.meta = responseData as any
       }
 
       return result

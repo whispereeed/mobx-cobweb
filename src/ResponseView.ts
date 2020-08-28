@@ -10,35 +10,29 @@ import {
   PureModel,
   updateModel,
   updateModelId,
+  isModel,
   View
 } from './datx'
 import { action, isArrayLike } from 'mobx'
-import {
-  IRequestOptions,
-  IRawResponse,
-  RESPONSE_DATATYPE,
-  ISingleResponseData,
-  IListResponseData,
-  IPageResponseData,
-  IOneOrMany
-} from './interfaces'
+import { IRequestOptions, IRawResponse, IOneOrMany, RESPONSE_DATATYPE } from './interfaces'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
-import { isModel } from '@issues-beta/datx'
 
-export class ResponseView<T extends IOneOrMany<PureModel>> {
+export class ResponseView<T extends IOneOrMany<PureModel>> implements IRawResponse {
   public readonly data: T | null = null
   public readonly meta: Record<string, any>
   public readonly headers?: Headers
   public readonly responseHeaders?: Headers
   public readonly requestHeaders?: Record<string, string>
+  public readonly dataType: RESPONSE_DATATYPE
   public readonly error?: Error
   public readonly status?: number
   public readonly views: View[] = []
 
   public readonly collection?: PureCollection
   public readonly requestOptions?: IRequestOptions
-  public readonly rawResponse: IRawResponse
   public readonly modelType: IType
+
+  private readonly rawResponse: IRawResponse
 
   constructor(
     rawResponse: IRawResponse,
@@ -51,11 +45,14 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
     this.requestOptions = requestOptions
     this.rawResponse = rawResponse
     this.modelType = getModelType(rawResponse.modelType)
+
+    this.dataType = rawResponse.dataType
     this.status = rawResponse.status
     this.headers = rawResponse.headers
     this.responseHeaders = rawResponse.responseHeaders
     this.requestHeaders = rawResponse.requestHeaders
     this.error = rawResponse.error
+    this.meta = rawResponse.meta
 
     if (views) {
       this.views = views
@@ -64,32 +61,10 @@ export class ResponseView<T extends IOneOrMany<PureModel>> {
     if (overrideData) {
       this.data = collection.add<T>(overrideData)
     } else {
-      switch (rawResponse.dataType) {
-        case RESPONSE_DATATYPE.SINGLE_DATA:
-          this.data = ((collection as unknown) as INetActionsMixinForCollection<PureCollection>).sync(
-            (rawResponse.data as ISingleResponseData).value,
-            this.modelType
-          ) as T
-          break
-        case RESPONSE_DATATYPE.LIST:
-        case RESPONSE_DATATYPE.PAGE:
-          this.data = ((collection as unknown) as INetActionsMixinForCollection<PureCollection>).sync(
-            (rawResponse.data as IListResponseData).items,
-            this.modelType
-          ) as T
-          this.meta = { count: (rawResponse.data as IPageResponseData)?.count }
-          break
-        case RESPONSE_DATATYPE.SINGLE_STATUS:
-        case RESPONSE_DATATYPE.SINGLE:
-        case RESPONSE_DATATYPE.CREATION:
-        case RESPONSE_DATATYPE.COUNT:
-          this.meta = rawResponse.data
-          break
-        case RESPONSE_DATATYPE.ERROR:
-          this.data = null
-          this.error = (rawResponse.data as any) as Error
-          break
-      }
+      this.data = ((collection as unknown) as INetActionsMixinForCollection<PureCollection>).sync(
+        rawResponse.data,
+        this.modelType
+      )
     }
 
     if (isModel(this.data) || (isArrayLike(this.data) && this.data.every(isModel))) {

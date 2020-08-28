@@ -10,7 +10,8 @@ import {
   modelToJSON,
   PureCollection,
   PureModel,
-  revertModel
+  revertModel,
+  updateModelId
 } from '../datx'
 import { getMeta, mapItems } from 'datx-utils'
 import { action, isArrayLike } from 'mobx'
@@ -23,7 +24,6 @@ import { getModelEndpointURL, remove, request, upsert } from './network'
 import { ResponseView } from '../ResponseView'
 import { error, isIdentifier } from './utils'
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
-import { updateModelId } from '@issues-beta/datx'
 
 export function getModelRefType(
   model: Function | any,
@@ -101,7 +101,7 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
         return modelO
       }
 
-      if (response.rawResponse.dataType === RESPONSE_DATATYPE.SINGLE_STATUS) {
+      if (response.dataType === RESPONSE_DATATYPE.SINGLE_STATUS) {
         if (response.meta.value === true) {
           commitModel(model)
         } else {
@@ -114,14 +114,14 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
         return model
       }
 
-      if (response.rawResponse.dataType === RESPONSE_DATATYPE.CREATION) {
+      if (response.dataType === RESPONSE_DATATYPE.CREATION) {
         updateModelId(model, response.meta.id)
         commitModel(model)
         setModelPersisted(model, true)
         return model
       }
 
-      if (response.rawResponse.dataType === RESPONSE_DATATYPE.SINGLE_DATA) {
+      if (response.dataType === RESPONSE_DATATYPE.SINGLE_DATA) {
         const modelO = response.data as T
         commitModel(modelO)
         return modelO
@@ -145,7 +145,7 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
       throw response
     }
 
-    if (response.rawResponse.dataType === RESPONSE_DATATYPE.SINGLE_STATUS) {
+    if (response.dataType === RESPONSE_DATATYPE.SINGLE_STATUS) {
       if (response.meta.value === false) {
         return false
       }
@@ -161,14 +161,11 @@ export async function removeModel<T extends PureModel>(model: T, options: IReque
   return true
 }
 
-export async function requestOnModel<T extends PureModel, D>(
-  model: T,
-  options: IRequestOptions
-): Promise<IRawResponse<D>> {
+export async function requestOnModel<T extends PureModel>(model: T, options: IRequestOptions): Promise<IRawResponse> {
   const collection = getModelCollection(model) as INetActionsMixinForCollection<PureCollection> & PureCollection
   const modelType = getModelType(model)
   const endpoint = getModelEndpointURL(modelType, collection)
-  const rawResponse = await request<D>(collection, endpoint, options)
+  const rawResponse = await request(collection, endpoint, options)
   rawResponse.modelType = modelType
   rawResponse.collection = collection
   return rawResponse

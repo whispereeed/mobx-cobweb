@@ -137,8 +137,8 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
       clearCache()
     }
 
-    @action request<D>(url: string, options: IRequestOptions): Promise<IRawResponse<D>> {
-      return request<D>(this as any, url, options)
+    @action request(url: string, options: IRequestOptions): Promise<IRawResponse> {
+      return request(this as any, url, options)
     }
 
     @action ffetch<T extends PureModel>(

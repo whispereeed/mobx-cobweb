@@ -36,30 +36,30 @@ describe('ListDataView', () => {
     await listDataView.next()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
-    expect(listDataView.data[1].name).toBe('Solutions')
-    expect(jestFn).toBeCalledTimes(3)
+    expect(listDataView.data[1].name).toBe('Auto Loan Account')
+    expect(jestFn).toBeCalledTimes(5)
 
     await listDataView.last()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
-    expect(listDataView.data[1].name).toBe('Solutions')
-    expect(listDataView.data[8].name).toBe('engage')
-    expect(jestFn).toBeCalledTimes(5)
+    expect(listDataView.data[1].name).toBe('Supervisor')
+    expect(listDataView.data[8].name).toBe('withdrawal')
+    expect(jestFn).toBeCalledTimes(7)
 
     await listDataView.prev()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
-    expect(listDataView.data[1].name).toBe('Solutions')
-    expect(listDataView.data[8].name).toBe('engage')
-    expect(listDataView.data[9].name).toBe('Dynamic')
-    expect(jestFn).toBeCalledTimes(5)
+    expect(listDataView.data[1].name).toBe('best-of-breed')
+    expect(listDataView.data[8].name).toBe('Berkshire')
+    expect(listDataView.data[9].name).toBe('calculating')
+    expect(jestFn).toBeCalledTimes(9)
 
     await listDataView.first()
     expect(listDataView.data.length).toBe(10)
     expect(listDataView.data).toMatchSnapshot()
     expect(listDataView.data[0].name).toBe('Accounts')
     expect(listDataView.data[1].name).toBe('Solutions')
-    expect(jestFn).toBeCalledTimes(7)
+    expect(jestFn).toBeCalledTimes(11)
   })
 
   test('should be fetched data by `infinite`', async () => {
@@ -86,7 +86,7 @@ describe('ListDataView', () => {
 
   test('should be revert model', async () => {
     const listDataView = new ListDataView<Staff>(Staff, collection)
-    await listDataView.search({
+    const sdd = await listDataView.search({
       selector: {
         limit: [0, 10]
       }

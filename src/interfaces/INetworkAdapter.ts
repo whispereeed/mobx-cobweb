@@ -14,7 +14,7 @@ export interface INetworkAdapter {
     method?: IRequestMethod
   }): { url: string; options?: any; cacheKey?: string }
 
-  fetch(url: string, options: any): Promise<IRawResponse<any>>
+  fetch(url: string, options: any): Promise<IRawResponse>
 
   onError(error: IRawResponse): void
 }

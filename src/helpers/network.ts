@@ -118,11 +118,11 @@ export function remove<T extends PureModel>(
   })
 }
 
-export async function request<D>(
+export async function request(
   collection: INetActionsMixinForCollection<PureCollection> & PureCollection,
   endpoint: string,
   options: IRequestOptions
-): Promise<IRawResponse<D>> {
+): Promise<IRawResponse> {
   const prepared = await collection.adapter.prepare({
     endpoint: endpoint,
     options,

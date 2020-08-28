@@ -13,7 +13,7 @@ export interface INetActionsMixinForModel<T extends PureModel> {
   upsert(options?: IRequestOptions): Promise<this>
   remove(options?: IRequestOptions): Promise<boolean>
   refresh(): Promise<ResponseView<T>>
-  request<D>(options: IRequestOptions): Promise<IRawResponse<D>>
+  request(options: IRequestOptions): Promise<IRawResponse>
 
   fetchRef(field: string, options?: IRequestOptions): Promise<ResponseView<any>>
   fetchRefs(options?: IRequestOptions): Promise<Array<ResponseView<any>>>
@@ -49,7 +49,7 @@ export interface INetActionsMixinForCollection<T extends PureCollection> {
   removeOne(type: IType | typeof PureModel, id: IIdentifier, remote?: boolean | IRequestOptions): Promise<boolean>
   removeOne(model: PureModel, remote?: boolean | IRequestOptions): Promise<boolean>
 
-  request<D>(url: string, options: IRequestOptions): Promise<IRawResponse<D>>
+  request(url: string, options: IRequestOptions): Promise<IRawResponse>
 
   ffetch<T extends PureModel, R = T[]>(
     type: IType | T | IModelConstructor<T>,
