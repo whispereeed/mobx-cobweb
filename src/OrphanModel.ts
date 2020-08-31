@@ -18,8 +18,7 @@ export class OrphanModel extends Model {
     return data
   }
 
-  @Attribute({ isIdentifier: true })
-  public [ORPHAN_MODEL_ID_KEY]: string
+  @Attribute({ isIdentifier: true }) public [ORPHAN_MODEL_ID_KEY]: string
 
   @action public refresh(): Promise<ResponseView<this>> {
     const collection: INetActionsMixinForCollection<PureCollection> = getModelCollection(this) as any

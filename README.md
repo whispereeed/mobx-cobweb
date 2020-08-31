@@ -179,13 +179,14 @@ The reference value of the current model that calls the `REST GET(ID) API`.
 All reference values for the current model that invoke the `REST GET(ID) API`.
 
 
-
 #### withStorage
 
 ##### static enableStorage : boolean
 
 Enable local storage tags, and if so, all instances defined in this model will be stored locally when they are changed
 
+#### recordOf
+Serialization, which converts Refs to `IDs`, It's not the same as modelToJSON
 
 
 #### OrphanModel

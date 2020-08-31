@@ -11,7 +11,8 @@ import {
   PureCollection,
   PureModel,
   revertModel,
-  updateModelId
+  updateModelId,
+  IFieldDefinition
 } from '../datx'
 import { getMeta, mapItems } from 'datx-utils'
 import { action, isArrayLike } from 'mobx'
@@ -40,6 +41,18 @@ export function getModelRefType(
   return model
 }
 
+export function isModelReference(value: IModelRef | Array<IModelRef>): true
+export function isModelReference(value: unknown): false
+export function isModelReference(value: unknown): boolean {
+  if (isArrayLike(value)) {
+    return (value as Array<IModelRef>).every(isModelReference)
+  }
+
+  return (
+    typeof value === 'object' && value !== null && 'type' in value && 'id' in value && Object.keys(value).length === 2
+  )
+}
+
 export function getModelConstructor<T extends PureModel>(
   model: T | IModelConstructor<T> | IType,
   collection: PureCollection
@@ -58,11 +71,37 @@ export function isOrphanModel<T extends PureModel>(
     }
     model = getModelConstructor(model, collection) as IModelConstructor<T>
   }
+
   return getMeta(model as T, ORPHAN_MODEL_ID_KEY, null, true) === ORPHAN_MODEL_ID_VAL
 }
 
-export function getModelIdField<T extends PureModel>(modal: T): string {
-  return getMeta<string>(modal, 'idField', 'id', true)
+export function modelToRecord<T extends PureModel>(model: T, exclude?: string[]) {
+  const raw = modelToJSON(model)
+  const fields = getMeta<Record<string, IFieldDefinition>>(model, 'fields', {})
+  Object.keys(fields).forEach((fieldName) => {
+    if (fields[fieldName].referenceDef)
+      raw[fieldName] = mapItems(raw[fieldName], (v) => (isModelReference(v) ? v.id : v))
+  })
+  delete raw.__META__
+  exclude?.forEach((key) => delete raw[key])
+
+  const idField = getModelIdField(model)
+  if (idField === ORPHAN_MODEL_ID_KEY) {
+    delete raw[idField]
+  }
+
+  return raw
+}
+
+export function getModelIdField<T extends PureModel>(model: T | IModelConstructor<T>): string {
+  if (model instanceof PureModel) {
+    return getMeta<string>(model, 'id', 'id', true)
+  }
+
+  if (typeof model === 'function') {
+    return getMeta<string>(model, 'idField', 'id', true)
+  }
+  return undefined
 }
 
 export async function upsertModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<T> {
@@ -72,11 +111,9 @@ export async function upsertModel<T extends PureModel>(model: T, options: IReque
     const data = modelToJSON(model)
     delete data.__META__
     const idField = getModelIdField(model)
-
     if (!isModelPersisted(model) || idField === ORPHAN_MODEL_ID_KEY) {
       delete data[idField]
     }
-
     options.data = data
   }
   const result = await upsert<T>(modelType, options, collection, getModelId(model))

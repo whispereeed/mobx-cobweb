@@ -8,11 +8,9 @@ export function getValue<T>(target: T | (() => T), ...params: any[]): T {
   }
   return target
 }
-
 export function error(message: string): Error {
   return new Error(`[mobx-cobweb exception] ${message}`)
 }
-
 export function isEmptyObject(obj: any) {
   if (obj === null || obj === undefined || Array.isArray(obj) || typeof obj !== 'object') {
     return true
@@ -37,35 +35,27 @@ export function peekNonNullish(...args: any[]): any {
   }
   return null
 }
-
 export function isPlainObject(obj: any) {
   return !!obj && Object.prototype.toString.call(obj) === '[object Object]'
 }
-
 export function isIdentifier(obj: any) {
   return typeof obj === 'string' || typeof obj === 'number'
 }
-
 export function isCreationResponseData(obj: any): boolean {
   return isPlainObject(obj) && Object.keys(obj).length === 1 && 'id' in obj
 }
-
 export function isCountResponseData(obj: any): boolean {
   return isPlainObject(obj) && Object.keys(obj).length === 1 && 'count' in obj
 }
-
 export function isListResponseData(obj: any): boolean {
   return isPlainObject(obj) && Object.keys(obj).length === 1 && 'items' in obj
 }
-
 export function isSingleResponseData(obj: any): boolean {
   return isPlainObject(obj) && Object.keys(obj).length === 1 && 'value' in obj
 }
-
 export function isPageResponseData(obj: any): boolean {
   return isPlainObject(obj) && Object.keys(obj).length === 2 && 'count' in obj && 'items' in obj
 }
-
 export function isErrorResponseData(obj: any): boolean {
   return isPlainObject(obj) && Object.keys(obj).length >= 2 && 'errorCode' in obj && 'errorMessage' in obj
 }
