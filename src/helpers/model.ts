@@ -107,15 +107,7 @@ export function getModelIdField<T extends PureModel>(model: T | IModelConstructo
 export async function upsertModel<T extends PureModel>(model: T, options: IRequestOptions = {}): Promise<T> {
   const collection = getModelCollection(model) as INetActionsMixinForCollection<PureCollection> & PureCollection
   const modelType = getModelType(model)
-  if (!options.data) {
-    const data = modelToJSON(model)
-    delete data.__META__
-    const idField = getModelIdField(model)
-    if (!isModelPersisted(model) || idField === ORPHAN_MODEL_ID_KEY) {
-      delete data[idField]
-    }
-    options.data = data
-  }
+  options.data = options.data ?? modelToRecord(model)
   const result = await upsert<T>(modelType, options, collection, getModelId(model))
   const response: T = action(
     (response: ResponseView<T>): T => {
