@@ -13,6 +13,8 @@ export class ListDataView<T extends PureModel> extends View<T> {
   readonly modelType: IType
   private requestOptions?: IRequestOptions = {}
 
+  public isInfiniteMode = false
+
   @observable isLoading: boolean = false
   @observable meta: { count: number } = { count: 0 }
   @observable limit: [number, number] = [0, 10]
@@ -43,30 +45,29 @@ export class ListDataView<T extends PureModel> extends View<T> {
   async infinite(start: number, count: number, options?: IRequestOptions): Promise<ResponseView<T[]>>
   async infinite(options: IRequestOptions): Promise<ResponseView<T[]>>
   @action public async infinite(...args: any[]): Promise<ResponseView<T[]>> {
+    this.isInfiniteMode = true
+
     if (args.length === 1 && typeof args === 'object') {
-      return this.search(args[0], true)
+      return this.search(args[0])
     }
 
     if (args.length === 2) {
-      return this.search({ selector: { limit: args as [number, number] } }, true)
+      return this.search({ selector: { limit: args as [number, number] } })
     }
 
     if (args.length === 3) {
-      return this.search(
-        {
-          ...args[2],
-          selector: {
-            ...args[2].selector,
-            limit: [args[0], args[1]]
-          }
-        },
-        true
-      )
+      return this.search({
+        ...args[2],
+        selector: {
+          ...args[2].selector,
+          limit: [args[0], args[1]]
+        }
+      })
     }
 
     throw error(`infinite() parameter type error`)
   }
-  @action public async search(options: IRequestOptions, isInfinite: boolean = false): Promise<ResponseView<T[]>> {
+  @action public async search(options: IRequestOptions): Promise<ResponseView<T[]>> {
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
     if (response.dataType !== RESPONSE_DATATYPE.PAGE) {
@@ -76,7 +77,7 @@ export class ListDataView<T extends PureModel> extends View<T> {
     this.requestOptions = response.requestOptions
     this.isLoading = false
     transaction(() => {
-      if (!isInfinite) this.removeAll()
+      if (!this.isInfiniteMode) this.removeAll()
       this.add(response.data)
     })
     this.meta = response.meta as any
