@@ -165,9 +165,9 @@ export class NetworkAdapter implements INetworkAdapter {
         }
       } else if (isPageResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.PAGE
-        const { items, count } = responseData as IPageResponseData
+        const { items, ...others } = responseData as IPageResponseData
         result.data = items
-        result.meta = { count }
+        result.meta = others
       } else if (isListResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.LIST
         result.data = (responseData as IListResponseData).items
