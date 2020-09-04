@@ -54,7 +54,7 @@ export function isSingleResponseData(obj: any): boolean {
   return isPlainObject(obj) && Object.keys(obj).length === 1 && 'value' in obj
 }
 export function isPageResponseData(obj: any): boolean {
-  return isPlainObject(obj) && Object.keys(obj).length === 2 && 'count' in obj && 'items' in obj
+  return isPlainObject(obj) && Object.keys(obj).length >= 2 && 'count' in obj && 'items' in obj
 }
 export function isErrorResponseData(obj: any): boolean {
   return isPlainObject(obj) && Object.keys(obj).length >= 2 && 'errorCode' in obj && 'errorMessage' in obj
