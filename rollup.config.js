@@ -14,7 +14,9 @@ export default [
         tsconfig: './tsconfig.build.json'
       }),
       uglify()
-    ]
+    ],
+
+    external: ['mobx', '@issues-beta/datx', 'datx-utils']
   },
   {
     input: './src/index.ts',
@@ -25,6 +27,7 @@ export default [
         typescript: require('typescript'),
         tsconfig: './tsconfig.build.json'
       })
-    ]
+    ],
+    external: ['mobx', '@issues-beta/datx', 'datx-utils']
   }
 ]

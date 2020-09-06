@@ -6,6 +6,7 @@ import { mapItems } from 'datx-utils'
 import { withStorage } from './mixins/withStorage'
 import { ORPHAN_MODEL_ID_VAL } from './helpers/consts'
 import { withNetActions } from './mixins/withNetActions'
+import { Model } from './Model'
 
 //// For DTS File (Don`t remove it)
 import { ICollectionConstructor } from './datx'
@@ -13,6 +14,8 @@ import { IStorageMixin, IStorageType } from './interfaces/IStorageMixin'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 
 export class Collection extends withStorage(withNetActions(_Collection)) {
+  static defaultModel = Model
+
   static register<T extends PureModel>(O: IModelConstructor<T> | IModelConstructor<T>[]) {
     return mapItems(O, (_O: IModelConstructor<T>) => {
       if (!this.types.find((_T) => _T.type === _O.type)) {

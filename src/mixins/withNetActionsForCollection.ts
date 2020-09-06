@@ -21,7 +21,6 @@ import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
 import { getModelIdField, isOrphanModel, removeModel } from '../helpers/model'
 import { INetworkAdapter, IRequestOptions, IRawResponse, IOneOrMany } from '../interfaces'
-import { Model } from '../Model'
 import { query, request } from '../helpers/network'
 import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
 import { IDataRef, createDataRef } from '../helpers/dataref'
@@ -31,9 +30,6 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
   const BaseClass = Base as typeof PureCollection
 
   class WithNetActionsForCollection extends BaseClass implements INetActionsMixinForCollection<T> {
-    static types = BaseClass.types && BaseClass.types.length ? BaseClass.types.concat(Model) : [Model]
-    static defaultModel = Model
-
     adapter: INetworkAdapter
 
     setNetworkAdapter(adapter: INetworkAdapter) {
@@ -46,6 +42,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
       const modelType = getModelType(type)
       const StaticCollection = this.constructor as typeof PureCollection
       const ModelClass = StaticCollection.types.find((Q) => Q.type === modelType)
+      const DefaultModelClass = StaticCollection.defaultModel
 
       return mapItems(raw, (item: IRawModel) => {
         let record: P
@@ -70,7 +67,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
 
           setModelPersisted(record, Boolean(id))
         } else {
-          record = (this.add(new Model(item, this)) as any) as P
+          record = (this.add(new DefaultModelClass(item, this)) as any) as P
         }
 
         commitModel(record)
