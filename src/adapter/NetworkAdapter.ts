@@ -78,7 +78,7 @@ export class NetworkAdapter implements INetworkAdapter {
     }
 
     this.fetchInstance = fetchInstance
-    this.defaultFetchOptions = Object.assign({}, this.defaultFetchOptions, options)
+    this.defaultFetchOptions = { ...this.defaultFetchOptions, ...options }
 
     if (!isBrowser && !fetchInstance) {
       throw error('Fetch reference needs to be defined before using the network')
@@ -100,7 +100,7 @@ export class NetworkAdapter implements INetworkAdapter {
     const url = this.prepareURL(props.endpoint, props.ids, options.action)
     const { headers: defaultHeaders, params: defaultParams, ...defaultOthers } = this.defaultFetchOptions
 
-    const fixedURL = appendParams(url, this.prepareQS(Object.assign({}, defaultParams, options.params)))
+    const fixedURL = appendParams(url, this.prepareQS({ ...defaultParams, ...options.params }))
 
     const requestHeaders: Record<string, string> = options.headers || {}
     let uppercaseMethod = options.method?.toUpperCase() || props.method?.toUpperCase()
@@ -123,12 +123,13 @@ export class NetworkAdapter implements INetworkAdapter {
     }
 
     const isBodySupported = uppercaseMethod !== 'GET' && uppercaseMethod !== 'HEAD'
-    const reqHeaders: Record<string, string> = Object.assign({}, defaultHeaders, requestHeaders)
-    const optionsO = Object.assign({}, defaultOthers, {
+    const reqHeaders: Record<string, string> = { ...defaultHeaders, ...requestHeaders }
+    const optionsO = {
+      ...defaultOthers,
       body: (isBodySupported && JSON.stringify(body)) || undefined,
       headers: reqHeaders,
       method: uppercaseMethod
-    })
+    }
 
     return { url: fixedURL, options: optionsO, cacheKey }
   }

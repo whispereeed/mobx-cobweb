@@ -48,19 +48,8 @@ export { Attribute as attribute } from './datx'
 export * from 'datx-utils'
 
 export * from './interfaces'
-
-export {
-  isModelReference,
-  getModelConstructor,
-  isOrphanModel,
-  modelToRecord,
-  getModelIdField,
-  upsertModel,
-  removeModel,
-  requestOnModel,
-  fetchModelRef,
-  fetchModelRefs
-} from './helpers/model'
+export * from './helpers/model'
+export * from './helpers/api'
 
 export { isBrowser, peekNonNullish, isPlainObject, isIdentifier, getValue } from './helpers/utils'
 

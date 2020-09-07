@@ -2,7 +2,7 @@ declare var window: { window: any }
 
 export const isBrowser: boolean = typeof window !== 'undefined' && window.window === window
 
-export function getValue<T>(target: T | (() => T), ...params: any[]): T {
+export function getValue<T>(target: T | ((...args: any[]) => T), ...params: any[]): T {
   if (typeof target === 'function') {
     return (target as Function)(...params)
   }

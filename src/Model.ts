@@ -8,7 +8,7 @@ import { withNetActions } from './mixins/withNetActions'
 //// For DTS File (Don`t remove it)
 import { INetActionsMixinForModel } from './interfaces/INetActionsMixin'
 import { IModelConstructor } from './datx'
-import { modelToRecord } from './helpers/model'
+import { modelToRecord } from './helpers/api'
 
 export class Model extends withStorage(withNetActions(_Model)) {
   recordOf(exclude?: string[]) {

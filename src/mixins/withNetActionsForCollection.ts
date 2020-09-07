@@ -19,12 +19,14 @@ import {
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
 import { clearCache, clearCacheByType } from '../helpers/cache'
 import { ResponseView } from '../ResponseView'
-import { getModelIdField, isOrphanModel, removeModel } from '../helpers/model'
+import { removeModel } from '../helpers/model'
+import { isOrphanModel } from '../helpers/api'
 import { INetworkAdapter, IRequestOptions, IRawResponse, IOneOrMany } from '../interfaces'
-import { query, request } from '../helpers/network'
-import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL, setModelPersisted } from '../helpers/consts'
+import { modelRequest, simpleRequest } from '../helpers/network'
+import { ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL } from '../helpers/consts'
 import { IDataRef, createDataRef } from '../helpers/dataref'
 import { isPlainObject } from '../helpers/utils'
+import { getModelIdField, setModelPersisted } from '../helpers/api'
 
 export function withNetActionsForCollection<T extends PureCollection>(Base: ICollectionConstructor<T>) {
   const BaseClass = Base as typeof PureCollection
@@ -87,7 +89,13 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
         ids = undefined
       }
 
-      return query<T>(modelType, options, this, ids)
+      return modelRequest<T>({
+        modelType,
+        options,
+        collection: this,
+        ids,
+        method: 'GET'
+      })
     }
 
     @action removeOne(
@@ -135,7 +143,7 @@ export function withNetActionsForCollection<T extends PureCollection>(Base: ICol
     }
 
     @action request(url: string, options: IRequestOptions): Promise<IRawResponse> {
-      return request(this as any, url, options)
+      return simpleRequest(this as any, url, options)
     }
 
     @action ffetch<T extends PureModel>(

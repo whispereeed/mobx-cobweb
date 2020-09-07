@@ -3,13 +3,14 @@
  ***************************************************/
 import { IIdentifier, IType, PureCollection, PureModel, View } from '../datx'
 import { getCache, saveCache } from './cache'
-import { error, getValue, isBrowser } from './utils'
+import { isBrowser } from './utils'
 
 import { IRequestOptions, IRawResponse, IOneOrMany, IRequestMethod } from '../interfaces'
 import { ResponseView } from '../ResponseView'
 import { INetActionsMixinForCollection } from '../interfaces/INetActionsMixin'
+import { getModelEndpoint } from './api'
 
-async function __doFetch<M extends IOneOrMany<PureModel>>(doFetchOptions: {
+export async function modelRequest<M extends IOneOrMany<PureModel>>(doFetchOptions: {
   collection: INetActionsMixinForCollection<PureCollection> & PureCollection
   options: IRequestOptions
   modelType?: IType
@@ -20,7 +21,7 @@ async function __doFetch<M extends IOneOrMany<PureModel>>(doFetchOptions: {
   const { options, method = 'GET', collection, views, modelType, ids } = doFetchOptions
 
   const prepared = collection.adapter.prepare({
-    endpoint: getModelEndpointURL(modelType, collection),
+    endpoint: getModelEndpoint(modelType, collection),
     ids,
     options,
     method
@@ -50,75 +51,7 @@ async function __doFetch<M extends IOneOrMany<PureModel>>(doFetchOptions: {
   return response
 }
 
-export function getModelEndpointURL(type: IType, collection: PureCollection): string {
-  const StaticCollection = collection.constructor as typeof PureCollection
-  const QueryModel: any = StaticCollection.types.find((item) => item.type === type)
-
-  if (!QueryModel) {
-    throw error(`No definition for endpoint was found at Collection<${type}>`)
-  }
-
-  const endpoint = getValue<string>(QueryModel.endpoint)
-
-  if (!endpoint) {
-    throw error(`No definition for endpoint was found at Model<${type}>`)
-  }
-
-  return endpoint
-}
-
-export function query<M extends IOneOrMany<PureModel>>(
-  modelType: IType,
-  options?: IRequestOptions,
-  collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
-  ids?: IOneOrMany<IIdentifier>,
-  views?: View[]
-): Promise<ResponseView<M>> {
-  return __doFetch<M>({
-    modelType,
-    options,
-    collection,
-    views,
-    ids,
-    method: 'GET'
-  })
-}
-
-export function upsert<T extends PureModel>(
-  modelType: IType,
-  options?: IRequestOptions,
-  collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
-  ids?: IOneOrMany<IIdentifier>,
-  views?: View[]
-): Promise<ResponseView<T>> {
-  return __doFetch<T>({
-    modelType,
-    collection,
-    options,
-    views,
-    ids,
-    method: 'PUT'
-  })
-}
-
-export function remove<T extends PureModel>(
-  modelType: IType,
-  options?: IRequestOptions,
-  collection?: INetActionsMixinForCollection<PureCollection> & PureCollection,
-  ids?: IOneOrMany<IIdentifier>,
-  views?: View[]
-): Promise<ResponseView<T>> {
-  return __doFetch<T>({
-    modelType,
-    collection,
-    options,
-    views,
-    ids,
-    method: 'DELETE'
-  })
-}
-
-export async function request(
+export async function simpleRequest(
   collection: INetActionsMixinForCollection<PureCollection> & PureCollection,
   endpoint: string,
   options: IRequestOptions
