@@ -44,7 +44,8 @@ describe('TreeDataView', () => {
         return JSON.stringify({ items: oo, count: 100 })
       })
 
-    const childrenList = await treeDataView.infinite(root, { selector: { limit: [0, 30] } })
+    await treeDataView.infinite(root, { selector: { limit: [0, 30] } })
+    const childrenList = treeDataView.getInfiniteListDataView(root)
     expect(treeDataView.data.length).toBe(1)
     expect(root.children.length).toBe(30)
     await childrenList.next()
