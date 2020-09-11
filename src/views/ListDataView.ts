@@ -68,6 +68,7 @@ export class ListDataView<T extends PureModel> extends View<T> {
     throw error(`infinite() parameter type error`)
   }
   @action public async search(options: IRequestOptions): Promise<ResponseView<T[]>> {
+    this.limit = options.selector.limit
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
     if (response.dataType !== RESPONSE_DATATYPE.PAGE) {
@@ -87,7 +88,6 @@ export class ListDataView<T extends PureModel> extends View<T> {
   public first(options?: IRequestOptions): Promise<ResponseView<T[]>> {
     const start = 0
     const count = this.limit[1]
-    this.limit = [start, count]
     return this.search({
       ...this.requestOptions,
       selector: {
@@ -102,7 +102,6 @@ export class ListDataView<T extends PureModel> extends View<T> {
     let [start, count] = this.limit
     start -= count
     start = start <= 0 ? 0 : start
-    this.limit = [start, count]
     return this.search({
       ...this.requestOptions,
       selector: {
@@ -114,10 +113,8 @@ export class ListDataView<T extends PureModel> extends View<T> {
   }
   public next(options?: IRequestOptions): Promise<ResponseView<T[]>> {
     if (!this.hasNext) return null
-
     let [start, count] = this.limit
     start += count
-    this.limit = [start, count]
     return this.search({
       ...this.requestOptions,
       selector: {
@@ -130,8 +127,6 @@ export class ListDataView<T extends PureModel> extends View<T> {
   public last(options?: IRequestOptions): Promise<ResponseView<T[]>> {
     const [, count] = this.limit
     const start = this.meta.count - count
-    this.limit = [start, count]
-
     return this.search({
       ...this.requestOptions,
       selector: {

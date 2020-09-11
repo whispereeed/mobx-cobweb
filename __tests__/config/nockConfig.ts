@@ -61,38 +61,6 @@ export function useFixtureGetByIds(key: string) {
     })
 }
 
-export function useFixtureGetChildrenById(key: string) {
-  CURRENT_SCOPE.persist(true)
-    .post(new RegExp(key + '/.+/children'))
-    .reply(200, (uri: string, body: any) => {
-      const id = uri.replace(key, '').replace('/api/v1/', '').replace('/children', '')
-      const { limit } = body
-      const { start, count } = limit
-      const json = MAPPER[key]
-      const object = json.items.filter((k: any) => k.parentId === id)
-      const items = object.slice(start, start + count)
-      return JSON.stringify({ items, count: object.length })
-    })
-}
-
-export function useFixtureGetParentsById(key: string) {
-  CURRENT_SCOPE.persist()
-    .get(new RegExp(key + '/.+/parents'))
-    .reply(200, (uri: string) => {
-      const id = uri.replace(key, '').replace('/api/v1/', '').replace('/parents', '')
-      const json = MAPPER[key]
-      const findOne = (_id: string) => json.items.find((k: any) => k.id === _id)
-      let current = findOne(id)
-      const object = []
-      while (current) {
-        current = findOne(current.parentId)
-        if (current) object.push(current)
-      }
-
-      return JSON.stringify({ items: object, count: object.length })
-    })
-}
-
 export function useFixtureGet404(key: string) {
   CURRENT_SCOPE.persist()
     .get(new RegExp(key))
@@ -128,4 +96,3 @@ export function useFixtureDELETEById(key: string, code: number = 200, value: any
       return JSON.stringify(value)
     })
 }
-

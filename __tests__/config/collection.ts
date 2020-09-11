@@ -5,9 +5,10 @@ import Staff from '../models/Staff'
 import Department from '../models/Department'
 import PropertySet from '../models/PropertySet'
 import User from '../models/User'
+import TreeDataDEMOModel from '../models/TreeDataDEMOModel'
 
 export class MyCollection extends Collection {
-  static types = [Me, Staff, Department, PropertySet, User]
+  static types = [Me, Staff, Department, PropertySet, User, TreeDataDEMOModel]
 }
 
 export const collection = new MyCollection()
