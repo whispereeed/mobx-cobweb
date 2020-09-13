@@ -68,11 +68,12 @@ export class ListDataView<T extends PureModel> extends View<T> {
     throw error(`infinite() parameter type error`)
   }
   @action public async search(options: IRequestOptions): Promise<ResponseView<T[]>> {
-    this.limit = options.selector.limit
+    this.limit = options?.selector?.limit ?? this.limit
     this.isLoading = true
     const response = await this.collection.fetch<T>(this.modelType, options)
-    if (response.dataType !== RESPONSE_DATATYPE.PAGE) {
-      throw error(`ListDataView.search must be return "PAGE" response value`)
+
+    if (!(response.dataType === RESPONSE_DATATYPE.PAGE || response.dataType === RESPONSE_DATATYPE.LIST)) {
+      throw error(`ListDataView.search must be return "PAGE" | "LIST" response value`)
     }
 
     this.requestOptions = response.requestOptions

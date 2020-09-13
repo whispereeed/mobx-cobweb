@@ -4,6 +4,7 @@
 import { collection, useFixturesByGET } from './config'
 import { TreeDataView } from '../src'
 import TreeDataDEMOModel from './models/TreeDataDEMOModel'
+import { autorun } from 'mobx'
 
 describe('TreeDataView', () => {
   let scope: any = null
@@ -25,7 +26,8 @@ describe('TreeDataView', () => {
     })
 
     const treeDataView = new TreeDataView<TreeDataDEMOModel>(TreeDataDEMOModel, collection)
-    await treeDataView.searchRoots()
+    await treeDataView.infiniteRoots()
+
     expect(treeDataView.data.length).toBe(1)
     const root = treeDataView.data[0]
     expect(collection.findAll(TreeDataDEMOModel).length).toBe(1)
@@ -44,23 +46,13 @@ describe('TreeDataView', () => {
         return JSON.stringify({ items: oo, count: 100 })
       })
 
-    await treeDataView.infinite(root, { selector: { limit: [0, 30] } })
+    await treeDataView.infiniteNodes(root, { selector: { limit: [0, 30] } })
+
     const childrenList = treeDataView.getInfiniteListDataView(root)
     expect(treeDataView.data.length).toBe(1)
     expect(root.children.length).toBe(30)
     await childrenList.next()
     expect(root.children.length).toBe(60)
     expect(collection.findAll(TreeDataDEMOModel).length).toBe(60)
-
-    scope
-      .persist()
-      .get(TreeDataDEMOModel.endpoint + '/$20/parents')
-      .reply(200, (uri: string) => {
-        return JSON.stringify({ items: [{ id: 200 }, { id: 10 }, { id: 0 }] })
-      })
-
-    const resp = await treeDataView.searchParents(20)
-
-    expect(resp.data.length).toBe(3)
   })
 })
