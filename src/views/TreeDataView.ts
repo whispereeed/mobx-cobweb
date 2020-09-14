@@ -52,16 +52,17 @@ export class TreeDataView<T extends PureModel> extends ListDataView<T> {
     if (!this.cacheStore.has(id)) {
       const cache = new ListDataView<T>(this.modelType, this.collection)
       this.cacheStore.set(id, cache)
+      const __model: T = model instanceof PureModel ? (model as T) : this.__collection.findOne<T>(this.modelType, id)
       this.cacheDisposer.set(
         id,
         reaction(
-          () => cache.list,
-          // @ts-ignore
-          (list) => (model[this.childrenProperty] = list)
+          () => cache.list, // @ts-ignore
+          (list) => (__model[this.childrenProperty] = list)
         )
       )
       return cache
     }
-    return this.cacheStore.get(getModelId(model))
+
+    return this.cacheStore.get(id)
   }
 }
