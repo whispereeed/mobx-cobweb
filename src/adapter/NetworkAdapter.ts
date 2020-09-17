@@ -147,12 +147,17 @@ export class NetworkAdapter implements INetworkAdapter {
         throw { message: `Invalid HTTP status: ${status}`, status }
       }
 
-      responseData = await response.json()
       const result: IRawResponse = {}
-
       result.status = status
       result.responseHeaders = result.headers = headers
       result.requestHeaders = requestHeaders
+
+      if (status === 204) {
+        result.dataType = RESPONSE_DATATYPE.NONE
+        return result
+      }
+
+      responseData = await response.json()
 
       if (isSingleResponseData(responseData)) {
         result.dataType = RESPONSE_DATATYPE.SINGLE

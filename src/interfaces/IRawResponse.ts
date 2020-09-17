@@ -13,7 +13,7 @@ export const enum RESPONSE_DATATYPE {
   ERROR = 'ERROR',
   NONE = 'NONE',
   SINGLE_STATUS = 'SINGLE_STATUS',
-  SINGLE_DATA = 'SINGLE_DATA'
+  SINGLE_DATA = 'SINGLE_DATA' ,
 }
 
 export interface ICreationResponseData {
