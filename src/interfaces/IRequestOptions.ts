@@ -19,7 +19,7 @@ export interface IRequestOptions {
     select?: string | INestedArray<string>
   }
   // qs
-  params?: Record<string, string>
+  params?: Record<string, string | number | boolean>
   // url fix
   action?: string | ((url: string) => string)
 
