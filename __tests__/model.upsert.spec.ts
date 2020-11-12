@@ -1,7 +1,7 @@
 import { collection, useFixtureGetById, useFixturePUTById, useFixturesByGET } from './config'
 import Staff from './models/Staff'
 import { ResponseView } from '../src'
-import { isAttributeDirty } from '@issues-beta/datx'
+import { isAttributeDirty } from '../src/datx'
 
 describe('model.upsert', () => {
   let scope: any = null

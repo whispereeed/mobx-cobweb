@@ -5,7 +5,7 @@ import { getModelType, IType, PureModel } from '../datx'
 import { ResponseView } from '../ResponseView'
 import { IOneOrMany } from '../interfaces'
 import { LRU } from './lru'
-import { isArrayLike } from 'mobx'
+import { isArrayLike } from 'datx-utils'
 import { peekNonNullish } from './utils'
 
 const cache = new LRU<ResponseView<IOneOrMany<PureModel>>>(16, 60000)

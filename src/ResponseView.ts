@@ -13,7 +13,8 @@ import {
   isModel,
   View
 } from './datx'
-import { action, isArrayLike } from 'mobx'
+import { action } from 'mobx'
+import { isArrayLike } from 'datx-utils'
 import { IRequestOptions, IRawResponse, IOneOrMany, RESPONSE_DATATYPE } from './interfaces'
 import { INetActionsMixinForCollection } from './interfaces/INetActionsMixin'
 
@@ -67,7 +68,7 @@ export class ResponseView<T extends IOneOrMany<PureModel>> implements IRawRespon
       )
     }
 
-    if (isModel(this.data) || (isArrayLike(this.data) && this.data.every(isModel))) {
+    if (isModel(this.data) || (isArrayLike(this.data) && (this.data as any[]).every(isModel))) {
       this.views?.forEach((view) => view.add(this.data))
     }
   }

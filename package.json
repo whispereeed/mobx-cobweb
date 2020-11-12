@@ -42,7 +42,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jest": "^26.4.2",
     "jest-cli": "^26.4.2",
-    "mobx": "^4 || ^5",
+    "mobx": "^4.15.7",
     "nock": "^13.0.4",
     "rollup": "^2.26.5",
     "rollup-plugin-typescript2": "^0.27.2",
@@ -52,7 +52,7 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@issues-beta/datx": "^2.0.0-beta.30",
-    "datx-utils": "^2.0.0-beta.4"
+    "datx": "^2.0.0-beta.8",
+    "datx-utils": "^2.0.0-beta.8"
   }
 }

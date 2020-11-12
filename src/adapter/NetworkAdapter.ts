@@ -1,7 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2019/11/28 17:24. *
  ***************************************************/
-import { isArrayLike } from 'mobx'
+import { isArrayLike } from 'datx-utils'
 import { IIdentifier } from '../datx'
 import {
   $ElementType,

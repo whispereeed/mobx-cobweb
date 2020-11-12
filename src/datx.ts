@@ -1,4 +1,4 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/7/28 09:28. *
  ***************************************************/
-export * from '@issues-beta/datx'
+export * from 'datx'

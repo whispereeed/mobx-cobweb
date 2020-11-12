@@ -1,8 +1,8 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/6/2 15:10. *
  ***************************************************/
-import { getModelId, getModelType, IModelConstructor, IType, PureModel, View, IIdentifier } from '../datx'
-import { action, computed, observable, reaction, IReactionDisposer } from 'mobx'
+import { getModelId, getModelType, IModelConstructor, IType, PureModel, IIdentifier } from '../datx'
+import { action, reaction, IReactionDisposer } from 'mobx'
 import { Collection } from '../Collection'
 import { ListDataView } from './ListDataView'
 import { ResponseView } from '../ResponseView'

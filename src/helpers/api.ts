@@ -13,9 +13,8 @@ import {
   PureModel
 } from '../datx'
 import { error, getValue, isIdentifier } from './utils'
-import { getMeta, mapItems, setMeta } from 'datx-utils'
+import { getMeta, mapItems, setMeta ,isArrayLike} from 'datx-utils'
 import { MODEL_PERSISTED_FIELD, ORPHAN_MODEL_ID_KEY, ORPHAN_MODEL_ID_VAL } from './consts'
-import { isArrayLike } from 'mobx'
 
 export function getModelEndpoint(type: IType, collection: PureCollection): string {
   const QueryModel: any = getModelConstructor(type, collection)

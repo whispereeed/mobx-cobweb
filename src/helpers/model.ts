@@ -10,8 +10,8 @@ import {
   revertModel,
   updateModelId
 } from '../datx'
-import { getMeta, mapItems } from 'datx-utils'
-import { action, isArrayLike } from 'mobx'
+import { getMeta, mapItems, isArrayLike } from 'datx-utils'
+import { action } from 'mobx'
 
 import { clearCacheByType } from './cache'
 import { IRawResponse, IRequestOptions, RESPONSE_DATATYPE } from '../interfaces'
