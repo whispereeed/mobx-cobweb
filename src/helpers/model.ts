@@ -153,7 +153,7 @@ export function fetchModelRefs<T extends PureModel>(
   const promises = Object.keys(refs).map((key) => {
     const refDef = refs[key]
     if (isArrayLike(refDef)) {
-      const _ids = refDef.map((d) => d.id)
+      const _ids = refDef.map((d: any) => d.id)
       const _type = refDef[0].type
       return collection.fetch<any>(_type, _ids, options)
     }

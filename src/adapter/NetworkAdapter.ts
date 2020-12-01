@@ -208,7 +208,7 @@ export class NetworkAdapter implements INetworkAdapter {
 
   protected prepareFilters(filters: $ElementType<$ElementType<IRequestOptions, 'selector'>, 'filters'>): string {
     if (!filters) return undefined
-    const filters2 = isArrayLike(filters) ? filters : [filters]
+    const filters2 = isArrayLike(filters) ? (filters as any[]) : [filters]
     return filters2.join('&&')
   }
   protected prepareOrders(orders?: $ElementType<ISelector, 'orders'>): IQueryParamOrder[] {
@@ -231,7 +231,7 @@ export class NetworkAdapter implements INetworkAdapter {
           return '`...`'
         }
         if (isArrayLike(k)) {
-          return `${k.shift()}(${this.prepareSelect(k)})`
+          return `${(k as any[]).shift()}(${this.prepareSelect(k)})`
         }
         return k
       })
@@ -243,7 +243,7 @@ export class NetworkAdapter implements INetworkAdapter {
   }
   protected prepareURL(endpoint: string, ids?: IOneOrMany<IIdentifier>, action?: string | ((url: string) => string)) {
     let url = endpoint
-    if (ids != undefined) url += isArrayLike(ids) ? `/[${ids.join(',')}]` : `/\$${ids}`
+    if (ids != undefined) url += isArrayLike(ids) ? `/[${(ids as any[]).join(',')}]` : `/\$${ids}`
     const baseURL = this.baseUrl
     if (!action) action = ''
 

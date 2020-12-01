@@ -15,7 +15,9 @@ export function saveCache(url: string, modelType: IType, response: ResponseView<
     // The type might need to be 100% correct - used only to clear the cache
     const type = peekNonNullish(
       modelType,
-      getModelType(isArrayLike(response.data) && response.data.length ? response.data[0] : response.data)
+      getModelType(
+        isArrayLike(response.data) && (response.data as any[]).length ? (response.data as any[])[0] : response.data
+      )
     )
     cache.set(`${url}@@${type}`, response)
   }
