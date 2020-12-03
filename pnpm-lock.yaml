@@ -1173,6 +1173,7 @@ packages:
       mobx: ^4.2.0 || ^5.5.0 || ^6.0.0
     resolution:
       integrity: sha1-juzPeA5OTOMtpdtsphrOaoao6fs=
+      tarball: datx-utils/download/datx-utils-2.0.0-beta.8.tgz
   /datx/2.0.0-beta.8_mobx@4.15.7:
     dependencies:
       datx-utils: 2.0.0-beta.8_mobx@4.15.7
@@ -1182,6 +1183,7 @@ packages:
       mobx: ^4.2.0 || ^5.5.0 || ^6.0.0
     resolution:
       integrity: sha1-gyDkGU4vSC/CO/kdEQ1eyhxJYcw=
+      tarball: datx/download/datx-2.0.0-beta.8.tgz
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -4114,8 +4116,8 @@ specifiers:
   '@types/glob': ^7.1.3
   '@types/isomorphic-fetch': 0.0.35
   '@types/jest': ^26.0.10
-  datx: ^2.0.0-beta.8
-  datx-utils: ^2.0.0-beta.8
+  datx: ^2.0.0-beta.7
+  datx-utils: ^2.0.0-beta.7
   glob: ^7.1.6
   isomorphic-fetch: ^2.2.1
   jest: ^26.4.2

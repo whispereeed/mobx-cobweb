@@ -1,6 +1,7 @@
 /***************************************************
  * Created by nanyuantingfeng on 2020/8/6 19:23. *
  ***************************************************/
+import 'requestidlecallback'
 import { autorun } from 'mobx'
 import { ICollectionConstructor, modelToJSON, PureCollection } from '../datx'
 import { IStorageMixin, IStorageType } from '../interfaces/IStorageMixin'
@@ -41,11 +42,13 @@ export function withStorageForCollection<T extends PureCollection>(Base: ICollec
       if (!engine) return () => {}
 
       const types = StaticCollection.types.filter((Q: any) => !!Q.enableStorage)
-      return autorun(() => {
-        const models = types.reduce((oo, type) => oo.concat(this.findAll(type).map(modelToJSON)), [])
-        let data = JSON.stringify(models)
-        engine.setItem(key, data)
-      })
+      return autorun(() =>
+        requestIdleCallback(() => {
+          const models = types.reduce((oo, type) => oo.concat(this.findAll(type).map(modelToJSON)), [])
+          let data = JSON.stringify(models)
+          engine.setItem(key, data)
+        })
+      )
     }
   }
 
